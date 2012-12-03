@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-하하하하호호호^^ by joanna:) 싱크로나이즈
+하하하하호호호^^ by joanna:);
 
 </body>
 </html>
