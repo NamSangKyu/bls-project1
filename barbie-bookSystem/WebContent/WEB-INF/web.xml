@@ -25,7 +25,7 @@
   			/WEB-INF/boardmvc.xml
   			/WEB-INF/bookmvc.xml
   			/WEB-INF/membermvc.xml
-  		</param-value>
+  			</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
