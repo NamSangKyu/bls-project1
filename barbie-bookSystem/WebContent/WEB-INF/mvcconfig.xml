@@ -27,9 +27,7 @@
 
 	<!-- MultiActionController 설정 -->
 	<bean id="methodNameResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
-		<property name="paramName">
-			<value>command</value>
-		</property>
+		<property name="paramName" value="command"></property>
 	</bean>
 
 	<!-- apache dbcp -->
