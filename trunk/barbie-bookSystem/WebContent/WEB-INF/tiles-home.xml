@@ -4,11 +4,10 @@
        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 <tiles-definitions>
-	<definition name="layout-tiles" template="/templates/layout_css.jsp">
-		<put-attribute name="header" value="/templates/header.jsp"></put-attribute>
-		<put-attribute name="left" value="/templates/left.jsp"></put-attribute>
-		<put-attribute name="footer" value="/templates/footer.jsp"></put-attribute>
-		<put-attribute name="main" value="/main.jsp"></put-attribute>
+	<definition name="home" template="/layout/layout.jsp">
+		<put-attribute name="header" value="/layout/header.jsp"></put-attribute>
+		<put-attribute name="main" value="/layout/main.jsp"></put-attribute>
+		<put-attribute name="footer" value="/layout/footer.jsp"></put-attribute>
 	</definition>
 </tiles-definitions>
 
