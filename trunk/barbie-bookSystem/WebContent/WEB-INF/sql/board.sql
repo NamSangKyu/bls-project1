@@ -1,5 +1,5 @@
 create table bls_board(
-	boardNo number() primary key,
+	boardNo number primary key,
 	title varchar2(100) not null,
 	memberId varchar2(20) not null,
 	pass varchar2(40) ,
