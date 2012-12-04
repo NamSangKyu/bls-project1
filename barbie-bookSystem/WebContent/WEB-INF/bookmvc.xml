@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 	<bean name="/book.do" class="control.BookController">
 		<property name="methodNameResolver">
-			<ref bean="multiActionMethod"/>
+			<ref bean="methodNameResolver"/>
 		</property>
 	</bean>
 	

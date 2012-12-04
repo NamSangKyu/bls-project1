@@ -7,5 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
+<jsp:forward page="book.do?command=home"></jsp:forward>
 </body>
 </html>
