@@ -7,6 +7,27 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<!-- 도서목록을 게시물로 보여주기 -->
+<table border="1">
+<thead>
+<tr>
+<!-- 글번호/도서명/출판사/저자명/ISBN -->
+<td>글번호</td>
+<td>도서명</td>
+<td>출판사</td>
+<td>저자명</td>
+<td>ISBN</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 </body>
 </html>
