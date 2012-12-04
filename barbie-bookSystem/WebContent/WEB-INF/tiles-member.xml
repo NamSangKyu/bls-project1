@@ -6,10 +6,10 @@
        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 <tiles-definitions>
-	<definition name="*.member" extends="layout-tiles">
+	<definition name="*.member" extends="home">
 		<put-attribute name="main" value="/member/{1}_form.jsp"></put-attribute>
 	</definition>
-	<definition name="*/*.member" extends="layout-tiles">
+	<definition name="*/*.member" extends="home">
 		<put-attribute name="header" value="/member/{1}/templates/header.jsp"></put-attribute>
 		<put-attribute name="main" value="/member/{1}/{2}_form.jsp"></put-attribute>
 	</definition>
