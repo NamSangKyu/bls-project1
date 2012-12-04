@@ -22,6 +22,7 @@
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>
+			/WEB-INF/mvcconfig.xml
   			/WEB-INF/boardmvc.xml
   			/WEB-INF/bookmvc.xml
   			/WEB-INF/membermvc.xml
