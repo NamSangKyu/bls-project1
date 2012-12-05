@@ -1,4 +1,4 @@
---게시판 테이블
+--寃뚯떆���뚯씠釉�
 create table bls_board(
 	boardNo number primary key,
 	title varchar2(100) not null,
@@ -11,12 +11,12 @@ create table bls_board(
 	relevel number not null 
 )
 
---게시판 sequence
+--寃뚯떆��sequence
 create sequence bls_board_seq nocache;
 
---게시판 insert test
+--寃뚯떆��insert test
 insert into BLS_BOARD(boardNo, title, memberId, boardDate, cont, ref, restep, relevel)
-values (bls_board_seq.nextval, '하하', 'bls1004', sysdate, '으하하하', 1, 0, 0)
+values (bls_board_seq.nextval, '�섑븯', 'bls1004', sysdate, '�쇳븯�섑븯', 1, 0, 0)
 
 select * from BLS_BOARD
 
