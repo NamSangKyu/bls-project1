@@ -4,7 +4,6 @@ public class BoardVO {
 	private int boardNo;
 	private String title;
 	private String memberId;
-	private String pass;
 	private String boardDate;
 	private int count;
 	private String cont;
@@ -16,14 +15,13 @@ public class BoardVO {
 		super();
 	}
 
-	public BoardVO(int boardNo, String title, String memberId, String pass,
+	public BoardVO(int boardNo, String title, String memberId,
 			String boardDate, int count, String cont, int ref, int restep,
 			int relevel) {
 		super();
 		this.boardNo = boardNo;
 		this.title = title;
 		this.memberId = memberId;
-		this.pass = pass;
 		this.boardDate = boardDate;
 		this.count = count;
 		this.cont = cont;
@@ -54,14 +52,6 @@ public class BoardVO {
 
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
-	}
-
-	public String getPass() {
-		return pass;
-	}
-
-	public void setPass(String pass) {
-		this.pass = pass;
 	}
 
 	public String getBoardDate() {
@@ -114,8 +104,8 @@ public class BoardVO {
 
 	public String toString() {
 		return "BoardVO [boardNo=" + boardNo + ", title=" + title
-				+ ", memberId=" + memberId + ", pass=" + pass + ", boardDate="
-				+ boardDate + ", count=" + count + ", cont=" + cont + ", ref="
-				+ ref + ", restep=" + restep + ", relevel=" + relevel + "]";
+				+ ", memberId=" + memberId + ", boardDate=" + boardDate
+				+ ", count=" + count + ", cont=" + cont + ", ref=" + ref
+				+ ", restep=" + restep + ", relevel=" + relevel + "]";
 	}
 }
