@@ -12,7 +12,7 @@ public class BoardService {
 		this.boardDao = boardDao;
 	}
 
-	public BoardVO test() throws SQLException {
-		return boardDao.test();
+	public BoardVO insert() throws SQLException {
+		return boardDao.insert();
 	}
 }

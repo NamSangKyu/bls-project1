@@ -18,8 +18,8 @@ public class BoardController extends MultiActionController {
 		this.boardService = boardService;
 	}
 	
-	public ModelAndView test(HttpServletRequest request, HttpServletResponse response) throws SQLException {
-		return new ModelAndView("board/list", "test", boardService.test());
+	public ModelAndView insert(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+		return new ModelAndView("insert.board", "test", boardService.insert());
 	}
 
 }
