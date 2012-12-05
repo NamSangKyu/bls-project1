@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="board.do?command=insert">Board MVC TEST</a>
+<a href="board/insert.jsp">Board MVC TEST</a>
 </body>
 </html>
