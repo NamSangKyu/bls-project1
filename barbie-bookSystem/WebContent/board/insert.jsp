@@ -10,16 +10,16 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#writeImg").click(function() {
-			if($("#title").val()==""){
+			if ($("#title").val() == "") {
 				alert("제목을 입력해주십시오");
 				return;
-			}else if($("#name").val()==""){
+			} else if ($("#name").val() == "") {
 				alert("이름을 입력해주십시오");
 				return;
-			}else if($("#pass").val()==""){
+			} else if ($("#pass").val() == "") {
 				alert("비밀번호를 입력해주십시오");
 				return;
-			}else if($("#content").val()==""){
+			} else if ($("#content").val() == "") {
 				alert("내용을 입력해주십시오");
 				return;
 			}
@@ -29,36 +29,29 @@
 </script>
 </head>
 <body>
-	<p>
-		<!-- 진하게  -->
-		<b>글쓰기</b>
-	</p>
-	<form action="" method="post" id="writeForm">
-		<input type="hidden" name="command" value="write">
-		<table width="300px">
-			<tr>
-				<td>제목</td>
-				<td><input type="text" id="title" name="title"></td>
-			</tr>
-			<tr>
-				<td>이름</td>
-				<td><input type="text" id="name" name="memberId"></td>
-			</tr>
-			<tr>
-				<td>패스워드</td>
-				<td><input type="password" id="pass" name="pass"></td>
-			</tr>
-			<tr>
-				<td colspan=2><textarea cols="32" rows="10" name="cont"
-						id="content"></textarea></td>
-			</tr>
-			<tr>
-			<!-- 그림파일은 일단 예제로 넣었습니다 -->
-				<td colspan="2"><img src="../img/ui/confirm.gif" id="writeImg"></td>
-			</tr>
-
-		</table>
-
-	</form>
+	<center>
+		<form action="board.do" method="post" id="insertForm">
+			<input type="hidden" name="command" value="insert">
+			<table border="1">
+				<tr align="center">
+					<td colspan="2">글쓰기</td>
+				<tr align="center">
+					<td>제목</td>
+					<td><input type="text" id="title" name="title"></td>
+				</tr>
+				<tr align="center">
+					<td>작성자</td>
+					<td><input type="text" id="memberId" name="memberId" readonly="readonly" value="${sessionScope.info.memberId }"></td>
+				</tr>
+				<tr align="center">
+					<td colspan=2><textarea cols="32" rows="10" name="cont" id="cont"></textarea></td>
+				</tr>
+				<tr align="center">
+					<!-- 그림파일은 일단 예제로 넣었습니다 -->
+					<td colspan="2"><img src="../img/ui/confirm.gif" id="writeImg"></td>
+				</tr>
+			</table>
+		</form>
+	</center>
 </body>
 </html>
