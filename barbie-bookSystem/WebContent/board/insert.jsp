@@ -35,7 +35,7 @@
 				</tr>
 				<tr align="center">
 					<td>작성자</td>
-					<td><input type="text" id="memberId" name="memberId" readonly="readonly" value="${sessionScope.info.memberId }"></td>
+					<td><input type="text" id="memberId" name="memberId"></td>
 				</tr>
 				<tr align="center">
 					<td colspan=2><textarea cols="32" rows="10" id="cont" name="cont"></textarea></td>
