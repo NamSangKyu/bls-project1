@@ -15,7 +15,7 @@ create table bls_board(
 create sequence bls_board_seq nocache;
 
 --게시판 insert test
-insert into BLS_BOARD(boardNo, title, memberId, pass, boardDate, cont, ref, restep, relevel)
+insert into BLS_BOARD(boardNo, title, memberId, boardDate, cont, ref, restep, relevel)
 values (bls_board_seq.nextval, '하하', 'bls1004', sysdate, '으하하하', 1, 0, 0)
 
 select * from BLS_BOARD
