@@ -24,7 +24,7 @@
 </head>
 <body>
 	<center>
-		<form action="board.do" method="post" id="insertForm">
+		<form action="../board.do" method="post" id="insertForm">
 			<input type="hidden" name="command" value="insert">
 			<table border="1">
 				<tr align="center">
@@ -38,7 +38,7 @@
 					<td><input type="text" id="memberId" name="memberId"></td>
 				</tr>
 				<tr align="center">
-					<td colspan=2><textarea cols="32" rows="10" id="cont" name="cont"></textarea></td>
+					<td colspan=2><textarea cols="100" rows="10" id="cont" name="cont"></textarea></td>
 				</tr>
 				<tr align="center">
 					<td colspan="2"><img src="../img/ui/confirm.gif" id="insertImg"></td>

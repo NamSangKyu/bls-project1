@@ -2,13 +2,24 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="board">
-	<select id="insert" resultClass="model.vo.BoardVO">
-		select * from bls_board
+	<!-- 별칭지정 -->
+	<typeAlias alias="bvo" type="model.vo.BoardVO"/>
+	
+	<!-- 게시물을 db에 저장하는 과정 boardNo 하고 boardDate 정보 추가 이때 boardNo 는 bvo 에 setting 됨 -->
+	<insert id="insert" parameterClass="bvo">
+		<selectKey keyProperty="boardNo" resultClass="int">
+			select bls_board_seq.nextval from dual
+		</selectKey>
+		<!-- insert 시에 count 는 default 값으로 0 이 주어지고 ref = boardNo 값이 restep, relevel 값은 int 형 초기화 0 -->
+		insert into bls_board(boardNo, title, memberId, boardDate, cont, ref, restep, relevel)
+		values(#boardNo#, #title#, #memberId#, sysdate, #cont#, #boardNo#, #restep#, #relevel#)
+	</insert>	
+	
+	<!-- 해당 게시물의 날짜를 select 한 뒤에 bvo 에 저장하기 위한 sql 문-->
+	<select id="getDate" parameterClass="int" resultClass="string">
+		select boardDate from bls_board where boardNo=#value#
 	</select>
 </sqlMap>
-
-
-
 
 
 
