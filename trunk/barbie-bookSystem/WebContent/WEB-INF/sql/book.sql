@@ -1,30 +1,35 @@
 --도서 테이블
-create table book(
- bookno number primary key,
- title varchar2(100) not null,
- writer varchar2(50) not null,
- isbn number not null,
- loc varchar2(50) not null,
- cont varchar2(4000) not null,
- publisherno number not null,
- subjectno number not null,
- img varchar2(1000),
- constraint publisherno_fk foreign key(publisherno) references publisher(publisherno),
- constraint subjectno_fk foreign key(subjectno) references booksubject(subjectno)
+create table bls_book(
+	bookNo number primary key,
+	isbn number not null,
+ 	title varchar2(100) not null,
+ 	writer varchar2(50) not null,
+ 	cont varchar2(4000) not null,
+ 	loc varchar2(50) not null,
+ 	img varchar2(1000),
+ 	subjectNo number not null,
+ 	publisherNo number not null,
+ 	constraint subjectNo_fk foreign key(subjectNo) references bls_book_sbj(subjectNo),
+ 	constraint publisherNo_fk foreign key(publisherNo) references bls_book_pbs(publisherNo)
 )
+
 --도서분류 테이블
-CREATE TABLE booksubject(
- subjectno number PRIMARY KEY,
- subjectname varchar2(50)
+CREATE TABLE bls_book_sbj(
+ 	subjectNo number PRIMARY KEY,
+ 	subject varchar2(50)
 )
---출판사 테이블
-CREATE TABLE publisher(
- publisherno number PRIMARY KEY,
- publishername varchar2(50)
+
+--출판사분류 테이블
+CREATE TABLE bls_book_pbs(
+ 	publisherNo number PRIMARY KEY,
+ 	publisher varchar2(50)
 )
---Book table sequence
-create sequence bookno nocache;
+
+--도서 sequence
+create sequence bls_book_seq nocache;
+
 --도서분류 sequence
-create sequence subjectno nocache;
---출판사 sequence
-create sequence publisherno nocache;
+create sequence bls_book_sbj_seq nocache;
+
+--출판사분류  sequence
+create sequence bls_book_pbs_seq nocache;
