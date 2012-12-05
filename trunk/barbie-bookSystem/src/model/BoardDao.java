@@ -14,8 +14,8 @@ public class BoardDao {
 		this.sqlMapClient = sqlMapClient;
 	}
 
-	public BoardVO test() throws SQLException {
-		return (BoardVO) sqlMapClient.queryForObject("board.test");
+	public BoardVO insert() throws SQLException {
+		return (BoardVO) sqlMapClient.queryForObject("board.insert");
 	}
 
 }
