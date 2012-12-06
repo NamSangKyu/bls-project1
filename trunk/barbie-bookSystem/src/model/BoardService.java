@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import model.vo.BoardVO;
 
@@ -35,5 +36,9 @@ public class BoardService {
 
 	public void updateContent(BoardVO bvo) throws SQLException {
 		boardDao.updateContent(bvo);
+	}
+
+	public ArrayList<BoardVO> list() throws SQLException {
+		return boardDao.list();
 	}
 }
