@@ -28,8 +28,7 @@ public class BoardDao {
 	}
 
 	public BoardVO showContent(String boardNo) throws SQLException {
-		return (BoardVO) sqlMapClient.queryForObject("board.showContent",
-				boardNo);
+		return (BoardVO) sqlMapClient.queryForObject("board.showContent", boardNo);
 	}
 
 	public void updateCount(String boardNo) throws SQLException {
