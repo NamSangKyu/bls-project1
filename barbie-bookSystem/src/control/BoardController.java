@@ -1,6 +1,7 @@
 package control;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +43,8 @@ public class BoardController extends MultiActionController {
 	public ModelAndView delete(HttpServletRequest request, HttpServletResponse response) throws SQLException {
 		String boardNo = request.getParameter("boardNo");
 		boardService.delete(boardNo);
-		return new ModelAndView("list.board", "lvo", null);
+		ArrayList<BoardVO> lvo = boardService.list();
+		return new ModelAndView("list.board", "lvo", lvo);
 	}
 	
 	// 게시물 수정화면 보여주기 이런 경우는 count 증가 없이 showContent
@@ -59,4 +61,13 @@ public class BoardController extends MultiActionController {
 		bvo = boardService.showContentNoCount(boardNo);
 		return new ModelAndView("show_content.board", "bvo", bvo);
 	}
+	
+	// 게시물 리스트 보기
+	public ModelAndView list(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+		ArrayList<BoardVO> lvo = boardService.list();
+		return new ModelAndView("list.board", "lvo", lvo);
+	}
+	
+	
+	
 }

@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import model.vo.BoardVO;
 
@@ -36,6 +37,10 @@ public class BoardDao {
 
 	public void updateContent(BoardVO bvo) throws SQLException {
 		sqlMapClient.update("board.updateContent", bvo);
+	}
+
+	public ArrayList<BoardVO> list() throws SQLException {
+		return (ArrayList<BoardVO>) sqlMapClient.queryForList("board.list");
 	}
 
 }

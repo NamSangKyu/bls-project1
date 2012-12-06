@@ -27,11 +27,11 @@
 </head>
 <body>
 	<center>
-		<table border="1">
+		<table border="1" width="900">
 			<tr align="center">
 				<td colspan="6">게시물 보기</td>
 			<tr align="center">
-				<td>NO</td>
+				<td>순번</td>
 				<td>${requestScope.bvo.boardNo }</td>
 				<td colspan="4">${requestScope.bvo.title }</td>
 			</tr>
@@ -44,7 +44,7 @@
 				<td>${requestScope.bvo.count }</td>
 			</tr>
 			<tr align="center">
-				<td colspan=6><textarea cols="100" rows="10" id="cont" name="cont" readonly="readonly">${requestScope.bvo.cont }</textarea></td>
+				<td colspan=6><textarea cols="124" rows="10" id="cont" name="cont" readonly="readonly">${requestScope.bvo.cont }</textarea></td>
 			</tr>
 		</table>
 		<a href="board.do?command=list"><img src="${initParam.root}/img/ui/board/list_btn.jpg"></a>
