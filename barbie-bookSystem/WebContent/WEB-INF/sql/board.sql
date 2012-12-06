@@ -8,7 +8,7 @@ create table bls_board(
 	cont varchar2(4000) not null,
 	ref number not null,
 	restep number not null,
-	relevel number not null 
+	relevel number not null
 )
 
 -- 게시판 sequence
