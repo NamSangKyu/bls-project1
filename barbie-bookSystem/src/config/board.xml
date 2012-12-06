@@ -19,6 +19,26 @@
 	<select id="getDate" parameterClass="int" resultClass="string">
 		select boardDate from bls_board where boardNo=#value#
 	</select>
+	
+	<!-- 해당 게시물 삭제 -->
+	<delete id="delete" parameterClass="string">
+		delete from bls_board where boardNo=#value#
+	</delete>
+	
+	<!-- 해당 게시물 보기 전 count 증가 -->
+	<update id="updateCount" parameterClass="string">
+		update bls_board set count=count+1 where boardNo=#value#
+	</update>
+	
+	<!-- 해당 게시물 보기 -->
+	<select id="showContent" parameterClass="string" resultClass="bvo">
+		select * from bls_board where boardNo=#value#
+	</select>
+	
+	<!-- 해당 게시물 수정 -->
+	<update id="updateContent" parameterClass="bvo">
+		update bls_board set title=#title#, cont=#cont# where boardNo=#boardNo#
+	</update>
 </sqlMap>
 
 

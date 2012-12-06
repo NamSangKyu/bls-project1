@@ -20,10 +20,43 @@ public class BoardController extends MultiActionController {
 		this.boardService = boardService;
 	}
 
-	public ModelAndView insert(HttpServletRequest request,
-			HttpServletResponse response, HttpSession session, BoardVO bvo)
-			throws SQLException {
+	// 게시물 쓰기 화면
+	public ModelAndView insertView(HttpServletRequest request,HttpServletResponse response) throws SQLException {
+		return new ModelAndView("insert.board");
+	}
+	
+	// 게시물 글쓰기 과정
+	public ModelAndView insert(HttpServletRequest request, HttpServletResponse response, HttpSession session, BoardVO bvo) throws SQLException {
 		boardService.insert(bvo);
-		return new ModelAndView("board/show_content", "bvo", bvo);
+		return new ModelAndView("show_content.board", "bvo", bvo);
+	}
+	
+	// 게시물 보여줄 경우 count 증가 후 showContent
+		public ModelAndView showContent(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+			String boardNo = request.getParameter("boardNo");
+			BoardVO bvo = boardService.showContent(boardNo);
+			return new ModelAndView("show_content.board", "bvo", bvo);
+		}
+	
+	// 게시물 삭제 이후 목록 페이지로 이동
+	public ModelAndView delete(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+		String boardNo = request.getParameter("boardNo");
+		boardService.delete(boardNo);
+		return new ModelAndView("list.board", "lvo", null);
+	}
+	
+	// 게시물 수정화면 보여주기 이런 경우는 count 증가 없이 showContent
+	public ModelAndView updateView(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+		String boardNo = request.getParameter("boardNo");
+		BoardVO bvo = boardService.showContentNoCount(boardNo);
+		return new ModelAndView("update.board", "bvo", bvo);
+	}
+	
+	// 게시물 수정 작업을 끝내고 해당 게시물 보여주기
+	public ModelAndView updateContent(HttpServletRequest request, HttpServletResponse response, BoardVO bvo) throws SQLException {
+		String boardNo = request.getParameter("boardNo");
+		boardService.updateContent(bvo);
+		bvo = boardService.showContentNoCount(boardNo);
+		return new ModelAndView("show_content.board", "bvo", bvo);
 	}
 }

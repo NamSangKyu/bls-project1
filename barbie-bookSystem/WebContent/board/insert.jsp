@@ -13,7 +13,7 @@
 			if ($("#title").val() == "") {
 				alert("제목을 입력해주십시오");
 				return;
-			} else if ($("#content").val() == "") {
+			} else if ($("#cont").val() == "") {
 				alert("내용을 입력해주십시오");
 				return;
 			}
@@ -24,7 +24,7 @@
 </head>
 <body>
 	<center>
-		<form action="../board.do" method="post" id="insertForm">
+		<form action="${initParam.root}/board.do" method="post" id="insertForm">
 			<input type="hidden" name="command" value="insert">
 			<table border="1">
 				<tr align="center">
@@ -41,7 +41,7 @@
 					<td colspan=2><textarea cols="100" rows="10" id="cont" name="cont"></textarea></td>
 				</tr>
 				<tr align="center">
-					<td colspan="2"><img src="../img/ui/confirm.gif" id="insertImg"></td>
+					<td colspan="2"><img src="${initParam.root}/img/ui/board/confirm.gif" id="insertImg"></td>
 				</tr>
 			</table>
 		</form>

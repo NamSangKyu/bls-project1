@@ -19,4 +19,21 @@ public class BoardService {
 		String date = boardDao.getDate(boardNo);
 		bvo.setBoardDate(date);
 	}
+
+	public void delete(String boardNo) throws SQLException {
+		boardDao.delete(boardNo);
+	}
+
+	public BoardVO showContent(String boardNo) throws SQLException {
+		boardDao.updateCount(boardNo);
+		return boardDao.showContent(boardNo);
+	}
+
+	public BoardVO showContentNoCount(String boardNo) throws SQLException {
+		return boardDao.showContent(boardNo);
+	}
+
+	public void updateContent(BoardVO bvo) throws SQLException {
+		boardDao.updateContent(bvo);
+	}
 }

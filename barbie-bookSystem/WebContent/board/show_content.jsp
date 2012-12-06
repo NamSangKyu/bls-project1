@@ -5,6 +5,25 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#list").click(function() {
+			
+		});
+		$("#reply").click(function() {
+
+		});
+		$("#updateImg").click(function() {
+			if(confirm("수정 하시겠습니까?"))
+				location.href="board.do?command=updateView&boardNo=${requestScope.bvo.boardNo }";
+		});
+		$("#deleteImg").click(function() {
+			if(confirm("삭제 하시겠습니까?"))
+				location.href="board.do?command=delete&boardNo=${requestScope.bvo.boardNo }";
+		});
+	});
+</script>
 </head>
 <body>
 	<center>
@@ -28,10 +47,10 @@
 				<td colspan=6><textarea cols="100" rows="10" id="cont" name="cont" readonly="readonly">${requestScope.bvo.cont }</textarea></td>
 			</tr>
 		</table>
-		<input type="button" value="목록">
-		<input type="button" value="답글">
-		<input type="button" value="수정">
-		<input type="button" value="삭제">
+		<a href="board.do?command=list"><img src="${initParam.root}/img/ui/board/list_btn.jpg"></a>
+		<a href="board.do?command=reply"><img src="${initParam.root}/img/ui/board/answer_btn.jpg"></a>
+		<img src="${initParam.root}/img/ui/board/modify_btn.jpg" id="updateImg">
+		<img src="${initParam.root}/img/ui/board/delete_btn.jpg" id="deleteImg">
 	</center>
 </body>
 </html>

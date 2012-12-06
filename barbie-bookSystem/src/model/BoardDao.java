@@ -22,4 +22,20 @@ public class BoardDao {
 		return (String) sqlMapClient.queryForObject("board.getDate", boardNo);
 	}
 
+	public void delete(String boardNo) throws SQLException {
+		sqlMapClient.delete("board.delete", boardNo);
+	}
+
+	public BoardVO showContent(String boardNo) throws SQLException {
+		return (BoardVO) sqlMapClient.queryForObject("board.showContent", boardNo);
+	}
+
+	public void updateCount(String boardNo) throws SQLException {
+		sqlMapClient.update("board.updateCount", boardNo);
+	}
+
+	public void updateContent(BoardVO bvo) throws SQLException {
+		sqlMapClient.update("board.updateContent", bvo);
+	}
+
 }
