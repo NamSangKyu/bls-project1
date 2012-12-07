@@ -19,7 +19,7 @@
 		});
 	});
 </script>
-	<table border="1" width="900">
+	<table border="1" width="600">
 		<tr align="center">
 			<td colspan="6">게시물 보기</td>
 		<tr align="center">
@@ -36,7 +36,7 @@
 			<td>${requestScope.bvo.count }</td>
 		</tr>
 		<tr align="center">
-			<td colspan=6><textarea cols="124" rows="10" id="cont" name="cont" readonly="readonly">${requestScope.bvo.cont }</textarea></td>
+			<td colspan=6><textarea cols="60" rows="10" id="cont" name="cont" readonly="readonly">${requestScope.bvo.cont }</textarea></td>
 		</tr>
 	</table>
 	<a href="board.do?command=list"><img src="${initParam.root}/img/ui/board/list_btn.jpg"></a>

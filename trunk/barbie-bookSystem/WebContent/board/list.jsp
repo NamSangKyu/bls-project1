@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 	 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<table border="1" width="900">
+	<table border="1" width="600">
 		<tr align="center">
 			<td>순번</td><td>제목</td><td>작성자</td>
 			<td>등록일</td><td>조회수</td><td>첨부</td>
