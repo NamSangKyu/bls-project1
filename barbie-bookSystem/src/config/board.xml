@@ -3,10 +3,10 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="board">
 	<!-- 별칭지정 -->
-	<typeAlias alias="bvo" type="model.vo.BoardVO"/>
+	<typeAlias alias="boardvo" type="model.vo.BoardVO"/>
 	
-	<!-- 게시물을 db에 저장하는 과정 boardNo 하고 boardDate 정보 추가 이때 boardNo 는 bvo 에 setting 됨 -->
-	<insert id="insert" parameterClass="bvo">
+	<!-- 게시물을 db에 저장하는 과정 boardNo 하고 boardDate 정보 추가 이때 boardNo 는 boardvo 에 setting 됨 -->
+	<insert id="insert" parameterClass="boardvo">
 		<selectKey keyProperty="boardNo" resultClass="int">
 			select bls_board_seq.nextval from dual
 		</selectKey>
@@ -15,7 +15,7 @@
 		values(#boardNo#, #title#, #memberId#, sysdate, #cont#, #boardNo#, #restep#, #relevel#)
 	</insert>	
 	
-	<!-- 해당 게시물의 날짜를 select 한 뒤에 bvo 에 저장하기 위한 sql 문-->
+	<!-- 해당 게시물의 날짜를 select 한 뒤에 boardvo 에 저장하기 위한 sql 문-->
 	<select id="getDate" parameterClass="int" resultClass="string">
 		select boardDate from bls_board where boardNo=#value#
 	</select>
@@ -31,17 +31,17 @@
 	</update>
 	
 	<!-- 해당 게시물 보기 -->
-	<select id="showContent" parameterClass="string" resultClass="bvo">
+	<select id="showContent" parameterClass="string" resultClass="boardvo">
 		select * from bls_board where boardNo=#value#
 	</select>
 	
 	<!-- 해당 게시물 수정 -->
-	<update id="updateContent" parameterClass="bvo">
+	<update id="updateContent" parameterClass="boardvo">
 		update bls_board set title=#title#, cont=#cont# where boardNo=#boardNo#
 	</update>
 	
 	<!-- 게시물 전체 리스트 -->
-	<select id="list" resultClass="bvo">
+	<select id="list" resultClass="boardvo">
 		select boardNo, title, memberId, to_char(boardDate,'YYYY.MM.DD') as boardDate, count, cont, ref, restep, relevel from bls_board order by boardNo desc
 	</select>
 </sqlMap>
