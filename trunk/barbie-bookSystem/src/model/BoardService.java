@@ -2,43 +2,37 @@ package model;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import model.vo.BoardVO;
+import model.vo.BookVO;
 
-public class BoardService {
-	private BoardDao boardDao;
-
-	public BoardService(BoardDao boardDao) {
+public class BookService {
+	private BookDao dao;
+	public BookService() {
 		super();
-		this.boardDao = boardDao;
+		// TODO Auto-generated constructor stub
+	}
+	public void setDao(BookDao dao) {
+		this.dao = dao;
+	}
+	public int insert(BookVO vo,String filename) throws SQLException{
+		return dao.insert(vo,filename);
+	}
+	public HashMap getBookInfo(int bookno) throws SQLException {
+		// TODO Auto-generated method stub
+		return dao.getBookInfo(bookno);
+	}
+	public ArrayList getBookAllList() throws SQLException {
+		// TODO Auto-generated method stub
+		return dao.getBookAllList();
+	}
+	public HashMap getBookInfoTitle(String title) throws SQLException {
+		// TODO Auto-generated method stub
+		return dao.getBookInfoTitle(title);
+	}
+	public String checkBook(int isbn) throws SQLException {
+		// TODO Auto-generated method stub
+		return dao.checkBook(isbn);
 	}
 
-	public void insert(BoardVO bvo) throws SQLException {
-		// 게시물을 db에 저장하는 과정 boardNo 하고 boardDate 정보 추가
-		int boardNo = boardDao.insert(bvo);
-		// 입력 되어진 해당 게시물의 boardDate 정보를 bvo 에 setting 하는 과정(boardNo 의 경우는 insert 시에 setting)
-		String date = boardDao.getDate(boardNo);
-		bvo.setBoardDate(date);
-	}
-
-	public void delete(String boardNo) throws SQLException {
-		boardDao.delete(boardNo);
-	}
-
-	public BoardVO showContent(String boardNo) throws SQLException {
-		boardDao.updateCount(boardNo);
-		return boardDao.showContent(boardNo);
-	}
-
-	public BoardVO showContentNoCount(String boardNo) throws SQLException {
-		return boardDao.showContent(boardNo);
-	}
-
-	public void updateContent(BoardVO bvo) throws SQLException {
-		boardDao.updateContent(bvo);
-	}
-
-	public ArrayList<BoardVO> list() throws SQLException {
-		return boardDao.list();
-	}
 }
