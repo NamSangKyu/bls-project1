@@ -26,7 +26,8 @@ css로 페이지 레이아웃을 구성
 	padding: 5px;
 	height:600px;
 	width:650px;
-	
+	margin-left: auto; 
+	margin-right: auto;
 }
 #footer{
 	padding-top: 5px;
