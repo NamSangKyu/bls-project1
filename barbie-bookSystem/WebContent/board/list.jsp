@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 	 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<center>
 	<table border="1" width="900">
 		<tr align="center">
 			<td>순번</td><td>제목</td><td>작성자</td>
@@ -17,4 +16,3 @@
 		</c:forEach>
 	</table>
 	<a href="board.do?command=insertView"><img src="${initParam.root}/img/ui/board/write_btn.jpg"></a>
-</center>

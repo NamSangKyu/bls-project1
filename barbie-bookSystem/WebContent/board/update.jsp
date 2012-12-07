@@ -17,7 +17,6 @@
 		});
 	});
 </script>
-<center>
 	<form action="${initParam.root}/board.do" method="post" id="updateForm">
 		<input type="hidden" name="command" value="updateContent">
 		<input type="hidden" name="boardNo" value="${requestScope.bvo.boardNo }">
@@ -43,4 +42,3 @@
 		</table>
 		<img src="${initParam.root}/img/ui/board/confirm.gif" id="confirmImg">
 	</form>
-</center>

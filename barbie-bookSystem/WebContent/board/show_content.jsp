@@ -19,7 +19,6 @@
 		});
 	});
 </script>
-<center>
 	<table border="1" width="900">
 		<tr align="center">
 			<td colspan="6">게시물 보기</td>
@@ -44,4 +43,3 @@
 	<a href="board.do?command=reply"><img src="${initParam.root}/img/ui/board/answer_btn.jpg"></a>
 	<img src="${initParam.root}/img/ui/board/modify_btn.jpg" id="updateImg">
 	<img src="${initParam.root}/img/ui/board/delete_btn.jpg" id="deleteImg">
-</center>
