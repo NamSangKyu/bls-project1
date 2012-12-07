@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="member">
+	<typeAlias alias="membervo" type="model.vo.MemberVO"/>
+	<insert id="insertMember" parameterClass="membervo">
+		insert into bls_member(memberId,pass,name,gender,email,subject1,subject2,subject3) 
+		values(#memberId#,#pass#,#name#,#gender#,#email#,#subject1#,#subject2#,#subject3#)
+	</insert>
+	<select id="selectMemberList"  parameterClass="hashmap" resultClass="membervo">	
+		select memberId,name,gender,subject1,subject2,subject3 from(
+			select memberId,name,gender,subject1,subject2,subject3,ceil(rownum/#numOfContent#) as page from bls_member
+		) where page = #nowPage#
+	</select>
+	<select id="selectNumContent" resultClass="int">
+		select count(*) from bls_member
+	</select>
+</sqlMap>
