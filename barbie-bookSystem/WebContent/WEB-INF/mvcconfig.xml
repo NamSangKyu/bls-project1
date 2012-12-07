@@ -15,7 +15,13 @@
 		<property name="suffix" value=".jsp"></property>
 		<property name="order" value="2"></property>
 	</bean>
-
+		<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding"> 
+			<value>utf-8</value>
+		</property>
+		<!-- 2MB로 제한 -->
+		<property name="maxUploadSize" value="2097152"></property>
+	</bean>
 	<!-- bean name 으로 직접 연결하는 ViewResolver 를 추가 -->
 	<bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		<!-- viewResolver 의 우선순위를 setting -->
