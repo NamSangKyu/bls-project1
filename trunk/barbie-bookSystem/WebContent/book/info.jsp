@@ -7,42 +7,48 @@
 <title>Insert title here</title>
 </head>
 <body>
-<table border="1">
-<tr>
+<table border="1" height="600">
+<tr height="40">
 <td>도서명</td>
-<td width="350"></td>
-<td rowspan="5">그림넣어!</td>
+<td width="350" >${requestScope.map.TITLE }</td>
+<td rowspan="5" align="center"><img src="${initParam.root }/upload/${requestScope.map.IMG }" width="150" height="200"></td>
 </tr>
 
-<tr>
+<tr height="40">
 <td>저자명</td>
-<td></td>
+<td>${requestScope.map.WRITER }</td>
 </tr>
 
-<tr>
+<tr height="40">
 <td>출판사</td>
-<td></td>
+<td>${requestScope.map.PUBLISHER }</td>
 </tr>
 
-<tr>
+<tr height="40">
 <td>분류</td>
-<td></td>
+<td>${requestScope.map.SUBJECT }</td>
 </tr>
 
-<tr>
+<tr height="40">
 <td>위치</td>
-<td></td>
+<td>${requestScope.map.LOC }</td>
 </tr>
 
 
-<tr>
+<tr height="100">
 <td>내용</td>
 <td colspan="2">
-<textarea rows="10" cols="70"></textarea>
+<textarea rows="15" cols="70" readonly="readonly">${requestScope.map.CONT }</textarea>
 </td>
 
 </tr>
+<tr>
+<td>답글</td>
+<td colspan="2">
+답글 들어가는 부분
+</td>
 
+</tr>
 
 </table>
 </body>

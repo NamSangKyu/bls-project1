@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,18 +17,23 @@
 <td>도서명</td>
 <td>출판사</td>
 <td>저자명</td>
-<td>ISBN</td>
+<td>분류</td>
+<td>위치</td>
 </tr>
 </thead>
 <tbody>
+<c:forEach var="list" items="${requestScope.list }">
 <tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>${list.NO }</td>
+<td><a href="book.do?command=getBookInfoTitle&title=${list.TITLE }">${list.TITLE }</a></td>
+<td>${list.PUBLISHER }</td>
+<td>${list.WRITER }</td>
+<td>${list.SUBJECT }</td>
+<td>${list.LOC }</td>
 </tr>
+</c:forEach>
 </tbody>
 </table>
+<a href="book.do?command=bookInsert">책등록</a>
 </body>
 </html>
