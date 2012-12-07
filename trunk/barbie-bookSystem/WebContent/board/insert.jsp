@@ -16,7 +16,6 @@
 		});
 	});
 </script>
-<center>
 	<form action="${initParam.root}/board.do" method="post" id="insertForm">
 		<input type="hidden" name="command" value="insert">
 		<table border="1" width="900">
@@ -38,4 +37,3 @@
 			</tr>
 		</table>
 	</form>
-</center>
