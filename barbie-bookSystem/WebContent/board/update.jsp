@@ -20,7 +20,7 @@
 	<form action="${initParam.root}/board.do" method="post" id="updateForm">
 		<input type="hidden" name="command" value="updateContent">
 		<input type="hidden" name="boardNo" value="${requestScope.bvo.boardNo }">
-		<table border="1" width="900">
+		<table border="1" width="600">
 			<tr align="center">
 				<td colspan="6">게시물 수정</td>
 			<tr align="center">
@@ -37,7 +37,7 @@
 				<td>${requestScope.bvo.count }</td>
 			</tr>
 			<tr align="center">
-				<td colspan=6><textarea cols="124" rows="10" id="cont" name="cont">${requestScope.bvo.cont }</textarea></td>
+				<td colspan=6><textarea cols="60" rows="10" id="cont" name="cont">${requestScope.bvo.cont }</textarea></td>
 			</tr>
 		</table>
 		<img src="${initParam.root}/img/ui/board/confirm.gif" id="confirmImg">
