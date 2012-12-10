@@ -15,22 +15,28 @@
 		<property name="suffix" value=".jsp"></property>
 		<property name="order" value="2"></property>
 	</bean>
-		<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="defaultEncoding"> 
-			<value>utf-8</value>
-		</property>
-		<!-- 2MB로 제한 -->
-		<property name="maxUploadSize" value="2097152"></property>
-	</bean>
+	
 	<!-- bean name 으로 직접 연결하는 ViewResolver 를 추가 -->
 	<bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		<!-- viewResolver 의 우선순위를 setting -->
 		<property name="order" value="1"></property>
 	</bean>
-
+	
 	<!-- ajax json 으로 자동 응답 -->
 	<bean name="JsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"></bean>
-
+	
+	<!-- FileDownLoad 처리 view -->
+	<bean name="downloadView" class="util.DownloadView"></bean>
+	
+	<!-- FileUpload 를 위한 환경 설정 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 업로드 관련 설정 -->
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<!-- 2MB 로 제한 -->
+		<property name="maxUploadSize" value="2097152"></property>
+	</bean>
+	
+	<!-- 타일즈를 적용하기 위한 ViewResolver 를 등록한다. -->
 	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView" />
 		<property name="order" value="0"></property>
@@ -47,14 +53,14 @@
 			</list>
 		</property>
 	</bean>
-
+	
 	<!-- MultiActionController 설정 -->
 	<bean id="methodNameResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
 		<property name="paramName">
 			<value>command</value>
 		</property>
 	</bean>
-
+	
 	<!-- apache dbcp -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName">
