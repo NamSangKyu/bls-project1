@@ -15,10 +15,15 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 public class BoardController extends MultiActionController {
 	private BoardService boardService;
+	private String path;
 
 	public BoardController(BoardService boardService) {
 		super();
 		this.boardService = boardService;
+	}
+	
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	// 게시물 쓰기 화면
