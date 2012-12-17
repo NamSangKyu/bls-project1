@@ -52,5 +52,29 @@ public String checkBook(int isbn) throws SQLException {
 	System.out.println("checkBook"+map.toString());
 	return (String) map.get("IMG");
 }
+public int getContentAllCount() throws SQLException {
+	// TODO Auto-generated method stub
+	return (int) sqlMapClient.queryForObject("book.getContentAllCount");
+}
+public ArrayList<HashMap> getBookList(String pageNum) throws SQLException {
+	// TODO Auto-generated method stub
+	return (ArrayList<HashMap>) sqlMapClient.queryForList("book.getBookList",pageNum);
+}
+public HashMap getBookInfoIsbn(int isbn) throws SQLException {
+	// TODO Auto-generated method stub
+	return (HashMap) sqlMapClient.queryForObject("book.getBookInfoIsbn", isbn);
+}
+public void updateBookInfo(HashMap map) throws SQLException {
+	// TODO Auto-generated method stub
+	sqlMapClient.update("book.updateBookInfo",map);
+}
+public int getPublisherNo(String publisher) throws SQLException {
+	// TODO Auto-generated method stub
+	return (int) sqlMapClient.queryForObject("book.getPublisherNo", publisher);
+}
+public int getSubjectNo(String subject) throws SQLException {
+	// TODO Auto-generated method stub
+	return (int) sqlMapClient.queryForObject("book.getSubjectNo", subject);
+}
  
 }

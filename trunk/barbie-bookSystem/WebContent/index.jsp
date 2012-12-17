@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<jsp:forward page="book.do?command=getBookAllList"></jsp:forward>
+<jsp:forward page="book.do?command=getBookList&nowPage=1"></jsp:forward>
 </body>
 </html>
