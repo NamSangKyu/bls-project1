@@ -1,18 +1,55 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="member">
 	<typeAlias alias="membervo" type="model.vo.MemberVO"/>
+
+	<!--  회원가입  -->
 	<insert id="insertMember" parameterClass="membervo">
-		insert into bls_member(memberId,pass,name,gender,email,subject1,subject2,subject3) 
-		values(#memberId#,#pass#,#name#,#gender#,#email#,#subject1#,#subject2#,#subject3#)
+		insert into bls_member(memberId,pass,name,gender,email,subject1,subject2,subject3,orgfilename,newfilename)
+		values(#memberId#,#pass#,#name#,#gender#,#email#,#subject1#,#subject2#,#subject3#,#orgfilename#,#newfilename#)
 	</insert>
-	<select id="selectMemberList"  parameterClass="hashmap" resultClass="membervo">	
+
+	<!--  회원목록  -->
+	<select id="selectMemberList"  parameterClass="hashmap" resultClass="membervo">
 		select memberId,name,gender,subject1,subject2,subject3 from(
 			select memberId,name,gender,subject1,subject2,subject3,ceil(rownum/#numOfContent#) as page from bls_member
 		) where page = #nowPage#
 	</select>
+
+	<!--  전체회원수  -->
 	<select id="selectNumContent" resultClass="int">
 		select count(*) from bls_member
 	</select>
+
+	<!-- 회원정보(memberId) -->
+	<select id="selectMemberByMemberId" parameterClass="string" resultClass="membervo">
+		select memberId,pass,name,gender,email,subject1,subject2,subject3,orgfilename,newfilename from bls_member
+		where memberId=#memberId#
+	</select>
+
+	<!-- 회원수정 -->
+	<update id="updateMemberById" parameterClass="membervo">
+		update bls_member set pass=#pass#, email=#email#, subject1=#subject1#, subject2=#subject2#, subject3=#subject3#,
+		orgfilename=#orgfilename# , newfilename=#newfilename# where memberId=#memberId#
+	</update>
+
+	<!--  회원 삭제 -->
+	<delete id="deleteMemberById" parameterClass="string">
+		delete from bls_member where memberId = #memberId#
+	</delete>
 </sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
