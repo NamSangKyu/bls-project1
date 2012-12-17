@@ -12,45 +12,22 @@
 				alert("내용을 입력해주십시오");
 				return;
 			}
-			$("#insertForm").submit();
-		});
+			$(	"#replyForm").submit();
+		});	
 	});
 </script>
-<style>
-table {
-        width: 800px;
-        border-collapse: collapse;
-        font-family: 'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
-        border-bottom: 2px solid #98bf21;
-    }
-    thead, tbody td{
-        font-size: 10pt;
-        border-top: 1px solid #98bf21;
-        border-bottom: 1px solid #98bf21;
-        height: 30px;
-    }
-    th{
-        background-color:#98bf21;
-        color:#ffffff;
-        height: 25px;
-    }
-    tfoot td{
-    	height: 40px;
-    }
-#title {
-	text-align: left;
-}
-#page {
-	font-family: 'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
-}
-</style>
 <center>
-	<form action="${initParam.root}/board.do" method="post" id="insertForm" enctype="multipart/form-data">
-		<input type="hidden" name="command" value="insert">
-		<table>
+	<c:set value="${requestScope.bvo }" var="bvo"/>
+	<form action="${initParam.root}/board.do" method="post" id="replyForm" enctype="multipart/form-data">
+		<input type="hidden" name="command" value="replyContent">
+		<input type="hidden" name="ref" value="${bvo.ref }">
+		<input type="hidden" name="restep" value="${bvo.restep }">
+		<input type="hidden" name="relevel" value="${bvo.relevel }">
+		<input type="hidden" name="page" value="${requestScope.page }">
+		<table border="1" width="600">
 			<tr>
 				<td>제목</td>
-				<td><input type="text" id="title" name="title"></td>
+				<td><input type="text" id="title" name="title" value="${bvo.title }"></td>
 			</tr>
 			<tr>
 				<td>작성자</td>

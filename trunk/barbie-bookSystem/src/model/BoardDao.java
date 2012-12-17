@@ -2,6 +2,7 @@ package model;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import model.vo.BoardVO;
 
@@ -39,8 +40,22 @@ public class BoardDao {
 		sqlMapClient.update("board.updateContent", bvo);
 	}
 
-	public ArrayList<BoardVO> list() throws SQLException {
-		return (ArrayList<BoardVO>) sqlMapClient.queryForList("board.list");
+	public ArrayList list(Map map) throws SQLException {
+		return (ArrayList) sqlMapClient.queryForList("board.list", map);
 	}
 
+	public int totalContent()  throws SQLException{
+		return (int) sqlMapClient.queryForObject("board.totalContent");
+	}
+
+	public void updateRestep(BoardVO bvo) throws SQLException {
+		sqlMapClient.update("board.updateRestep", bvo);
+	}
+
+	public int replyContent(BoardVO bvo) throws SQLException {
+		return (int) sqlMapClient.insert("board.replyContent", bvo);
+	}
+	
+	
+	
 }

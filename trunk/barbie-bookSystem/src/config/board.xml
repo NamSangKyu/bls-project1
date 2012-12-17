@@ -5,19 +5,19 @@
 	<!-- 별칭지정 -->
 	<typeAlias alias="boardvo" type="model.vo.BoardVO"/>
 	
-	<!-- 게시물을 db에 저장하는 과정 boardNo 하고 boardDate 정보 추가 이때 boardNo 는 boardvo 에 setting 됨 -->
+	<!-- 게시물을 DB 에 저장하는 과정 boardNo 하고 boardDate 정보 추가 이때 boardNo 는 boardvo 에 자동 setting 됨 -->
 	<insert id="insert" parameterClass="boardvo">
 		<selectKey keyProperty="boardNo" resultClass="int">
 			select bls_board_seq.nextval from dual
 		</selectKey>
-		<!-- insert 시에 count 는 default 값으로 0 이 주어지고 ref = boardNo 값이 restep, relevel 값은 int 형 초기화 0 -->
-		insert into bls_board(boardNo, title, memberId, boardDate, cont, ref, restep, relevel)
-		values(#boardNo#, #title#, #memberId#, sysdate, #cont#, #boardNo#, #restep#, #relevel#)
+		<!-- insert 시에 count 는 default 값으로 0 이 주어지고 ref 에는 boardNo 값이 restep, relevel 에는 int 형 초기화 값인 0 저장 -->
+		insert into bls_board(boardNo, title, memberId, boardDate, orgFileName, newFileName, cont, ref, restep, relevel)
+		values(#boardNo#, #title#, #memberId#, sysdate, #orgFileName#, #newFileName#, #cont#, #boardNo#, #restep#, #relevel#)
 	</insert>	
 	
-	<!-- 해당 게시물의 날짜를 select 한 뒤에 boardvo 에 저장하기 위한 sql 문-->
+	<!-- 게시물을 쓴 다음에 날짜정보를 보여주기 위해 boardvo 에 setting -->
 	<select id="getDate" parameterClass="int" resultClass="string">
-		select boardDate from bls_board where boardNo=#value#
+		select to_char(boardDate,'YYYY.MM.DD HH24:MI') as boardDate from bls_board where boardNo=#value#
 	</select>
 	
 	<!-- 해당 게시물 삭제 -->
@@ -32,47 +32,42 @@
 	
 	<!-- 해당 게시물 보기 -->
 	<select id="showContent" parameterClass="string" resultClass="boardvo">
-		select * from bls_board where boardNo=#value#
+		select boardNo, title, memberId, to_char(boardDate,'YYYY.MM.DD HH24:MI') as boardDate, count, orgFileName, newFileName, cont, ref, restep, relevel from bls_board where boardNo=#value#
 	</select>
 	
-	<!-- 해당 게시물 수정 -->
+	<!-- 해당 게시물 수정(title, orgFileName, newFileName, cont) -->
 	<update id="updateContent" parameterClass="boardvo">
-		update bls_board set title=#title#, cont=#cont# where boardNo=#boardNo#
+		update bls_board set title=#title#, orgFileName=#orgFileName#, newFileName=#newFileName#, cont=#cont# where boardNo=#boardNo#
 	</update>
 	
-	<!-- 게시물 전체 리스트 -->
-	<select id="list" resultClass="boardvo">
-		select boardNo, title, memberId, to_char(boardDate,'YYYY.MM.DD') as boardDate, count, cont, ref, restep, relevel from bls_board order by boardNo desc
+	<!-- PagingBean 생성을 위한 전체 게시물 수 -->
+	<select id="totalContent" resultClass="int">
+		select count(*) from bls_board
 	</select>
+	
+	<!-- PagingBean 을 적용한 전체 게시물 목록(조건추가 1. 작성시간이 오늘 날짜일 경우엔 시간으로만 표기 아닌 경우는 날짜로 표기 -->
+	<select id="list" parameterClass="hashmap" resultClass="boardvo">
+		select boardNo, title, memberId, memberId, boardDate, count, orgFileName, newFileName, cont, ref, restep, relevel from
+		(select ceil(rownum/#num#) as page, boardNo, title, memberId, boardDate, count, orgFileName, newFileName, cont, ref, restep, relevel from
+		(select boardNo, title, memberId, count, orgFileName, newFileName, cont, ref, restep, relevel,
+		case to_char(boardDate) when to_char(sysdate) then to_char(boardDate, 'HH24:MI')
+		else to_char(boardDate, 'YYYY.MM.DD')
+		end as boardDate
+		from bls_board order by ref desc, restep asc)) where page=#page#
+	</select>
+	
+	<!-- 답글 작성 전 원글의 restep 보다 큰 값 +1 증가 -->
+	<update id="updateRestep">
+		update bls_board set restep=restep+1 where ref=#ref# and restep>#restep#
+	</update>
+	
+	<!-- 답글을 DB 에 저장하는 과정 boardNo 하고 boardDate 정보 추가 이때 boardNo 는 boardvo 에 자동 setting 됨 -->
+	<insert id="replyContent" parameterClass="boardvo">
+		<selectKey keyProperty="boardNo" resultClass="int">
+			select bls_board_seq.nextval from dual
+		</selectKey>
+		<!-- insert 시에 count 는 default 값으로 0 이 주어지고 ref 에는 원글의 ref 값이 restep, relevel 에는 각각 +1 증가-->
+		insert into bls_board(boardNo, title, memberId, boardDate, orgFileName, newFileName, cont, ref, restep, relevel)
+		values(#boardNo#, #title#, #memberId#, sysdate, #orgFileName#, #newFileName#, #cont#, #ref#, #restep#, #relevel#)
+	</insert>	
 </sqlMap>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
