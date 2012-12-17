@@ -20,17 +20,17 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 public class MemberController extends MultiActionController {
 	private MemberService memberService;
-	private String path;
-	private String workPath;
+	private String memberPath;
+	private String memberWorkPath;
 	public MemberController(MemberService memberService){
 		System.out.println("[Check] : controller 생성자 호출");
 		this.memberService = memberService;
 	}
-	public void setPath(String path){
-		this.path = path;
+	public void setPath(String memberPath){
+		this.memberPath = memberPath;
 	}
-	public void setWorkPath(String workPath) {
-		this.workPath = workPath;
+	public void setWorkPath(String memberWorkPath) {
+		this.memberWorkPath = memberWorkPath;
 	}
 
 	/*
@@ -40,7 +40,7 @@ public class MemberController extends MultiActionController {
 			String newfilename = membervo.getNewfilename();
 			if(newfilename !=null ){
 			//	memberService.deleteFile(membervo.getNewfilename());
-				File file = new File(path+newfilename);
+				File file = new File(memberPath+newfilename);
 				//File file1 = new Fiile(workPath+newfilename);
 				System.out.println(file.delete() + " delete status" + newfilename + file.isFile());
 			}
@@ -106,7 +106,7 @@ public class MemberController extends MultiActionController {
 		try {
 			if(memberService.info(membervo.getMemberId()) !=null)
 				return new ModelAndView("info.member");
-			System.out.println(path);
+			System.out.println(memberPath);
 			MultipartFile mfile=membervo.getUploadFile();
 			System.out.println("getOriginalFilename() :"+mfile.getOriginalFilename());
 			if(mfile.isEmpty() == false){
@@ -114,7 +114,7 @@ public class MemberController extends MultiActionController {
 				String newfilename = System.currentTimeMillis()+"_"+fileName;
 				membervo.setOrgfilename(fileName);
 				membervo.setNewfilename(newfilename);
-				File copyFile = new File(workPath+newfilename);						// server
+				File copyFile = new File(memberWorkPath+newfilename);						// server
 				//File copyFile2 = new File(workPath+newfilename);			// workspace
 				mfile.transferTo(copyFile);
 				//mfile.transferTo(copyFile2);
@@ -144,7 +144,7 @@ public class MemberController extends MultiActionController {
 				if(mfile.isEmpty() ==false){
 					String orgfilename = mfile.getOriginalFilename();
 					String newfilename = System.currentTimeMillis()+"_"+orgfilename;
-					File copyFile = new File(workPath+newfilename);
+					File copyFile = new File(memberWorkPath+newfilename);
 					membervo.setNewfilename(newfilename);
 					membervo.setOrgfilename(orgfilename);
 					System.out.println(membervo + " " + orgfilename + newfilename);
