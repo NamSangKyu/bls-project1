@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>																
+    pageEncoding="UTF-8"%>
    <%-- <script type="text/javascript" src="${initParam.root }/WEB-INF/js/jquery-1.8.2.js"></script> --%>
    <script src="http://code.jquery.com/jquery-latest.js"></script>
    <script type="text/javascript" >
@@ -9,7 +9,7 @@
   			});
   		});
    </script>
-  <center> 
+  <center>
  <h4> 회원가입</h4>
 <form action="member.do" method="post" id="insert_form" >
 	<input type="hidden" name="command" value="insert">
@@ -46,7 +46,7 @@
 			</td>
 		</tr>
 		<tr height="50px">
-			
+
 			<td>
 				소설<input type="checkbox" name="sub" value="novel">
 				경제<input type="checkbox" name="sub" value="economy">
