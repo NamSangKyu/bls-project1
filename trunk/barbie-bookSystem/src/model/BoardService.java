@@ -49,7 +49,7 @@ public class BoardService {
 	public ListVO list(String page) throws SQLException {
 		
 		int totalContent = boardDao.totalContent();
-		PagingBean bean = new PagingBean(Integer.parseInt(page), totalContent);
+		PagingBean bean = new PagingBean(Integer.parseInt(page), totalContent, CommonConstants.BOARD_CONTENT_NUMBER_PER_PAGE, CommonConstants.BOARD_PAGEGROUP_NUMBER_PER_PAGE);
 		
 		HashMap map = new HashMap();
 		map.put("page", page);
