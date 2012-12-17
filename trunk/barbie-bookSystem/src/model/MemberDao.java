@@ -36,7 +36,7 @@ public class MemberDao {
 
 	// 	전체 관심 리스트
 	public List getBookSbjList() throws SQLException{
-		return sqlMapClient.queryForList("book.getBookSbjList");
+		return sqlMapClient.queryForList("member.getBookSbjList");
 	}
 
 	//		수정
