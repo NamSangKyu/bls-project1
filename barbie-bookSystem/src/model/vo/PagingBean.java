@@ -6,15 +6,18 @@ public class PagingBean {
 	private int nowPage;
 	private int totalContent;
 	// 한 페이지에서 보여줄 게시물 수
-	private int numberOfContentPerPage = CommonConstants.BOARD_CONTENT_NUMBER_PER_PAGE;
+	private int numberOfContentPerPage;
 	// 한 페이지 그룹내 페이지 수
-	private int numberOfPageGroup = CommonConstants.BOARD_PAGEGROUP_NUMBER_PER_PAGE;
+	private int numberOfPageGroup;
 
 	// PagingBean을 통해 페이징 로직을 정의하기 위해서는 전체 게시물 수와 현재 페이지 넘버를 필요로 한다.
-	public PagingBean(int nowPage, int totalContent) {
+	// 추가적으로 업무(member, board, book) 에 맞는 상수를 생성자에서 받는다.
+	public PagingBean(int nowPage, int totalContent, int numberOfContentPerPage,int numberOfPageGroup) {
 		super();
 		this.nowPage = nowPage;
 		this.totalContent = totalContent;
+		this.numberOfContentPerPage = numberOfContentPerPage;
+		this.numberOfPageGroup = numberOfPageGroup;
 	}
 
 	public int getNowPage() {
