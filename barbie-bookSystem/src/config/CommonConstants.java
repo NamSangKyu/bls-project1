@@ -8,11 +8,11 @@ public interface CommonConstants {
 	/**
 	 * 한 페이지에서 보여질 게시물 수 
 	 */
-	int CONTENT_NUMBER_PER_PAGE=5;
+	int BOARD_CONTENT_NUMBER_PER_PAGE=10;
 	/**
 	 * 한 페이지에 보여질 페이지 그룹의 페이지수 
 	 */
-	int PAGEGROUP_NUMBER_PER_PAGE=4;
+	int BOARD_PAGEGROUP_NUMBER_PER_PAGE=4;
 }
 
 

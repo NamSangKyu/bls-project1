@@ -11,37 +11,39 @@
 css로 페이지 레이아웃을 구성
 */
 #container{
-	width: 950px;
-	border: 1px solid black;
+	width: 1200px;
 	margin-left: auto; 
 	margin-right: auto;
 }
 #header{
 	padding: 5px;
-	height:50px;
-	border-bottom: 1px solid black;
+	height:100px;
+	border-bottom: 1px solid #708491;
 }
 
 #main{
+	width: 1200px;
 	padding: 5px;
 	height:600px;
-	width:650px;
 	margin-left: auto; 
 	margin-right: auto;
 }
 #footer{
-	padding-top: 5px;
+	padding: 5px;
 	height:70px;
-	border-top: 1px solid black;
-	clear: both;
+	margin-left: auto; 
+	margin-right: auto;
+	border-top: 1px solid #708491;
 }
 </style>
 </head>
 <body>
 <div id="container">
+	<center>
 	<div id="header"><tiles:insertAttribute name="header"/></div>
-	<div id="main"><tiles:insertAttribute name="main"/></div>
+	<div style="text-align:center;" id="main"><tiles:insertAttribute name="main"/></div>
 	<div id="footer"><tiles:insertAttribute name="footer"/></div>
+	</center>
 </div>
 </body>
 </html>

@@ -33,22 +33,24 @@
 .listPage tfoot td{
     	height: 40px;
 }
- 
-.listHref:link {
-		line-height: 5px;
-		text-decoration: none;
-		color: #708491;
-}
-.listHref a:visited {
+
+.listHref:link{
 		line-height: 5px;
 		text-decoration: none;
 		color: #708491;
 }
 
-#listPage a:link.active, a:visited.active, a:hover{
+.listHref:link.active, visited.active{
 		padding-bottom: 6px;
 		color: #cd1039; 
 }
+
+.listHref:hover{
+		text-decoration: underline;
+		padding-bottom: 6px;
+		color: #cd1039; 
+}
+
 #title {
 		text-align: left;
 }
@@ -101,7 +103,7 @@
 							</c:forEach>
 							<img src="${initParam.root}/img/ui/board/reply.jpg">
 						</c:if>
-						<a href="board.do?command=showContent&boardNo=${lvo.boardNo }&page=${requestScope.lvo.bean.nowPage}" style="text-decoration: none" class="listHref">${lvo.title}</a>
+						<a href="board.do?command=showContent&boardNo=${lvo.boardNo }&page=${requestScope.lvo.bean.nowPage}" class="listHref">${lvo.title}</a>
 					</td>
 					<td>${lvo.memberId }</td><td>${lvo.boardDate }</td><td>${lvo.count }</td>
 					<td>
