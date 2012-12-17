@@ -26,10 +26,10 @@ public class MemberController extends MultiActionController {
 		System.out.println("[Check] : controller 생성자 호출");
 		this.memberService = memberService;
 	}
-	public void setPath(String memberPath){
+	public void setMemberPath(String memberPath){
 		this.memberPath = memberPath;
 	}
-	public void setWorkPath(String memberWorkPath) {
+	public void setMemberWorkPath(String memberWorkPath) {
 		this.memberWorkPath = memberWorkPath;
 	}
 
