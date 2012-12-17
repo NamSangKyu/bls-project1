@@ -19,8 +19,8 @@
    </script>
 <link rel="stylesheet" href="${initParam.root }/css/member.css"/>
 
- <div class="title">회원가입</div>
-
+<center>
+<div class="title">회원가입</div>
 <form action="member.do" method="post" id="insert_form"  enctype="multipart/form-data">
 	<input type="hidden" name="command" value="insert">
 	<table class="insert_table" cellspacing="0">
@@ -69,4 +69,4 @@
 	<input type="button" name="insert_btn" id="insert_btn" value="회원가입">
 	<input type="button" name="cancel_btn" id="cancel_img" value="취소">
 </form>
-
+</center>
