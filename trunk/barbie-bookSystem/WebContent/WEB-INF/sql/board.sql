@@ -5,6 +5,8 @@ create table bls_board(
 	memberId varchar2(50) not null,
 	boardDate date not null,
 	count number default 0,
+	orgFileName varchar2(500),
+	newFileName varchar2(500),
 	cont varchar2(4000) not null,
 	ref number not null,
 	restep number not null,
@@ -18,6 +20,10 @@ create sequence bls_board_seq nocache;
 insert into BLS_BOARD(boardNo, title, memberId, boardDate, cont, ref, restep, relevel)
 values (bls_board_seq.nextval, '제목', '아이디', sysdate, '내용', 1, 0, 0)
 
-select * from BLS_BOARD
-
 drop table bls_board
+
+drop sequence bls_board_seq
+
+select * from BLS_BOARD order by ref desc, restep asc 
+
+
