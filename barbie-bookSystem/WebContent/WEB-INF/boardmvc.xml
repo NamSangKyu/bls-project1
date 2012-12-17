@@ -23,8 +23,10 @@
 		<property name="methodNameResolver">
 			<ref bean="methodNameResolver" />
 		</property>
+		<property name="path">
+			<value>C:\\java-kosta\\bls\\barbie-bookSystem\\WebContent\\upload\\board\\</value>
+		</property>
 	</bean>
-
 </beans>
 
 
