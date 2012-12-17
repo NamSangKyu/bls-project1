@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.BookService;
 import model.vo.BookVO;
+import model.vo.ListVO;
 
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -111,5 +112,84 @@ public class BookController extends MultiActionController{
 		}
 		return new ModelAndView("info.book","map",map);
 	}
-	
+	public ModelAndView getBookList(HttpServletRequest request, HttpServletResponse response){
+		String nowPage = request.getParameter("nowPage");
+		ListVO list = service.getBookList(nowPage);
+		System.out.println("paging 완료");
+		System.out.println(list.getBean().getEndPageOfPageGroup());
+		return new ModelAndView("list.book","list",list);
+	}
+	public ModelAndView updateSet(HttpServletRequest request, HttpServletResponse response){
+		int isbn = Integer.parseInt(request.getParameter("isbn"));
+		HashMap map = null;
+		try {
+			map = service.getBookInfoIsbn(isbn);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return new ModelAndView("update.book","map",map);
+	}
+	public ModelAndView getBookInfoIsbn(HttpServletRequest request, HttpServletResponse response){
+		int isbn = Integer.parseInt(request.getParameter("isbn"));
+		HashMap map = new HashMap();
+		try {
+			map = service.getBookInfoIsbn(isbn);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ModelAndView("info.book","map",map);
+	}
+	public ModelAndView updateBook(HttpServletRequest request, HttpServletResponse response){
+		int isbn = Integer.parseInt(request.getParameter("isbn"));
+		String title = request.getParameter("title");
+		String writer = request.getParameter("writer");
+		String loc = request.getParameter("loc");
+		int publisherNo = Integer.parseInt(request.getParameter("publisherNo")) ;
+		int subjectNo = Integer.parseInt(request.getParameter("subjectNo"));
+		String cont = request.getParameter("cont");
+		HashMap map = new HashMap();
+		map.put("title", title);
+		map.put("writer", writer);
+		map.put("isbn", isbn);
+		map.put("loc", loc);
+		map.put("publisherNo", publisherNo);
+		map.put("subjectNo", subjectNo);
+		map.put("cont", cont);
+		try {
+			service.updateBookInfo(map);
+			System.out.println("업데이트 완료");
+			map = service.getBookInfoIsbn(isbn);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ModelAndView("info.book","map",map);
+	}
+	public ModelAndView getPblisherNo(HttpServletRequest request, HttpServletResponse response){
+		String publisher = request.getParameter("publisher");
+		int publisherNo=0;
+		try {
+			publisherNo = service.getPublisherNo(publisher);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(publisherNo);
+		return new ModelAndView("JsonView","publisherNo",publisherNo); 
+	}
+	public ModelAndView getSubjectNo(HttpServletRequest request, HttpServletResponse response){
+		String subject = request.getParameter("subject");
+		int subjectNo=0;
+		try {
+			subjectNo = service.getSubjectNo(subject);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(subjectNo);
+		return new ModelAndView("JsonView","subjectNo",subjectNo); 
+	}
 }

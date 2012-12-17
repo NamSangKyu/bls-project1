@@ -22,6 +22,24 @@
 	<select id="getBookAllList" resultClass="java.util.HashMap">
 		select rownum as no, title, writer,loc, b_subject as subject, b_publisher as publisher from (select distinct(isbn), title, writer, cont, isbn ,loc, s.subject as b_subject, p.publisher as b_publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno)
 	</select>
+	<select id="getContentAllCount" resultClass="int">
+		select count(distinct(isbn)) from BLS_BOOK
+	</select>
+	<select id="getBookList" parameterClass="String" resultClass="java.util.HashMap">
+		select no,page, title, writer,loc, subject, publisher, s_isbn as isbn from (select rownum as no,ceil( rownum /5) as page, title, writer,loc, b_subject as subject, b_publisher as publisher, s_isbn from (select distinct(isbn) as s_isbn, title, writer, cont, isbn ,loc, s.subject as b_subject, p.publisher as b_publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno)) where page = #pageNum#
+	</select>
+	<select id="getBookInfoIsbn" parameterClass="int" resultClass="java.util.HashMap">
+		select distinct(isbn), title, writer, cont, isbn ,loc, img, s.subject, p.publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno and isbn=#isbn#
+	</select>
+	<update id="updateBookInfo" parameterClass="java.util.HashMap">
+		update BLS_BOOK set title=#title#, writer=#writer#, cont=#cont#, loc=#loc#, subjectNo=#subjectNo#, publisherNo=#publisherNo# where isbn=#isbn#
+	</update>
+	<select id="getPublisherNo" parameterClass="String" resultClass="int">
+		select publisherNo from bls_book_pbs where publisher=#publisher#
+	</select>
+	<select id="getSubjectNo" parameterClass="String" resultClass="int">
+		select subjectNo from bls_book_sbj where subject=#subject#
+	</select>
 </sqlMap>
 
 

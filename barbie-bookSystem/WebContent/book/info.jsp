@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<center>
 <table border="1" height="600">
 <tr height="40">
 <td>도서명</td>
@@ -39,9 +40,29 @@
 <tr>
 <td>답글</td>
 <td colspan="2">
-답글 들어가는 부분
+<table>
+<tfoot>
+	<tr>
+		<td>
+		평점 : 
+		<select>
+			<option value="1">☆</option>
+			<option value="2">☆☆</option>
+			<option value="3">☆☆☆</option>
+			<option value="4">☆☆☆☆</option>
+			<option value="5">☆☆☆☆☆</option>
+		</select>
+		<br>
+		<textarea name="contents" cols="60" rows="2"></textarea>
+		<input type="button" id="comment_input"  value="서평 입력" >
+		</td>
+	</tr>
+</tfoot>
+</table>
 </td>
 
 </tr>
 
 </table>
+</center>
+<a href="book.do?command=updateSet&isbn=${requestScope.map.ISBN }"><input type="button" value="수정"></a>
