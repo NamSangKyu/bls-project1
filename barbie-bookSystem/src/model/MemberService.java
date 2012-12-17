@@ -36,7 +36,7 @@ public class MemberService {
 		map.put("numOfContent", CommonConstants.MEMBER_CONTENT_NUMBER_PER_PAGE);
 		ArrayList contents =(ArrayList) memberDao.list(map);
 		PagingBean pb = new PagingBean(nowPage, content,CommonConstants.MEMBER_CONTENT_NUMBER_PER_PAGE,CommonConstants.MEMBER_PAGEGROUP_NUMBER_PER_PAGE);
-		return new ListVO(pb,contents);
+		return new ListVO(contents,pb);
 	}
 
 	//			회원정보-request
