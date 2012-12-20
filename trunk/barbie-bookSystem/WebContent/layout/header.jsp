@@ -122,7 +122,7 @@
 
 	<c:choose><c:when test="${sessionScope.membervo.memberId !='java' }">
 		<ul id="navCircle">
-			<li><a href="book.do?command=getBookAllList" class="wrapper">도서대여</a></li>
+			<li><a href="book.do?command=getBookAllList" class="wrapper">도서검색</a></li>
 			<li><a href="member.do?command=insertView" class="wrapper">추천도서</a></li>
 			<li><a href="#" class="wrapper">신간도서</a></li>
 			<li><a href="board.do?command=list&page=1" class="wrapper">자유게시판</a></li>
