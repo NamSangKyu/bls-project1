@@ -111,3 +111,50 @@ insert into bls_book_sbj(subjectNo,subject) values('5','종교');
 insert into bls_book_sbj(subjectNo,subject) values('6','철학');
 
 
+--도서 서평 테이블
+CREATE TABLE bls_book_comment(
+	no number PRIMARY KEY,
+	isbn number,
+	writer varchar2(50),
+	bookcomment varchar2(1000),
+	score number
+)
+create sequence bls_book_comment_seq nocache;
+--도서 서평 검색
+select * from BLS_BOOK_COMMENT where isbn=123123
+select * from BLS_BOOK
+select  no, isbn, writer, bookcomment, score from (select rownum as cno, no, isbn, writer, bookcomment, score from BLS_BOOK_COMMENT where isbn=1919 order by no desc ) where cno <= 5
+select cno, no, isbn, writer, bookcomment, score from (select  rownum as cno, no, isbn, writer, bookcomment, score from (select no, isbn, writer, bookcomment, score from BLS_BOOK_COMMENT where isbn=1919 order by no desc ))
+--서평 입력
+insert into BLS_BOOK_COMMENT values(bls_book_comment_seq.nextval,isbn,writer,bookcomment,score);
+insert into BLS_BOOK_COMMENT values(bls_book_comment_seq.nextval,123123,'named1','comment',5);
+--도서 서평 번호
+select bls_book_comment_seq.nextval from dual
+--해당 도서 평점
+select round(avg(score),1) from BLS_BOOK_COMMENT where isbn=123123
+select isbn, a_score from (select  isbn, avg(score) as a_score from BLS_BOOK_COMMENT group by isbn) order by a_score desc
+
+select avg(score)
+
+delete from bls_book_comment
+
+--도서 평점으로 5개 출력
+select rownum as num, isbn, average from (select rownum as num, isbn, average from(
+select isbn, average from (
+select isbn, avg(score) as average from BLS_BOOK_COMMENT group by isbn
+) order by average desc))
+
+--도서 평점을 가지고 도서 명 까지 출력
+select num, r_isbn, average, title, writer, publisher, subject, loc from (
+select rownum as num, r_isbn, average, title, writer, publisher, subject, loc from(
+select r_isbn, average, title, writer, p.publisher, s.subject, loc from (
+select distinct(r_isbn), average, title, writer, publisherNo, subjectNo, loc from bls_book b, (
+select rownum as num, isbn as r_isbn, average from (select rownum as num, isbn, average from(
+select isbn, average from (
+select isbn, avg(score) as average from BLS_BOOK_COMMENT group by isbn
+)))) where r_isbn = b.isbn) b, bls_book_sbj s, bls_book_pbs p where b.publisherNo = p.publisherNo and b.subjectNo = s.subjectNo and subject='수험서' order by average desc))
+where num < 6
+insert into BLS_BOOK_PBS values(bls_book_pbs_seq.nextval,)
+select * from BLS_BOOK_PBS
+select * from BLS_BOOK_SBJ
+insert into BLS_BOOK_SBJ values(bls_book_sbj_seq.nextval,'asd')
