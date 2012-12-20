@@ -53,14 +53,11 @@ table {
 		<input type="hidden" name="restep" value="${bvo.restep }">
 		<input type="hidden" name="relevel" value="${bvo.relevel }">
 		<input type="hidden" name="page" value="${requestScope.page }">
+		<input type="hidden" name="memberId" value="${sessionScope.membervo.memberId }">
 		<table>
 			<tr>
 				<td>&nbsp;제목</td>
 				<td><input type="text" id="title" name="title" value="${bvo.title }" size="50"></td>
-			</tr>
-			<tr>
-				<td>&nbsp;작성자</td>
-				<td><input type="text" id="memberId" name="memberId" size="50"></td>
 			</tr>
 			<tr>
 				<td>&nbsp;첨부파일</td>
