@@ -118,7 +118,9 @@
 		<tfoot>
 			<tr>
 				<td colspan="6" align="right">
-					<a href="board.do?command=insertView" class="listHref"><img src="${initParam.root}/img/ui/board/write_btn.jpg"></a>
+					<c:if test="${sessionScope.membervo != null }">
+						<a href="board.do?command=insertView" class="listHref"><img src="${initParam.root}/img/ui/board/write_btn.jpg"></a>
+					</c:if>
 				</td>
 			</tr>
 		</tfoot>

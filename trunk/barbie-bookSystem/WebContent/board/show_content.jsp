@@ -4,15 +4,6 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#list").click(function() {
-
-		});
-		$("#reply").click(function() {
-
-		});
-		$("#updateImg").click(function() {
-			
-		});
 		$("#deleteImg").click(function() {
 			if (confirm("삭제 하시겠습니까?"))
 				location.href = "board.do?command=delete&boardNo=${requestScope.bvo.boardNo }&newFileName=${requestScope.bvo.newFileName }&page=${requestScope.page }";
@@ -50,18 +41,19 @@ table {
 	background: #D2D2FF;
 }
 #replySize1 {
-		width: 120px;
+		width: 100px;
 }
 #replySize2 {
 		width: 50px;
 }
 #replySize3 {
-		width: 430px;
+		width: 450px;
 }
 </style>
 <center>
 	<div id="page">
 	<c:set value="${requestScope.bvo }" var="bvo"/>
+	<c:set value="${sessionScope.membervo }" var="mvo" />
 	<table>
 		<tr>
 			<td><b>&nbsp;${bvo.title }</b> | 자유게시판</td>
@@ -104,7 +96,7 @@ table {
 			<br>
 			<table>
 				<tr>
-					<td><textarea cols="70" rows="3" id="cont" name="cont" readonly="readonly" disabled="disabled"></textarea></td>
+					<td><textarea cols="70" rows="3" id="cont" name="cont" readonly="readonly"></textarea></td>
 					<td><input type="button" value="덧글입력"></td>
 				</tr>
 			</table>					
@@ -113,11 +105,17 @@ table {
 		</tr>
 		<tr>
 			<td colspan="2" align="right">
-			<a href="board.do?command=insertView"><img src="${initParam.root}/img/ui/board/write_btn.jpg"></a>
-	<a href="board.do?command=replyView&boardNo=${bvo.boardNo }&page=${requestScope.page }"><img src="${initParam.root}/img/ui/board/answer_btn.jpg"></a>
-	<a href="board.do?command=updateView&boardNo=${bvo.boardNo }&page=${requestScope.page }"><img src="${initParam.root}/img/ui/board/modify_btn.jpg" id="updateImg"></a>
-	<input type="image" src="${initParam.root}/img/ui/board/delete_btn.jpg" id="deleteImg">
-	<a href="board.do?command=list&page=${requestScope.page }"><img src="${initParam.root}/img/ui/board/list_btn.jpg"></a>
+			<c:if test="${mvo != null }">
+				<a href="board.do?command=insertView"><img src="${initParam.root}/img/ui/board/write_btn.jpg"></a>
+				<a href="board.do?command=replyView&boardNo=${bvo.boardNo }&page=${requestScope.page }"><img src="${initParam.root}/img/ui/board/answer_btn.jpg"></a>
+				<c:if test="${mvo.memberId == bvo.memberId }">
+					<a href="board.do?command=updateView&boardNo=${bvo.boardNo }&page=${requestScope.page }"><img src="${initParam.root}/img/ui/board/modify_btn.jpg" id="updateImg"></a>
+				</c:if>
+				<c:if test="${mvo.memberId == 'java' || mvo.memberId == bvo.memberId }">
+					<input type="image" src="${initParam.root}/img/ui/board/delete_btn.jpg" id="deleteImg">
+				</c:if>
+			</c:if>
+			<a href="board.do?command=list&page=${requestScope.page }"><img src="${initParam.root}/img/ui/board/list_btn.jpg"></a>
 	</td>
 	</table>
 	</div>

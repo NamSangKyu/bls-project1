@@ -48,14 +48,11 @@ table {
 	<div id="page">
 	<form action="${initParam.root}/board.do" method="post" id="insertForm" enctype="multipart/form-data">
 		<input type="hidden" name="command" value="insert">
+		<input type="hidden" name="memberId" value="${sessionScope.membervo.memberId }">
 		<table>
 			<tr>
 				<td>제목</td>
 				<td><input type="text" id="title" name="title" size="50"></td>
-			</tr>
-			<tr>
-				<td>작성자</td>
-				<td><input type="text" id="memberId" name="memberId" size="50"></td>
 			</tr>
 			<tr>
 				<td>첨부파일</td>
