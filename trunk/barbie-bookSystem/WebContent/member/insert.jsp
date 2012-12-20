@@ -6,16 +6,17 @@
 <link rel="stylesheet" href="${initParam.root }/css/member.css">
    <script type="text/javascript" >
   		$(document).ready(function(){
+  			// 		가입 버튼
   			$("#insert_btn").click(function(){
   				$("#insert_form").submit();
   			});
+  			//			취소 버튼
   			$("#cancel_img").click(function(){
   				location.href="${initParam.root}/index1.jsp";
   			});
-  			//$("tr").css("height","50px");
-  			//$("tr td:first-child").css("border-right","1px  solid #2828ce").css("width=30%");		// 공통 색 지정
-  			//$("tr td:last-child").css("border-top","1px solid #2828ce");
-  			//	$("tr td:last").css("border-bottom","1px solid #2828ce");
+
+  			//			아이디 체크
+  			//$("#memberId")
   		});
    </script>
  <div class="title">회원가입</div>
@@ -24,7 +25,7 @@
 	<table class="insert_table" cellspacing="0">
 		<tr>
 			<td class="name" >아이디</td>
-			<td class="value"><input type="text" size="10" name="memberId" id="memberId" value=""><span id="checkResult"></span>
+			<td class="value"><input type="text" size="10" name="memberId" id="memberId" value=""><span id="checkResult"></span><br>
 			<p class="defaultText">한글1~10자, 영문2~20자 이하 별명만 입력 가능합니다.</p></td>
 			<td class="file" rowspan="3" ><input type="file" name="uploadFile"></td>
 
