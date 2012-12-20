@@ -44,7 +44,7 @@ insert into bls_book_sbj(subjectNo,subject) values(bls_book_sbj_seq.nextval,'철
 
 
 select * from bls_member
-
+delete from bls_member where id='java'
 
 
 
