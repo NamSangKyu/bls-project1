@@ -30,7 +30,51 @@
 		});
 	});
 </script>
+<style>
+table {
+        width: 600px;
+        border-collapse: collapse;
+        font-family: 'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
+        border-bottom: 2px solid #98bf21;
+    }
+    thead, tbody td{
+        font-size: 10pt;
+        border-top: 1px solid #98bf21;
+        border-bottom: 1px solid #98bf21;
+        height: 30px;
+    }
+    th{
+        background-color:#98bf21;
+        color:#ffffff;
+        height: 25px;
+    }
+    tfoot td{
+    	height: 40px;
+    }
+#title {
+	text-align: left;
+}
+#page {
+	font-family: 'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
+}
+#replyPage{
+	background: #D2D2FF;
+}
+#replySize1 {
+		width: 120px;
+}
+#replySize2 {
+		width: 50px;
+}
+#replySize3 {
+		width: 430px;
+}
+</style>
+
+
+
 <center>
+<div id="page">
 	<form action="${initParam.root}/board.do" method="post" id="updateForm"
 		enctype="multipart/form-data">
 		<input type="hidden" name="command" value="updateContent"> <input
@@ -38,14 +82,14 @@
 			<input type="hidden" name="page" value="${requestScope.page }">
 			<input type="hidden" name="default1" value="${requestScope.bvo.orgFileName }">
 			<input type="hidden" name="default2" value="${requestScope.bvo.newFileName }">
-		<table border="1" width="600">
+		<table>
 			<tr>
-				<td>제목</td>
+				<td>&nbsp;제목</td>
 				<td><input type="text" id="title" name="title"
-					value="${requestScope.bvo.title }"></td>
+					value="${requestScope.bvo.title }" size="50"></td>
 			</tr>
 			<tr>
-				<td>첨부파일</td>
+				<td>&nbsp;첨부파일</td>
 				<td><span id="fileView"><c:choose>
 						<c:when test="${requestScope.bvo.orgFileName!=null }">
 							 <font size="2"> <a
@@ -59,10 +103,15 @@
 					</c:choose></span></td>
 			</tr>
 			<tr>
-				<td colspan=2><textarea cols="60" rows="10" id="cont"
+				<td colspan=2><textarea cols="82" rows="12" id="cont"
 						name="cont">${requestScope.bvo.cont }</textarea></td>
 			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<img src="${initParam.root}/img/ui/board/confirm.gif" id="confirmImg">
+				</td>
+			</tr>
 		</table>
-		<img src="${initParam.root}/img/ui/board/confirm.gif" id="confirmImg">
 	</form>
+	</div>
 </center>

@@ -18,7 +18,7 @@
 </script>
 <style>
 table {
-        width: 800px;
+        width: 600px;
         border-collapse: collapse;
         font-family: 'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
         border-bottom: 2px solid #98bf21;
@@ -45,29 +45,31 @@ table {
 }
 </style>
 <center>
+	<div id="page">
 	<form action="${initParam.root}/board.do" method="post" id="insertForm" enctype="multipart/form-data">
 		<input type="hidden" name="command" value="insert">
 		<table>
 			<tr>
 				<td>제목</td>
-				<td><input type="text" id="title" name="title"></td>
+				<td><input type="text" id="title" name="title" size="50"></td>
 			</tr>
 			<tr>
 				<td>작성자</td>
-				<td><input type="text" id="memberId" name="memberId"></td>
+				<td><input type="text" id="memberId" name="memberId" size="50"></td>
 			</tr>
 			<tr>
 				<td>첨부파일</td>
 				<td><input type="file" name="uploadFile"></td>
 			</tr>
 			<tr>
-				<td colspan=2><textarea cols="60" rows="10" id="cont"
+				<td colspan=2><textarea cols="82" rows="12" id="cont"
 						name="cont"></textarea></td>
 			</tr>
 			<tr>
-				<td colspan="2"><img
+				<td colspan="2" align="center"><img
 					src="${initParam.root}/img/ui/board/confirm.gif" id="insertImg"></td>
 			</tr>
 		</table>
 	</form>
+	</div>
 </center>
