@@ -3,6 +3,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
    <%-- <script type="text/javascript" src="${initParam.root }/WEB-INF/js/jquery-1.8.2.js"></script> --%>
    <script src="http://code.jquery.com/jquery-latest.js"></script>
+<link rel="stylesheet" href="${initParam.root }/css/member.css">
    <script type="text/javascript" >
   		$(document).ready(function(){
   			$("#insert_btn").click(function(){
@@ -17,16 +18,14 @@
   			//	$("tr td:last").css("border-bottom","1px solid #2828ce");
   		});
    </script>
-<link rel="stylesheet" href="${initParam.root }/css/member.css"/>
-
-<center>
-<div class="title">회원가입</div>
+ <div class="title">회원가입</div>
 <form action="member.do" method="post" id="insert_form"  enctype="multipart/form-data">
 	<input type="hidden" name="command" value="insert">
 	<table class="insert_table" cellspacing="0">
 		<tr>
 			<td class="name" >아이디</td>
-			<td class="value"><input type="text" name="memberId" id="memberId" value=""></td>
+			<td class="value"><input type="text" size="10" name="memberId" id="memberId" value=""><span id="checkResult"></span>
+			<p class="defaultText">한글1~10자, 영문2~20자 이하 별명만 입력 가능합니다.</p></td>
 			<td class="file" rowspan="3" ><input type="file" name="uploadFile"></td>
 
 		</tr>
@@ -69,4 +68,3 @@
 	<input type="button" name="insert_btn" id="insert_btn" value="회원가입">
 	<input type="button" name="cancel_btn" id="cancel_img" value="취소">
 </form>
-</center>

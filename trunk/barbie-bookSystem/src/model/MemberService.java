@@ -19,6 +19,22 @@ public class MemberService {
 	public MemberService(MemberDao memberDao){
 		this.memberDao = memberDao;
 	}
+	// 	로그인 전 체크
+	public boolean checkLogin(MemberVO membervo) throws SQLException{
+		String id = memberDao.selectIdForCheck(membervo);
+		boolean flag = false;
+		if(id !=null)
+			flag=true;
+		System.out.println("cheking " +flag);
+		return flag;
+	}
+
+	//		로그인
+	public MemberVO login(MemberVO membervo) throws SQLException{
+		System.out.println(membervo);
+		MemberVO mvo =  memberDao.selectMemberForLogin(membervo);
+		return mvo;
+	}
 
 	// 	회원가입
 	public void insert(MemberVO membervo) throws SQLException{
