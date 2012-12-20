@@ -26,7 +26,6 @@ $(document).ready(function(){
 	$("#subject").change(function() {
 		var bookList;
 		var subject=$(this).val(); 
-		alert(subject);
 		$.ajax({
 		 type:"POST",
 		 url:"book.do",
@@ -34,7 +33,6 @@ $(document).ready(function(){
 		 dataType:"json",
 		success:function(data){ 
 		 bookList="";
-		 alert(data.list[0]);
 		 for(i=0; i<data.list.length; i++){
 		bookList+="<tr><td>"+data.list[i].TITLE+"</td><td>"+data.list[i].WRITER+"</td><td>"+data.list[i].AVERAGE+"</td><td>"+data.list[i].C_ISBN+"</td><td>"+data.list[i].SUBJECT+"</td></tr>";	 
 		 }

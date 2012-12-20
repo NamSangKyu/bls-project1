@@ -37,7 +37,6 @@
 		    dataType:"json", //Dispatcher로 부터 받는 데이터 타입
 		    data:"command=getCommentList&isbn="+$("input[name=isbn]").val(),//Dispatcher로 보내는 데이터
 		    success:function(data){ //callback 함수
-		     alert(data.map.list.length);
 		     comment = "";
 		    for(i=0;i<data.map.list.length;i++){
 		     comment += "<tr><td>"+data.map.list[i].writer+"</td><td>"+data.map.list[i].bookcomment+"</td></tr>";
@@ -75,53 +74,17 @@ table tr,td {
 }
 </style>
 <center>
-	<table border="1">
-		<tr height="40">
-			<td>도서명</td>
-			<td width="350">${requestScope.map.TITLE }</td>
-			<td rowspan="5" align="center"><img
-				src="${initParam.root }/upload/${requestScope.map.IMG }" width="150"
-				height="200"></td>
-		</tr>
-
-		<tr height="40">
-			<td>저자명</td>
-			<td>${requestScope.map.WRITER }</td>
-		</tr>
-
-		<tr height="40">
-			<td>출판사</td>
-			<td>${requestScope.map.PUBLISHER }</td>
-		</tr>
-
-		<tr height="40">
-			<td>분류</td>
-			<td>${requestScope.map.SUBJECT }</td>
-		</tr>
-
-		<tr height="40">
-			<td>위치</td>
-			<td>${requestScope.map.LOC }</td>
-		</tr>
-
-
-		<tr>
-			<td>내용</td>
-			<td colspan="2"><textarea rows="2" cols="5" readonly="readonly">${requestScope.map.CONT }</textarea>
-			</td>
-
-		</tr>
-		<tr>
-			<td>답글</td>
-			<td colspan="2">
-<form name="commentForm">
+<table height="500" >
+	<tr>
+		<td>
+			<form name="commentForm">
 <input type="hidden" name="command" value="insertComment">
 <input type="hidden" name="writer" value="userId">
 <input type="hidden" name="isbn" value="${requestScope.map.ISBN }">
-<table border="1">
+<table border="1" width="450"  height="300">
 <thead>
 <tr>
-<th width="120">작성자</th>
+<th>작성자</th>
 <th>댓글</th>
 </tr>
 </thead>
@@ -141,23 +104,59 @@ table tr,td {
 			<option value="5">☆☆☆☆☆</option>
 		</select>
 		<br>
-		<textarea name="bookcomment" cols="60" rows="2"></textarea>
-		<input type="button" id="comment_input"  value="서평 입력" >
+		<textarea name="bookcomment" cols="60" rows="2"></textarea><br>
+		<p align="right"><input type="button" id="comment_input"  value="서평 입력" ></p>
 		</td>
 	</tr>
 </tfoot>
 </table>
 </form>
+			
+		</td>
+		<td rowspan="2">
+			<table border="1" height="500" width="350">
+		<tr>
+			<td width="15%" align="center">도서명</td>
+			<td >${requestScope.map.TITLE }</td>
+			<td rowspan="2" align="center" width="30%" height="30%"><img
+				src="${initParam.root }/upload/${requestScope.map.IMG }"  width="100%" height="100%">
 			</td>
 		</tr>
-	</table>
-</center>
-<a href="book.do?command=updateSet&isbn=${requestScope.map.ISBN }"><input
-	type="button" value="수정"></a>
 
-<center>
-<span class="resolve"> 도서현황
-	<table border="1"> 
+		<tr align="center">
+			<td>저자명</td>
+			<td>${requestScope.map.WRITER }</td>
+		</tr>
+
+		<tr align="center">
+			<td height="10">출판사</td>
+			<td colspan="2">${requestScope.map.PUBLISHER }</td>
+		</tr>
+
+		<tr align="center">
+			<td height="10">분류</td>
+			<td colspan="2">${requestScope.map.SUBJECT }</td>
+		</tr>
+
+		<tr align="center">
+			<td height="10">위치</td>
+			<td colspan="2">${requestScope.map.LOC }</td>
+		</tr>
+
+
+		<tr >
+			<td height="200" align="center">내용</td>
+			<td colspan="2"><textarea rows="5" cols="37" readonly="readonly" >${requestScope.map.CONT }</textarea>
+			</td>
+
+		</tr>
+	</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<span class="resolve"> 도서현황
+	<table border="1" width="450"> 
 		<tr>
 			<td>도서번호</td>
 			<td>도서명</td>
@@ -187,6 +186,15 @@ table tr,td {
 		</c:forEach>
 	</table>
 </span>
+			
+		</td> 
+	</tr>
+</table>
+	
+</center>
+<%-- <a href="book.do?command=updateSet&isbn=${requestScope.map.ISBN }"><input
+	type="button" value="수정"></a> --%>
+<center>
 </center>
 
 
