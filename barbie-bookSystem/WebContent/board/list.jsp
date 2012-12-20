@@ -82,7 +82,6 @@
 		width: 50px;
 }
 </style>
-<center>
 <div class="listPage">
 	<c:set value="${requestScope.lvo }" var="lvo" />
 	<table>
@@ -148,5 +147,4 @@
 		</a>
 	</c:if>
 	</div>
-	</div>
-</center>
+</div>
