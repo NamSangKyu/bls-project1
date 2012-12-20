@@ -10,6 +10,10 @@
 		<put-attribute name="main" value="/member/{1}.jsp"></put-attribute>
 	<!-- 	<put-attribute name="header" value="/member/login.jsp"></put-attribute> -->
 	  </definition>
+	   <definition name="*.admin" extends="home">
+	  	<!-- <put-attribute name="header" value="/admin/header_admin.jsp"></put-attribute> -->
+	  	<put-attribute name="main" value="/admin/{1}.jsp"></put-attribute>
+	  </definition>
 </tiles-definitions>
 
 
