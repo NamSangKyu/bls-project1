@@ -39,11 +39,9 @@ css로 페이지 레이아웃을 구성
 </head>
 <body>
 <div id="container">
-	<center>
-	<div id="header"><tiles:insertAttribute name="header"/></div>
-	<div style="text-align:center;" id="main"><tiles:insertAttribute name="main"/></div>
-	<div id="footer"><tiles:insertAttribute name="footer"/></div>
-	</center>
+	<center><div id="header"><tiles:insertAttribute name="header"/></div></center>
+	<center><div id="main"><tiles:insertAttribute name="main"/></div></center>
+	<center><div id="footer"><tiles:insertAttribute name="footer"/></div></center>
 </div>
 </body>
 </html>
