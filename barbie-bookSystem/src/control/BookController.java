@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 public class BookController extends MultiActionController{
 	private String path;
 	private BookService service;
-	 
+
 	public void setService(BookService service) {
 		this.service = service;
 	}
@@ -57,7 +57,7 @@ public class BookController extends MultiActionController{
 		System.out.println("file upload ok~"+copyFile.getName());
 		return fileName;
 	}
-	
+
 	public ModelAndView insert(HttpServletRequest request, HttpServletResponse response, BookVO vo){
 		System.out.println("insert");
 		System.out.println(vo.toString());
@@ -88,7 +88,7 @@ public class BookController extends MultiActionController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return new ModelAndView("info.book","map",map);
 	}
 	public ModelAndView getBookAllList(HttpServletRequest request, HttpServletResponse response){
@@ -117,7 +117,7 @@ public class BookController extends MultiActionController{
 		ListVO list = service.getBookList(nowPage);
 		System.out.println("paging 완료");
 		System.out.println(list.getBean().getEndPageOfPageGroup());
-		
+
 		return new ModelAndView("list.book","list",list);
 	}
 	public ModelAndView updateSet(HttpServletRequest request, HttpServletResponse response){
@@ -129,10 +129,9 @@ public class BookController extends MultiActionController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return new ModelAndView("update.book","map",map);
 	}
-	
+
 	public ModelAndView updateBook(HttpServletRequest request, HttpServletResponse response){
 		int isbn = Integer.parseInt(request.getParameter("isbn"));
 		String title = request.getParameter("title");
@@ -169,7 +168,7 @@ public class BookController extends MultiActionController{
 			e.printStackTrace();
 		}
 		System.out.println(publisherNo);
-		return new ModelAndView("JsonView","publisherNo",publisherNo); 
+		return new ModelAndView("JsonView","publisherNo",publisherNo);
 	}
 	public ModelAndView getSubjectNo(HttpServletRequest request, HttpServletResponse response){
 		String subject = request.getParameter("subject");
@@ -181,23 +180,23 @@ public class BookController extends MultiActionController{
 			e.printStackTrace();
 		}
 		System.out.println(subjectNo);
-		return new ModelAndView("JsonView","subjectNo",subjectNo); 
+		return new ModelAndView("JsonView","subjectNo",subjectNo);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	// 여기서부터 호희 추가로직 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// 여기서부터 호희 추가로직
 	// 북 정보 뽑아올때 해당 북에 대한 예약 목록 가져오는 로직
 	public ModelAndView getBookInfoIsbn(HttpServletRequest request, HttpServletResponse response) throws SQLException{
 		int isbn = Integer.parseInt(request.getParameter("isbn"));
@@ -211,45 +210,45 @@ public class BookController extends MultiActionController{
 		// 도서 info 볼 때 도서상태 보기위한 로직
 		ArrayList list = service.getBookState(isbn);
 		request.setAttribute("list", list);
-		
+
 		return new ModelAndView("info.book","map",map);
 	}
-	
+
 	// 예약 버튼을 눌렀을 경우 도서상태 예약 취소 상태으로 바뀌는 Ajax
 	public ModelAndView bookResolve(HttpServletRequest request, HttpServletResponse response) throws SQLException{
 		String bookNo = request.getParameter("bookNo");
 		service.bookResolve(bookNo);
-		return new ModelAndView("JsonView"); 
+		return new ModelAndView("JsonView");
 	}
-	
+
 	// 예약 취소 버튼을 눌렀을 경우 도서상태 예약상태로 바뀌는 Ajax
 	public ModelAndView bookResolveCancle(HttpServletRequest request, HttpServletResponse response)  throws SQLException{
 		System.out.println("ㅎㅎ");
 		String bookNo = request.getParameter("bookNo");
 		service.bookResolveCancle(bookNo);
-		return new ModelAndView("JsonView"); 
+		return new ModelAndView("JsonView");
 	}
-	
+
 	// 추가적인 로직인데 관리자가 로그인 하여 도서관리를 눌렀을 경우 도서전체에 대한 상태가 보여짐
 	public ModelAndView adminBook(HttpServletRequest request, HttpServletResponse response) throws SQLException{
 		ArrayList list = service.adminBook();
-		return new ModelAndView("admin_list.book","list", list);
+		return new ModelAndView("admin_list.admin","list", list);
 	}
-	
+
 	// 관리자 도서관리 에서 대여 할 경우 진행될 소스
 	public ModelAndView bookRental(HttpServletRequest request, HttpServletResponse response) throws SQLException{
 		String bookNo = request.getParameter("bookNo");
 		String memberId = request.getParameter("memberId");
 		service.bookRental(bookNo, memberId);
-		return new ModelAndView("JsonView"); 
+		return new ModelAndView("JsonView");
 	}
-	
+
 	// 관리자 도서관리 에서 반납 할 경우 진행될 소스
 	public ModelAndView bookRentalCancle(HttpServletRequest request, HttpServletResponse response)  throws SQLException{
 		String bookNo = request.getParameter("bookNo");
 		service.bookRentalCancle(bookNo);
-		return new ModelAndView("JsonView"); 
+		return new ModelAndView("JsonView");
 	}
-	
-	
+
+
 }
