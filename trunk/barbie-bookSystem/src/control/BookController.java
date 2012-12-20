@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.BookService;
+import model.vo.BookCommentVO;
 import model.vo.BookVO;
 import model.vo.ListVO;
 
@@ -76,6 +77,7 @@ public class BookController extends MultiActionController{
 		int bookno = 0;
 		try {
 			bookno = service.insert(vo, filename);
+			System.out.println("bookNo"+bookno);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -249,6 +251,61 @@ public class BookController extends MultiActionController{
 		service.bookRentalCancle(bookNo);
 		return new ModelAndView("JsonView");
 	}
+	//list 로 넣어야지!!
+		public  ModelAndView insertComment(HttpServletRequest request, HttpServletResponse response,BookCommentVO vo){
+		HashMap map=new HashMap();
+		ArrayList list=null;
+			try {
+		map=service.insertComment(vo); //insertCommentf를 하고나면 list가 채워지므로 null해도 오케
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return new ModelAndView("JsonView","map",map);
+		
+			
+		}
+		public ModelAndView getCommentList(HttpServletRequest request, HttpServletResponse response){
+		String isbn=request.getParameter("isbn");
+		HashMap map=new HashMap();
+		ArrayList list=new ArrayList();
+		try {
+			map=service.getCommentList(isbn);
+			System.out.println("list="+map.get("list"));
+		} catch (SQLException e) {
 
+			e.printStackTrace();
+		}
+		return new ModelAndView("JsonView","map",map);
+		}
+		public ModelAndView recommandBook(HttpServletRequest request, HttpServletResponse response){
+		System.out.println("추천도서 컨트롤러 입성완료@@");
+		String subject=request.getParameter("subject");
+		ArrayList list=new ArrayList();
+		try {
+		if(subject==null||subject.equals("")){
+		list=service.recommandBook();	
+		return new ModelAndView("recommand.book","list",list);
+		}else{
+		list=service.recommandBook(subject);
+		}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("list="+list);
+		return new ModelAndView("JsonView","list",list);
+			
+		}
+		
+		public ModelAndView getSubject(HttpServletRequest request, HttpServletResponse response){
+		System.out.println("getSubjectController입성완료");
+		ArrayList list=new ArrayList();
+		try {
+		list=service.getSubject();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println(list.toString());
+		return new ModelAndView("JsonView","list",list);
+		}
 
 }

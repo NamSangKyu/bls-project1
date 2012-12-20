@@ -1,4 +1,7 @@
 --도서 테이블
+drop table bls_book;
+select * from BLS_BOOK;
+
 create table bls_book(
 	bookNo number primary key,
 	isbn number not null,
@@ -41,12 +44,15 @@ update bls_book set bookState='대여중' where bookNo=31
 select * from bls_book
 drop table bls_book
 
+drop table bls_book_sbj;
 --도서분류 테이블
 CREATE TABLE bls_book_sbj(
  	subjectNo number PRIMARY KEY,
  	subject varchar2(50)
 )
 
+
+drop table bls_book_pbs;
 --출판사분류 테이블
 CREATE TABLE bls_book_pbs(
  	publisherNo number PRIMARY KEY,
@@ -87,5 +93,21 @@ create table bls_book_mgt(
 )
 select b.bookNo, b.title, p.publisher, b.loc, b.bookState from bls_book b, bls_book_pbs p where b.isbn='1234' and b.publisherNo=p.publisherNo
 
+select * from BLS_BOOK_PBS
+
+insert into bls_book_pbs values('1','창작과비평사');
+insert into bls_book_pbs values('2','나무');
+insert into bls_book_pbs values('3','한솔');
+insert into bls_book_pbs values('4','푸른숲나무');
+insert into bls_book_pbs values('5','맑은샘');
+insert into bls_book_pbs values('6','책과나무');
+
+select * from BLS_BOOK_SBJ;
+insert into bls_book_sbj(subjectNo,subject) values('1','소설');
+insert into bls_book_sbj(subjectNo,subject) values('2','인문');
+insert into bls_book_sbj(subjectNo,subject) values('3','역사');
+insert into bls_book_sbj(subjectNo,subject) values('4','정치');
+insert into bls_book_sbj(subjectNo,subject) values('5','종교');
+insert into bls_book_sbj(subjectNo,subject) values('6','철학');
 
 
