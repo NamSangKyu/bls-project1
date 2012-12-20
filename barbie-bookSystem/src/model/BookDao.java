@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import model.vo.BookCommentVO;
 import model.vo.BookVO;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -30,6 +31,7 @@ public class BookDao {
 		map.put("file", filename);
 		System.out.println(map.get("file"));
 		sqlMapClient.insert("book.insert", map);
+		System.out.println("map="+map.toString());
 		System.out.println("삽입성공");
 		return (int) map.get("bookno");
 	}
@@ -95,7 +97,29 @@ public class BookDao {
 	}
 
 	
-	
+	public int getCommentNO() throws SQLException {
+		return (int) sqlMapClient.queryForObject("book.getCommentNo");
+	}
+	public void insertComment(BookCommentVO vo) throws SQLException {
+		sqlMapClient.insert("book.insertComment", vo);
+	}
+	public ArrayList getCommentList(String isbn) throws SQLException {
+	return (ArrayList) sqlMapClient.queryForList("book.getCommentList", isbn);
+	}
+	public  double getAvgScore(int isbn) throws SQLException{
+	return (double) sqlMapClient.queryForObject("book.getAvgScore",isbn);
+	}
+	public ArrayList recommandBook() throws SQLException {
+	return (ArrayList) sqlMapClient.queryForList("book.recommandBook");
+	}
+	public ArrayList recommandBook(String subject) throws SQLException {
+	return (ArrayList) sqlMapClient.queryForList("book.recommandBookBySubject", subject);
+	}
+
+	public ArrayList getSubject() throws SQLException {
+	return (ArrayList) sqlMapClient.queryForList("book.getSubject");
+		
+	}
 	
 	
 	

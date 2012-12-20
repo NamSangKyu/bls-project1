@@ -29,6 +29,42 @@
 				}
 			});	
 		});
+		var comment;
+		   //onload() comment show
+		   $.ajax({
+		    type:"GET",//전송 타입 POST or GET
+		    url:"book.do", //Servlet 명
+		    dataType:"json", //Dispatcher로 부터 받는 데이터 타입
+		    data:"command=getCommentList&isbn="+$("input[name=isbn]").val(),//Dispatcher로 보내는 데이터
+		    success:function(data){ //callback 함수
+		     alert(data.map.list.length);
+		     comment = "";
+		    for(i=0;i<data.map.list.length;i++){
+		     comment += "<tr><td>"+data.map.list[i].writer+"</td><td>"+data.map.list[i].bookcomment+"</td></tr>";
+		    }
+		    comment+="<tr><td colspan=2>평점"+data.map.avgscore+"</td></tr>";
+		    $("#commentTable").html(comment);
+		    
+		    }//success
+		   });//ajax    
+		   //comment input -> comment show
+		   $("#comment_input").click(function() {
+		    var str = $("form[name=commentForm]").serialize();
+		    $.ajax({
+		     type:"GET",//전송 타입 POST or GET
+		     url:"book.do", //Servlet 명
+		     dataType:"json", //Dispatcher로 부터 받는 데이터 타입
+		     data:str,//Dispatcher로 보내는 데이터
+		     success:function(data){ //callback 함수 
+		      comment = "";
+		      for(i=0;i<data.map.list.length;i++){
+		       comment += "<tr><td>"+data.map.list[i].writer+"</td><td>"+data.map.list[i].bookcomment+"</td></tr>";
+		      }
+		      comment+="<tr><td colspan=2>평점"+data.map.avgscore+"</td></tr>";
+		      $("#commentTable").html(comment);
+		     }//success
+		    });//ajax    
+		   });//comment_input click
 	});
 </script>
 
@@ -78,21 +114,40 @@ table tr,td {
 		<tr>
 			<td>답글</td>
 			<td colspan="2">
-				<table>
-					<tfoot>
-						<tr>
-							<td>평점 : <select>
-									<option value="1">☆</option>
-									<option value="2">☆☆</option>
-									<option value="3">☆☆☆</option>
-									<option value="4">☆☆☆☆</option>
-									<option value="5">☆☆☆☆☆</option>
-							</select> <br> <textarea name="contents" cols="60" rows="2"></textarea>
-								<input type="button" id="comment_input" value="서평 입력">
-							</td>
-						</tr>
-					</tfoot>
-				</table>
+<form name="commentForm">
+<input type="hidden" name="command" value="insertComment">
+<input type="hidden" name="writer" value="userId">
+<input type="hidden" name="isbn" value="${requestScope.map.ISBN }">
+<table border="1">
+<thead>
+<tr>
+<th width="120">작성자</th>
+<th>댓글</th>
+</tr>
+</thead>
+<tbody id="commentTable">
+
+</tbody>
+
+<tfoot>
+	<tr>
+		<td colspan="2">
+		평점 : 
+		<select name="score">
+			<option value="1">☆</option>
+			<option value="2">☆☆</option>
+			<option value="3">☆☆☆</option>
+			<option value="4">☆☆☆☆</option>
+			<option value="5">☆☆☆☆☆</option>
+		</select>
+		<br>
+		<textarea name="bookcomment" cols="60" rows="2"></textarea>
+		<input type="button" id="comment_input"  value="서평 입력" >
+		</td>
+	</tr>
+</tfoot>
+</table>
+</form>
 			</td>
 		</tr>
 	</table>

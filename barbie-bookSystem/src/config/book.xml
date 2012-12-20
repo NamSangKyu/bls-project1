@@ -17,7 +17,7 @@
     	select distinct(isbn), title, writer, cont, isbn ,loc, img, s.subject, p.publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno and title = #title#
     </select>
 	<insert id="insert" parameterClass="java.util.HashMap">
-		insert into bls_book values(#bookno#,#vo.isbn#,#vo.title#,#vo.writer#,#vo.cont#,#vo.loc#,#file#,#vo.subjectNo#,#vo.publisherNo#)
+		insert into bls_book(bookNo,isbn,title,writer,cont,loc,img,subjectNo,publisherNo) values(#bookno#,#vo.isbn#,#vo.title#,#vo.writer#,#vo.cont#,#vo.loc#,#file#,#vo.subjectNo#,#vo.publisherNo#)
 	</insert>  	
 	<select id="getBookAllList" resultClass="java.util.HashMap">
 		select rownum as no, title, writer,loc, b_subject as subject, b_publisher as publisher from (select distinct(isbn), title, writer, cont, isbn ,loc, s.subject as b_subject, p.publisher as b_publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno)
@@ -41,7 +41,56 @@
 		select subjectNo from bls_book_sbj where subject=#subject#
 	</select>
 	
+		
+	<select id="getCommentNo" resultClass="int">
+	select bls_book_comment_seq.nextval from dual
+	</select>
 	
+	<insert id="insertComment">
+	insert into bls_book_comment values(#no#,#isbn#,#writer#,#bookcomment#,#score#)
+	</insert>
+
+	<select id="getCommentList" parameterClass="String" resultClass="model.vo.BookCommentVO">
+<![CDATA[select no, isbn, writer, bookcomment, score 
+from (select rownum as cno, no, isbn, writer, bookcomment, score 
+from BLS_BOOK_COMMENT where isbn=#isbn# order by no desc ) 
+where cno <= 5]]>
+	</select>
+	
+	<select id="getAvgScore" parameterClass="integer" resultClass="double">
+	select round(avg(score),1) from BLS_BOOK_COMMENT where isbn=#isbn#
+	</select>
+	
+
+<select id="recommandBook" resultClass="java.util.HashMap">
+select num, c_isbn, average,title, writer, publisher, subject, loc from (
+select rownum as num ,c_isbn, average,title, writer, publisher, subject, loc from(
+select distinct(c_isbn), average, title, writer, publisherNO, subjectNO, loc from bls_book b,(
+select num, isbn as c_isbn, average from (
+select rownum as num, isbn, average from (
+select isbn, average from (
+select isbn, round(avg(score),1) as average from bls_book_comment c group by isbn)order by average desc))where num<![CDATA[<]]>6)where b.isbn=c_isbn)
+b, bls_book_sbj s, bls_book_pbs p where b.publisherNo=p.publisherNo and b.subjectNo = s.subjectNo order by average desc)
+where num<![CDATA[<]]>6
+</select>
+
+
+<select id="recommandBookBySubject" resultClass="java.util.HashMap" parameterClass="String">
+select num, c_isbn, average,title, writer, publisher, subject, loc from (
+select rownum as num ,c_isbn, average,title, writer, publisher, subject, loc from(
+select distinct(c_isbn), average, title, writer, publisherNO, subjectNO, loc from bls_book b,(
+select num, isbn as c_isbn, average from (
+select rownum as num, isbn, average from (
+select isbn, average from (
+select isbn, round(avg(score),1) as average from bls_book_comment c group by isbn)order by average desc))where num<![CDATA[<]]>6)where b.isbn=c_isbn)
+b, bls_book_sbj s, bls_book_pbs p where b.publisherNo=p.publisherNo and b.subjectNo = s.subjectNo and subject=#subject# order by average desc)
+where num<![CDATA[<]]>6
+</select>
+
+
+<select id="getSubject" resultClass="String">
+select subject from BLS_BOOK_SBJ
+</select>
 	
 	
 	

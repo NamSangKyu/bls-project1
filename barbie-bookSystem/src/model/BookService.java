@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import model.vo.BookCommentVO;
 import model.vo.BookVO;
 import model.vo.ListVO;
 import model.vo.PagingBean;
@@ -68,6 +69,33 @@ public class BookService {
 		return dao.getSubjectNo(subject);
 	}
 	
+	public HashMap insertComment(BookCommentVO vo) throws SQLException {
+		vo.setNo(dao.getCommentNO());
+		dao.insertComment(vo);
+		HashMap map=new HashMap();
+		ArrayList list= dao.getCommentList(String.valueOf(vo.getIsbn()));
+		map.put("list", list );
+		map.put("avgscore",dao.getAvgScore(vo.getIsbn()));
+		return map;
+		
+		}
+		
+		public HashMap getCommentList(String isbn) throws SQLException {
+		HashMap map=new HashMap();
+		map.put("list", dao.getCommentList(isbn));
+		map.put("avgscore",dao.getAvgScore(Integer.parseInt(isbn)));
+		return map;
+		}
+		public ArrayList recommandBook() throws SQLException {
+		return dao.recommandBook();
+			
+		}
+		public ArrayList recommandBook(String subject) throws SQLException {
+		return dao.recommandBook(subject);
+		}
+		public ArrayList getSubject() throws SQLException {
+		return dao.getSubject();		
+		}
 	
 	
 	
