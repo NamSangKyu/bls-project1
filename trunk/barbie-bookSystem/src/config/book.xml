@@ -3,7 +3,7 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <!-- 별칭 지정 -->
 <sqlMap namespace="book">
-  <typeAlias alias="bookvo" type="model.BookVO"/>
+  <typeAlias alias="bookvo" type="model.vo.BookVO"/>
     <select id="bookno" resultClass="int">
     	select bls_book_seq.nextval from dual
     </select>
@@ -12,7 +12,7 @@
     </select>
     <select id="getBookInfoNum" parameterClass="int" resultClass="HashMap">
     	select title, writer, cont, isbn ,loc, s.subject, p.publisher, img from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno and bookno=#bookno#
-    </select>
+    </select> 
     <select id="getBookInfoTitle" parameterClass="java.lang.String" resultClass="java.util.HashMap">
     	select distinct(isbn), title, writer, cont, isbn ,loc, img, s.subject, p.publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno and title = #title#
     </select>
@@ -40,7 +40,40 @@
 	<select id="getSubjectNo" parameterClass="String" resultClass="int">
 		select subjectNo from bls_book_sbj where subject=#subject#
 	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- book info 화면을 보여줄 때 해당 도서의 대여 상태 -->
+	<select id="getBookState" resultClass="java.util.HashMap">
+		select b.bookNo, b.title, p.publisher, b.loc, b.bookState from bls_book b, bls_book_pbs p where b.isbn=#value# and b.publisherNo=p.publisherNo
+	</select>
+	
+	<!-- 예약버튼 눌렀을 경우 도서상태 예약중으로 변경 -->
+	<update id="bookResolve">
+		update bls_book set bookState='예약중' where bookNo=#value#
+	</update>
+	
+	<!-- 취소버튼 눌렀을 경우 도서상태  -->
+	<update id="bookResolveCancle">
+		update bls_book set bookState='대여가능' where bookNo=#value#
+	</update>
+	
+	<!-- 관리자모드에서 도서관리 눌렀을 경우 현재 도서 전체 상태를 보여준다. -->
+	<select id="adminBook" resultClass="java.util.HashMap">
+		select b.bookNo, b.title, p.publisher, b.loc, b.bookState from bls_book b, bls_book_pbs p 
+		where b.publisherNo=p.publisherNo
+	</select>
+	
 </sqlMap>
+
+
 
 
 
