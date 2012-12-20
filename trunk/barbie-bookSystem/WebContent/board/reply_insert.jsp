@@ -44,6 +44,7 @@ table {
 	font-family: 'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
 }
 </style>
+<div><a href="board.do?command=list&page=1"><img src="${initParam.root}/img/ui/layout/freeboard.jpg"></a><br><br></div>
 <center>
 <div id="page">
 	<c:set value="${requestScope.bvo }" var="bvo"/>

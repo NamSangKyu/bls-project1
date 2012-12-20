@@ -82,6 +82,7 @@
 		width: 50px;
 }
 </style>
+<div><a href="board.do?command=list&page=1"><img src="${initParam.root}/img/ui/layout/freeboard.jpg"></a><br><br></div>
 <div class="listPage">
 	<c:set value="${requestScope.lvo }" var="lvo" />
 	<table>

@@ -38,7 +38,7 @@
 </script>
 <style type="text/css">
 #navCircle {
-	margin-top: 60px;
+	margin-top: 50px;
 	margin-left: auto;
 	margin-right: auto;
 	padding: 4px 10px 20px 10px;
@@ -50,11 +50,11 @@
 }
 .wrapper {
             display: inline-block;
-            padding: 0 50px 6px 50px;
+            padding: 6px 50px 6px 50px;
             margin: 10px;
-            background: #08C;
+            background: #F5F2FF;
 
-            color: white;
+            color: black;
             font-weight: bold;
             text-decoration: none;
             position: relative;
@@ -71,7 +71,8 @@
             }
 
 .wrapper:hover {
-                    background: #cd1039
+                    background: #cd1039;
+                    color: white;
                    }
 
 .wrapper:active {
