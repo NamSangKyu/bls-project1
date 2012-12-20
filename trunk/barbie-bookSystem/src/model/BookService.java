@@ -67,5 +67,38 @@ public class BookService {
 		// TODO Auto-generated method stub
 		return dao.getSubjectNo(subject);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public ArrayList getBookState(int isbn) throws SQLException {
+		return dao.getBookState(isbn);
+	}
+	public void bookResolve(String bookNo) throws SQLException {
+		dao.bookResolve(bookNo);
+	}
+	public void bookResolveCancle(String bookNo) throws SQLException {
+		dao.bookResolveCancle(bookNo);
+	}
+	public ArrayList adminBook() throws SQLException {
+		return dao.adminBook();
+	}
+	public void bookRental(String bookNo, String memberId) {
+		HashMap map = new HashMap();
+		map.put("bookNo", bookNo);
+		map.put("memberId", memberId);
+		dao.bookRental(map);
+	}
+	public void bookRentalCancle(String bookNo) {
+		dao.bookRentalCancle(bookNo);
+	}
 
 }
