@@ -17,7 +17,7 @@
 		<value>E:\\Kosta\\project\\tomcat\\webapps\\barbie-bookSystem-m-step2\\upload\\member\\</value>
 	</property>
 	<property name="memberWorkPath">
-		<value>E:\\Kosta\\project\\workspace\\project\\barbie-bookSystem-m-step2\\WebContent\\upload\\member\\</value>
+		<value>C:\\java-kosta\\bls\\barbie-bookSystem\\WebContent\\upload\\member\\</value>
 	</property>
 </bean>
 

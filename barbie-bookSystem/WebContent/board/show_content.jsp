@@ -50,6 +50,7 @@ table {
 		width: 450px;
 }
 </style>
+<div><a href="board.do?command=list&page=1"><img src="${initParam.root}/img/ui/layout/freeboard.jpg"></a><br><br></div>
 <center>
 	<div id="page">
 	<c:set value="${requestScope.bvo }" var="bvo"/>
@@ -82,12 +83,6 @@ table {
 			<table>
 				<tr>
 					<td id="replySize1"><b>&nbsp;ex) memberId</b></td><td id="replySize2">sysdate</td><td id="replySize3">->reply</td>
-				</tr>
-				<tr>
-					<td colspan="3">&nbsp;cont</td>
-				</tr>
-				<tr>
-					<td id="replySize1">&nbsp;<b>ex) memberId</b></td><td id="replySize2">sysdate</td><td id="replySize3">->reply</td>
 				</tr>
 				<tr>
 					<td colspan="3">&nbsp;cont</td>

@@ -72,7 +72,7 @@ table {
 </style>
 
 
-
+<div><a href="board.do?command=list&page=1"><img src="${initParam.root}/img/ui/layout/freeboard.jpg"></a><br><br></div>
 <center>
 <div id="page">
 	<form action="${initParam.root}/board.do" method="post" id="updateForm"
