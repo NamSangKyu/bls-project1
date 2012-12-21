@@ -1,0 +1,56 @@
+@CHARSET "UTF-8";
+/*			insert 		*/
+.title{	font-size:30px;
+			font-family:맑은 고딕;			
+			padding-bottom: 20px;}		
+tr{ 		height: 45px;								
+ 			font-family: 맑은 고딕 ,'Malgun Gothic';	 	}
+.insert_table{ 		border-bottom: 1px solid #8666fa;
+ 							border-top: 1px solid #8666fa;		
+ 							width:630px;			}
+.name{	width:80px;
+			background:#e6e6fa;
+			text-align: left;
+			font-size:  13px;
+			letter-spacing: 3px;
+			padding-left: 25px;
+			font-weight: bold;					}
+.value{	border-bottom: 1px solid #8666fa;
+			border-left: 1px solid #8666fa;		
+			font-size:13px;
+			text-align:left;
+			padding-left:35px;}
+.file{		width:150px;
+			border-bottom: 1px solid #8666fa;
+			border-left: 1px solid #8666fa;
+}
+#lastValue{	border-bottom: 0px solid #8666fa;	}
+
+/*			list			*/
+.board_table{	border-left:1px solid #8666fa;
+						border-right:1px solid #8666fa;
+						border-bottom:1px solid #8666fa;
+						width:630px;		}
+.board_header{	background:#e6e6fa;
+						text-align: center;
+						font-size:  13px;
+						letter-spacing: 3px;
+						font-weight: bold;			}
+.board_body{	font-size: 13px;
+					text-align: CENTER;
+					border-top: 1px solid #8666fa;				}
+					
+					
+					
+					ㄴ
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
