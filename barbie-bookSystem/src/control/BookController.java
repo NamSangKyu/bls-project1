@@ -13,6 +13,8 @@ import model.BookService;
 import model.vo.BookCommentVO;
 import model.vo.BookVO;
 import model.vo.ListVO;
+import model.vo.PublisherVO;
+import model.vo.SubjectVO;
 
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -307,5 +309,54 @@ public class BookController extends MultiActionController{
 		System.out.println(list.toString());
 		return new ModelAndView("JsonView","list",list);
 		}
-
+		public ModelAndView getPublisherList(HttpServletRequest request, HttpServletResponse response, BookCommentVO vo){
+			ArrayList<PublisherVO> list = null;
+			try {
+				list = service.getPublisherList();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(list.toString());
+			return new ModelAndView("JsonView","list",list); 
+		}
+		
+		public ModelAndView insertPublusher(HttpServletRequest request, HttpServletResponse response, BookCommentVO vo){
+			ArrayList<PublisherVO> list = null;
+			String publisher = request.getParameter("Publisher");
+			System.out.println(publisher);
+			try {
+				list = service.insertPublisher(publisher);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(list.toString());
+			return new ModelAndView("JsonView","list",list); 
+		}
+		public ModelAndView getSubjectList(HttpServletRequest request, HttpServletResponse response, BookCommentVO vo){
+			ArrayList<SubjectVO> list = null;
+			try {
+				list = service.getSubjectList();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(list.toString());
+			return new ModelAndView("JsonView","list",list); 
+		}
+		public ModelAndView insertSubject(HttpServletRequest request, HttpServletResponse response, BookCommentVO vo){
+			System.out.println("subjecinsert");
+			ArrayList<SubjectVO> list = null;
+			String subject = request.getParameter("subject");
+			System.out.println(subject);
+			try {
+				list = service.insertSubject(subject);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(list.toString());
+			return new ModelAndView("JsonView","list",list); 
+		}
 }
