@@ -8,6 +8,8 @@ import model.vo.BookCommentVO;
 import model.vo.BookVO;
 import model.vo.ListVO;
 import model.vo.PagingBean;
+import model.vo.PublisherVO;
+import model.vo.SubjectVO;
 
 public class BookService {
 	private BookDao dao;
@@ -127,6 +129,27 @@ public class BookService {
 	}
 	public void bookRentalCancle(String bookNo) {
 		dao.bookRentalCancle(bookNo);
+	}
+
+	
+	
+	public ArrayList<PublisherVO> getPublisherList() throws SQLException {
+		// TODO Auto-generated method stub
+		return dao.getPublisherList();
+	}
+	public ArrayList<PublisherVO> insertPublisher(String publisher) throws SQLException {
+		// TODO Auto-generated method stub
+		dao.insertPublisher(publisher);
+		return dao.getPublisherList();
+	}
+	public ArrayList<SubjectVO> getSubjectList() throws SQLException {
+		// TODO Auto-generated method stub
+		return dao.getSubjectList();
+	}
+	public ArrayList<SubjectVO> insertSubject(String subject) throws SQLException {
+		// TODO Auto-generated method stub
+		dao.insertSubject(subject);
+		return dao.getSubjectList();
 	}
 
 }

@@ -6,6 +6,8 @@ import java.util.HashMap;
 
 import model.vo.BookCommentVO;
 import model.vo.BookVO;
+import model.vo.PublisherVO;
+import model.vo.SubjectVO;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -149,4 +151,23 @@ public class BookDao {
 
 	public void bookRentalCancle(String bookNo) {
 	}
+	
+	
+
+public ArrayList<PublisherVO> getPublisherList() throws SQLException {
+	// TODO Auto-generated method stub
+	return (ArrayList<PublisherVO>) sqlMapClient.queryForList("book.getPublisherList");
+}
+public void insertPublisher(String publisher) throws SQLException {
+	// TODO Auto-generated method stub
+	sqlMapClient.insert("book.insertPublisher", publisher);
+}
+public ArrayList<SubjectVO> getSubjectList() throws SQLException {
+	// TODO Auto-generated method stub
+	return (ArrayList<SubjectVO>) sqlMapClient.queryForList("book.getSubjectList");
+}
+public void insertSubject(String subject) throws SQLException {
+	// TODO Auto-generated method stub
+	sqlMapClient.insert("book.insertSubject", subject);
+}
 }
