@@ -120,6 +120,19 @@ select subject from BLS_BOOK_SBJ
 		where b.publisherNo=p.publisherNo
 	</select>
 	
+	<select id="getPublisherList" resultClass="model.vo.PublisherVO">
+		select * from BLS_BOOK_PBS
+	</select>
+	<insert id="insertPublisher" parameterClass="String">
+		insert into BLS_BOOK_PBS values(bls_book_pbs_seq.nextval,#publisher#)
+	</insert>
+	<select id="getSubjectList" resultClass="model.vo.SubjectVO">
+		select * from BLS_BOOK_SBJ
+	</select>
+	<insert id="insertSubject" parameterClass="String">
+		insert into BLS_BOOK_SBJ values(bls_book_sbj_seq.nextval,#subject#)
+	</insert>
+	
 </sqlMap>
 
 
