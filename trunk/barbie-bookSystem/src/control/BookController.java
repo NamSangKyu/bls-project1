@@ -20,34 +20,43 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
-public class BookController extends MultiActionController{
+public class BookController extends MultiActionController {
 	private String path;
 	private BookService service;
 
 	public void setService(BookService service) {
 		this.service = service;
 	}
+
 	public void setPath(String path) {
 		this.path = path;
 	}
-	public ModelAndView home(HttpServletRequest request, HttpServletResponse response){
+
+	public ModelAndView home(HttpServletRequest request,
+			HttpServletResponse response) {
 		System.out.println("home");
-		return new ModelAndView("home","test","홈화면 타일즈 테스트");
+		return new ModelAndView("home", "test", "홈화면 타일즈 테스트");
 	}
-	public ModelAndView bookinfo(HttpServletRequest request, HttpServletResponse response){
+
+	public ModelAndView bookinfo(HttpServletRequest request,
+			HttpServletResponse response) {
 		System.out.println("bookinfo");
-		return new ModelAndView("info.book","test","bookinfo타일즈 테스트");
+		return new ModelAndView("info.book", "test", "bookinfo타일즈 테스트");
 	}
-	public ModelAndView bookInsert(HttpServletRequest request, HttpServletResponse response){
+
+	public ModelAndView bookInsert(HttpServletRequest request,
+			HttpServletResponse response) {
 		System.out.println("bookInsert");
-		return new ModelAndView("insert.book","test","bookInsert타일즈 테스트");
+		return new ModelAndView("insert.book", "test", "bookInsert타일즈 테스트");
 	}
-	//--------------------------------------------------
-	private String fileUpload(MultipartFile mfile,int isbn) {
-		System.out.println(mfile.getOriginalFilename());//파일 이름
-		String fileName = String.valueOf(System.currentTimeMillis()) + "_"+String.valueOf(isbn)+".jpg";
-		//업로드할 원본 파일을 이동시킬 파일 객체를 생성
-		File copyFile = new File(path+fileName);
+
+	// --------------------------------------------------
+	private String fileUpload(MultipartFile mfile, int isbn) {
+		System.out.println(mfile.getOriginalFilename());// 파일 이름
+		String fileName = String.valueOf(System.currentTimeMillis()) + "_"
+				+ String.valueOf(isbn) + ".jpg";
+		// 업로드할 원본 파일을 이동시킬 파일 객체를 생성
+		File copyFile = new File(path + fileName);
 		try {
 			mfile.transferTo(copyFile);
 		} catch (IllegalStateException e) {
@@ -57,14 +66,15 @@ public class BookController extends MultiActionController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("file upload ok~"+copyFile.getName());
+		System.out.println("file upload ok~" + copyFile.getName());
 		return fileName;
 	}
 
-	public ModelAndView insert(HttpServletRequest request, HttpServletResponse response, BookVO vo){
+	public ModelAndView insert(HttpServletRequest request,
+			HttpServletResponse response, BookVO vo) {
 		System.out.println("insert");
 		System.out.println(vo.toString());
-		String filename=null;
+		String filename = null;
 		try {
 			filename = service.checkBook(vo.getIsbn());
 		} catch (SQLException e1) {
@@ -72,14 +82,14 @@ public class BookController extends MultiActionController{
 			e1.printStackTrace();
 		}
 		System.out.println(filename);
-		if(filename==null){
+		if (filename == null) {
 			MultipartFile mfile = vo.getFile();
-			filename = fileUpload(mfile , vo.getIsbn());
+			filename = fileUpload(mfile, vo.getIsbn());
 		}
 		int bookno = 0;
 		try {
 			bookno = service.insert(vo, filename);
-			System.out.println("bookNo"+bookno);
+			System.out.println("bookNo" + bookno);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -93,9 +103,11 @@ public class BookController extends MultiActionController{
 			e.printStackTrace();
 		}
 
-		return new ModelAndView("info.book","map",map);
+		return new ModelAndView("info.book", "map", map);
 	}
-	public ModelAndView getBookAllList(HttpServletRequest request, HttpServletResponse response){
+
+	public ModelAndView getBookAllList(HttpServletRequest request,
+			HttpServletResponse response) {
 		ArrayList list = new ArrayList();
 		try {
 			list = service.getBookAllList();
@@ -103,9 +115,11 @@ public class BookController extends MultiActionController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return new ModelAndView("list.book","list",list);
+		return new ModelAndView("list.book", "list", list);
 	}
-	public ModelAndView getBookInfoTitle(HttpServletRequest request, HttpServletResponse response){
+
+	public ModelAndView getBookInfoTitle(HttpServletRequest request,
+			HttpServletResponse response) {
 		String title = request.getParameter("title");
 		HashMap map = new HashMap();
 		try {
@@ -114,17 +128,21 @@ public class BookController extends MultiActionController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return new ModelAndView("info.book","map",map);
+		return new ModelAndView("info.book", "map", map);
 	}
-	public ModelAndView getBookList(HttpServletRequest request, HttpServletResponse response){
+
+	public ModelAndView getBookList(HttpServletRequest request,
+			HttpServletResponse response) {
 		String nowPage = request.getParameter("nowPage");
 		ListVO list = service.getBookList(nowPage);
 		System.out.println("paging 완료");
 		System.out.println(list.getBean().getEndPageOfPageGroup());
 
-		return new ModelAndView("list.book","list",list);
+		return new ModelAndView("list.book", "list", list);
 	}
-	public ModelAndView updateSet(HttpServletRequest request, HttpServletResponse response){
+
+	public ModelAndView updateSet(HttpServletRequest request,
+			HttpServletResponse response) {
 		int isbn = Integer.parseInt(request.getParameter("isbn"));
 		HashMap map = null;
 		try {
@@ -133,15 +151,16 @@ public class BookController extends MultiActionController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return new ModelAndView("update.book","map",map);
+		return new ModelAndView("update.book", "map", map);
 	}
 
-	public ModelAndView updateBook(HttpServletRequest request, HttpServletResponse response){
+	public ModelAndView updateBook(HttpServletRequest request,
+			HttpServletResponse response) {
 		int isbn = Integer.parseInt(request.getParameter("isbn"));
 		String title = request.getParameter("title");
 		String writer = request.getParameter("writer");
 		String loc = request.getParameter("loc");
-		int publisherNo = Integer.parseInt(request.getParameter("publisherNo")) ;
+		int publisherNo = Integer.parseInt(request.getParameter("publisherNo"));
 		int subjectNo = Integer.parseInt(request.getParameter("subjectNo"));
 		String cont = request.getParameter("cont");
 		HashMap map = new HashMap();
@@ -160,11 +179,13 @@ public class BookController extends MultiActionController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return new ModelAndView("info.book","map",map);
+		return new ModelAndView("info.book", "map", map);
 	}
-	public ModelAndView getPblisherNo(HttpServletRequest request, HttpServletResponse response){
+
+	public ModelAndView getPblisherNo(HttpServletRequest request,
+			HttpServletResponse response) {
 		String publisher = request.getParameter("publisher");
-		int publisherNo=0;
+		int publisherNo = 0;
 		try {
 			publisherNo = service.getPublisherNo(publisher);
 		} catch (SQLException e) {
@@ -172,11 +193,13 @@ public class BookController extends MultiActionController{
 			e.printStackTrace();
 		}
 		System.out.println(publisherNo);
-		return new ModelAndView("JsonView","publisherNo",publisherNo);
+		return new ModelAndView("JsonView", "publisherNo", publisherNo);
 	}
-	public ModelAndView getSubjectNo(HttpServletRequest request, HttpServletResponse response){
+
+	public ModelAndView getSubjectNo(HttpServletRequest request,
+			HttpServletResponse response) {
 		String subject = request.getParameter("subject");
-		int subjectNo=0;
+		int subjectNo = 0;
 		try {
 			subjectNo = service.getSubjectNo(subject);
 		} catch (SQLException e) {
@@ -184,25 +207,13 @@ public class BookController extends MultiActionController{
 			e.printStackTrace();
 		}
 		System.out.println(subjectNo);
-		return new ModelAndView("JsonView","subjectNo",subjectNo);
+		return new ModelAndView("JsonView", "subjectNo", subjectNo);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	// 여기서부터 호희 추가로직
 	// 북 정보 뽑아올때 해당 북에 대한 예약 목록 가져오는 로직
-	public ModelAndView getBookInfoIsbn(HttpServletRequest request, HttpServletResponse response) throws SQLException{
+	public ModelAndView getBookInfoIsbn(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException {
 		int isbn = Integer.parseInt(request.getParameter("isbn"));
 		HashMap map = new HashMap();
 		try {
@@ -215,18 +226,20 @@ public class BookController extends MultiActionController{
 		ArrayList list = service.getBookState(isbn);
 		request.setAttribute("list", list);
 
-		return new ModelAndView("info.book","map",map);
+		return new ModelAndView("info.book", "map", map);
 	}
 
 	// 예약 버튼을 눌렀을 경우 도서상태 예약 취소 상태으로 바뀌는 Ajax
-	public ModelAndView bookResolve(HttpServletRequest request, HttpServletResponse response) throws SQLException{
+	public ModelAndView bookResolve(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException {
 		String bookNo = request.getParameter("bookNo");
 		service.bookResolve(bookNo);
 		return new ModelAndView("JsonView");
 	}
 
 	// 예약 취소 버튼을 눌렀을 경우 도서상태 예약상태로 바뀌는 Ajax
-	public ModelAndView bookResolveCancle(HttpServletRequest request, HttpServletResponse response)  throws SQLException{
+	public ModelAndView bookResolveCancle(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException {
 		System.out.println("ㅎㅎ");
 		String bookNo = request.getParameter("bookNo");
 		service.bookResolveCancle(bookNo);
@@ -234,13 +247,15 @@ public class BookController extends MultiActionController{
 	}
 
 	// 추가적인 로직인데 관리자가 로그인 하여 도서관리를 눌렀을 경우 도서전체에 대한 상태가 보여짐
-	public ModelAndView adminBook(HttpServletRequest request, HttpServletResponse response) throws SQLException{
+	public ModelAndView adminBook(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException {
 		ArrayList list = service.adminBook();
-		return new ModelAndView("admin_list.admin","list", list);
+		return new ModelAndView("admin_list.admin", "list", list);
 	}
 
 	// 관리자 도서관리 에서 대여 할 경우 진행될 소스
-	public ModelAndView bookRental(HttpServletRequest request, HttpServletResponse response) throws SQLException{
+	public ModelAndView bookRental(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException {
 		String bookNo = request.getParameter("bookNo");
 		String memberId = request.getParameter("memberId");
 		service.bookRental(bookNo, memberId);
@@ -248,115 +263,141 @@ public class BookController extends MultiActionController{
 	}
 
 	// 관리자 도서관리 에서 반납 할 경우 진행될 소스
-	public ModelAndView bookRentalCancle(HttpServletRequest request, HttpServletResponse response)  throws SQLException{
+	public ModelAndView bookRentalCancle(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException {
 		String bookNo = request.getParameter("bookNo");
 		service.bookRentalCancle(bookNo);
 		return new ModelAndView("JsonView");
 	}
-	//list 로 넣어야지!!
-		public  ModelAndView insertComment(HttpServletRequest request, HttpServletResponse response,BookCommentVO vo){
-		HashMap map=new HashMap();
-		ArrayList list=null;
-			try {
-		map=service.insertComment(vo); //insertCommentf를 하고나면 list가 채워지므로 null해도 오케
+
+	// list 로 넣어야지!!
+	public ModelAndView insertComment(HttpServletRequest request,
+			HttpServletResponse response, BookCommentVO vo) {
+		HashMap map = new HashMap();
+		ArrayList list = null;
+		try {
+			map = service.insertComment(vo); // insertCommentf를 하고나면 list가 채워지므로
+												// null해도 오케
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return new ModelAndView("JsonView","map",map);
-		
-			
-		}
-		public ModelAndView getCommentList(HttpServletRequest request, HttpServletResponse response){
-		String isbn=request.getParameter("isbn");
-		HashMap map=new HashMap();
-		ArrayList list=new ArrayList();
+		return new ModelAndView("JsonView", "map", map);
+
+	}
+
+	public ModelAndView getCommentList(HttpServletRequest request,
+			HttpServletResponse response) {
+		String isbn = request.getParameter("isbn");
+		HashMap map = new HashMap();
+		ArrayList list = new ArrayList();
 		try {
-			map=service.getCommentList(isbn);
-			System.out.println("list="+map.get("list"));
+			map = service.getCommentList(isbn);
+			System.out.println("list=" + map.get("list"));
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
-		return new ModelAndView("JsonView","map",map);
-		}
-		public ModelAndView recommandBook(HttpServletRequest request, HttpServletResponse response){
+		return new ModelAndView("JsonView", "map", map);
+	}
+
+	public ModelAndView recommandBook(HttpServletRequest request,
+			HttpServletResponse response) {
 		System.out.println("추천도서 컨트롤러 입성완료@@");
-		String subject=request.getParameter("subject");
-		ArrayList list=new ArrayList();
+		String subject = request.getParameter("subject");
+		ArrayList list = new ArrayList();
 		try {
-		if(subject==null||subject.equals("")){
-		list=service.recommandBook();	
-		return new ModelAndView("recommand.book","list",list);
-		}else{
-		list=service.recommandBook(subject);
-		}
-		}catch (SQLException e) {
+			if (subject == null || subject.equals("")) {
+				list = service.recommandBook();
+				return new ModelAndView("recommand.book", "list", list);
+			} else {
+				list = service.recommandBook(subject);
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println("list="+list);
-		return new ModelAndView("JsonView","list",list);
-			
-		}
-		
-		public ModelAndView getSubject(HttpServletRequest request, HttpServletResponse response){
+		System.out.println("list=" + list);
+		return new ModelAndView("JsonView", "list", list);
+
+	}
+
+	public ModelAndView getSubject(HttpServletRequest request,
+			HttpServletResponse response) {
 		System.out.println("getSubjectController입성완료");
-		ArrayList list=new ArrayList();
+		ArrayList list = new ArrayList();
 		try {
-		list=service.getSubject();
+			list = service.getSubject();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		System.out.println(list.toString());
-		return new ModelAndView("JsonView","list",list);
+		return new ModelAndView("JsonView", "list", list);
+	}
+
+	public ModelAndView getPublisherList(HttpServletRequest request,
+			HttpServletResponse response, BookCommentVO vo) {
+		ArrayList<PublisherVO> list = null;
+		try {
+			list = service.getPublisherList();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		public ModelAndView getPublisherList(HttpServletRequest request, HttpServletResponse response, BookCommentVO vo){
-			ArrayList<PublisherVO> list = null;
-			try {
-				list = service.getPublisherList();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			System.out.println(list.toString());
-			return new ModelAndView("JsonView","list",list); 
+		System.out.println(list.toString());
+		return new ModelAndView("JsonView", "list", list);
+	}
+
+	public ModelAndView insertPublusher(HttpServletRequest request,
+			HttpServletResponse response, BookCommentVO vo) {
+		ArrayList<PublisherVO> list = null;
+		String publisher = request.getParameter("Publisher");
+		System.out.println(publisher);
+		try {
+			list = service.insertPublisher(publisher);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		public ModelAndView insertPublusher(HttpServletRequest request, HttpServletResponse response, BookCommentVO vo){
-			ArrayList<PublisherVO> list = null;
-			String publisher = request.getParameter("Publisher");
-			System.out.println(publisher);
-			try {
-				list = service.insertPublisher(publisher);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			System.out.println(list.toString());
-			return new ModelAndView("JsonView","list",list); 
+		System.out.println(list.toString());
+		return new ModelAndView("JsonView", "list", list);
+	}
+
+	public ModelAndView getSubjectList(HttpServletRequest request,
+			HttpServletResponse response, BookCommentVO vo) {
+		ArrayList<SubjectVO> list = null;
+		try {
+			list = service.getSubjectList();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		public ModelAndView getSubjectList(HttpServletRequest request, HttpServletResponse response, BookCommentVO vo){
-			ArrayList<SubjectVO> list = null;
-			try {
-				list = service.getSubjectList();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			System.out.println(list.toString());
-			return new ModelAndView("JsonView","list",list); 
+		System.out.println(list.toString());
+		return new ModelAndView("JsonView", "list", list);
+	}
+
+	public ModelAndView insertSubject(HttpServletRequest request,
+			HttpServletResponse response, BookCommentVO vo) {
+		System.out.println("subjecinsert");
+		ArrayList<SubjectVO> list = null;
+		String subject = request.getParameter("subject");
+		System.out.println(subject);
+		try {
+			list = service.insertSubject(subject);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		public ModelAndView insertSubject(HttpServletRequest request, HttpServletResponse response, BookCommentVO vo){
-			System.out.println("subjecinsert");
-			ArrayList<SubjectVO> list = null;
-			String subject = request.getParameter("subject");
-			System.out.println(subject);
-			try {
-				list = service.insertSubject(subject);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			System.out.println(list.toString());
-			return new ModelAndView("JsonView","list",list); 
-		}
+		System.out.println(list.toString());
+		return new ModelAndView("JsonView", "list", list);
+	}
+
+	public ModelAndView publisher(HttpServletRequest request,
+			HttpServletResponse response) {
+		return new ModelAndView("publisher.admin");
+	}
+
+	public ModelAndView subject(HttpServletRequest request,
+			HttpServletResponse response) {
+		return new ModelAndView("subject.admin");
+	}
+
 }
