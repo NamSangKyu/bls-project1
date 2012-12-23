@@ -31,6 +31,9 @@ table {
     tfoot td{
     	height: 40px;
     }
+.prenext{
+	font-size: 10pt;
+}
 #title {
 	text-align: left;
 }
@@ -49,8 +52,19 @@ table {
 #replySize3 {
 		width: 450px;
 }
+#prenext1 {
+		width: 50px;
+}
+#prenext2 {
+		width: 420px;
+}
+#prenext3 {
+		width: 50px;
+}
+#prenext4 {
+		width: 80px;
+}
 </style>
-<div><a href="board.do?command=list&page=1"><img src="${initParam.root}/img/ui/layout/freeboard.jpg"></a><br><br></div>
 <center>
 	<div id="page">
 	<c:set value="${requestScope.bvo }" var="bvo"/>
@@ -112,6 +126,20 @@ table {
 			</c:if>
 			<a href="board.do?command=list&page=${requestScope.page }"><img src="${initParam.root}/img/ui/board/list_btn.jpg"></a>
 	</td>
+	</table>
+	<table>
+		<tr>
+			<td id="prenext1"><img src="${initParam.root}/img/ui/board/pre.jpg"></td>
+			<td id="prenext2"><a href="board.do?command=showContent&boardNo=${requestScope.nextpre.PRE_BOARDNO}&page=${requestScope.page }" class="prenext">${requestScope.nextpre.PRE_TITLE }</a></td>
+			<td id="prenext3">${requestScope.nextpre.MEMBERID }</td>
+			<td id="prenext4">${requestScope.nextpre.BOARDDATE }</td>
+		</tr>
+		<tr>
+			<td id="prenext1"><img src="${initParam.root}/img/ui/board/next.jpg"></td>
+			<td id="prenext2"><a href="board.do?command=showContent&boardNo=${requestScope.nextpre.NEXT_BOARDNO}&page=${requestScope.page }" class="prenext">${requestScope.nextpre.NEXT_TITLE }</a></td>
+			<td id="prenext3">${requestScope.nextpre.MEMBERID }</td>
+			<td id="prenext4">${requestScope.nextpre.BOARDDATE }</td>
+		</tr>
 	</table>
 	</div>
 </center>

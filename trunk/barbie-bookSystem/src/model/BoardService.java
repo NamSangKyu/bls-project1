@@ -75,4 +75,8 @@ public class BoardService {
 		String date = boardDao.getDate(boardNo);
 		bvo.setBoardDate(date);
 	}
+
+	public HashMap NextAndPreContent(String boardNo) throws SQLException {
+		return boardDao.NextAndPreContent(boardNo);
+	}
 }
