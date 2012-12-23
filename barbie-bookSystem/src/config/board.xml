@@ -70,4 +70,14 @@
 		insert into bls_board(boardNo, title, memberId, boardDate, orgFileName, newFileName, cont, ref, restep, relevel)
 		values(#boardNo#, #title#, #memberId#, sysdate, #orgFileName#, #newFileName#, #cont#, #ref#, #restep#, #relevel#)
 	</insert>	
+	
+	<!-- 현재 게시물의 이전 과 다음 게시물을 가져오는 로직 -->
+	<select id="NextAndPreContent" resultClass="java.util.HashMap">
+		select * from(select boardNo, memberId, boardDate,
+		lead(title,1,'이전 게시물이 존재하지 않습니다') over (order by boardNo) pre_title,
+    	lead(boardNo,1,'0') over (order by boardNo) pre_boardNo,
+    	lag(title,1,'다음 게시물이 존재하지 않습니다') over (order by boardNo) next_title,
+    	lag(boardNo,1,'0') over (order by boardNo) next_boardNo
+    	from bls_board where relevel='0') where boardNo=#value#
+	</select>
 </sqlMap>

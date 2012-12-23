@@ -27,3 +27,15 @@ drop sequence bls_board_seq
 select * from BLS_BOARD order by ref desc, restep asc 
 
 
+select * from
+(
+    select boardNo,
+    lead(title,1,'다음 게시물이 존재하지 않습니다') over (order by boardNo) next_title,
+    lead(boardNo,1,'0') over (order by boardNo) next_boardNo,
+    lag(title,1,'이전 게시물이 존재하지 않습니다') over (order by boardNo) pre_title,
+    lag(boardNo,1,'0') over (order by boardNo) pre_boardNo
+    from bls_board where relevel='0'
+) 
+where boardNo='50'
+
+

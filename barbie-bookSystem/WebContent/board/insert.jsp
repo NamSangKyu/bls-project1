@@ -60,8 +60,8 @@ table {
 				<td><input type="file" name="uploadFile"></td>
 			</tr>
 			<tr>
-				<td colspan=2><textarea cols="82" rows="12" id="cont"
-						name="cont"></textarea></td>
+				<td colspan=2><b><textarea cols="82" rows="12" id="cont"
+						name="cont"></textarea></b></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center"><img

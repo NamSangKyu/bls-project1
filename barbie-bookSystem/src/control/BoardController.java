@@ -55,6 +55,8 @@ public class BoardController extends MultiActionController {
 		boardService.insert(bvo);
 		// 글쓰기를 하는 경우는 page 값을 1 으로 지정
 		request.setAttribute("page", 1);
+		HashMap map = boardService.NextAndPreContent(Integer.toString(bvo.getBoardNo()));
+		request.setAttribute("nextpre", map);
 		return new ModelAndView("show_content.board", "bvo", bvo);
 	}
 	
@@ -64,6 +66,8 @@ public class BoardController extends MultiActionController {
 		String page = request.getParameter("page");
 		request.setAttribute("page", page);
 		BoardVO bvo = boardService.showContent(boardNo);
+		HashMap map = boardService.NextAndPreContent(boardNo);
+		request.setAttribute("nextpre", map);
 		return new ModelAndView("show_content.board", "bvo", bvo);
 	}
 	
@@ -119,6 +123,8 @@ public class BoardController extends MultiActionController {
 		System.out.println("업데이트 bvo 상태 : " + bvo);
 		bvo = boardService.showContentNoCount(boardNo);
 		request.setAttribute("page", page);
+		HashMap map = boardService.NextAndPreContent(boardNo);
+		request.setAttribute("nextpre", map);
 		return new ModelAndView("show_content.board", "bvo", bvo);
 	}
 	
@@ -176,6 +182,8 @@ public class BoardController extends MultiActionController {
 		boardService.replyContent(bvo);
 		String page = request.getParameter("page");
 		request.setAttribute("page", page);
+		HashMap map = boardService.NextAndPreContent(Integer.toString(bvo.getBoardNo()));
+		request.setAttribute("nextpre", map);
 		return new ModelAndView("show_content.board", "bvo", bvo);
 	}
 }

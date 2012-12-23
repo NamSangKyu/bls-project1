@@ -14,7 +14,7 @@
 		<ref bean="methodNameResolver"/>
 	</property>
 	<property name="memberPath">
-		<value>E:\\Kosta\\project\\tomcat\\webapps\\barbie-bookSystem-m-step2\\upload\\member\\</value>
+		<value>C:\\servers\\project-tomcat\\webapps\\barbie-bookSystem\\upload\\member\\</value>
 	</property>
 	<property name="memberWorkPath">
 		<value>C:\\java-kosta\\bls\\barbie-bookSystem\\WebContent\\upload\\member\\</value>

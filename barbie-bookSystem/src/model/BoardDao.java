@@ -2,6 +2,7 @@ package model;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import model.vo.BoardVO;
@@ -54,6 +55,10 @@ public class BoardDao {
 
 	public int replyContent(BoardVO bvo) throws SQLException {
 		return (int) sqlMapClient.insert("board.replyContent", bvo);
+	}
+
+	public HashMap NextAndPreContent(String boardNo) throws SQLException {
+		return (HashMap) sqlMapClient.queryForObject("board.NextAndPreContent", boardNo);
 	}
 	
 	
