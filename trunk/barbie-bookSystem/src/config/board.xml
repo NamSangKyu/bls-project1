@@ -4,19 +4,19 @@
 <sqlMap namespace="board">
 	<!-- 별칭지정 -->
 	<typeAlias alias="boardvo" type="model.vo.BoardVO"/>
-	
+	<typeAlias alias="bcvo" type="model.vo.BoardCommentVO"/>
 	<!-- 게시물을 DB 에 저장하는 과정 boardNo 하고 boardDate 정보 추가 이때 boardNo 는 boardvo 에 자동 setting 됨 -->
 	<insert id="insert" parameterClass="boardvo">
 		<selectKey keyProperty="boardNo" resultClass="int">
 			select bls_board_seq.nextval from dual
 		</selectKey>
-		<!-- insert 시에 count 는 default 값으로 0 이 주어지고 ref 에는 boardNo 값이 restep, relevel 에는 int 형 초기화 값인 0 저장 -->
+		<!-- insert 시에 count/commentCount 는 default 값으로 0 이 주어지고 ref 에는 boardNo 값이 restep, relevel 에는 int 형 초기화 값인 0 저장 -->
 		insert into bls_board(boardNo, title, memberId, boardDate, orgFileName, newFileName, cont, ref, restep, relevel)
 		values(#boardNo#, #title#, #memberId#, sysdate, #orgFileName#, #newFileName#, #cont#, #boardNo#, #restep#, #relevel#)
 	</insert>	
 	
 	<!-- 게시물을 쓴 다음에 날짜정보를 보여주기 위해 boardvo 에 setting -->
-	<select id="getDate" parameterClass="int" resultClass="string">
+	<select id="getBoardDate" parameterClass="int" resultClass="string">
 		select to_char(boardDate,'YYYY.MM.DD HH24:MI') as boardDate from bls_board where boardNo=#value#
 	</select>
 	
@@ -47,9 +47,9 @@
 	
 	<!-- PagingBean 을 적용한 전체 게시물 목록(조건추가 1. 작성시간이 오늘 날짜일 경우엔 시간으로만 표기 아닌 경우는 날짜로 표기 -->
 	<select id="list" parameterClass="hashmap" resultClass="boardvo">
-		select boardNo, title, memberId, memberId, boardDate, count, orgFileName, newFileName, cont, ref, restep, relevel from
-		(select ceil(rownum/#num#) as page, boardNo, title, memberId, boardDate, count, orgFileName, newFileName, cont, ref, restep, relevel from
-		(select boardNo, title, memberId, count, orgFileName, newFileName, cont, ref, restep, relevel,
+		select boardNo, title, memberId, memberId, boardDate, count, commentCount, orgFileName, newFileName, cont, ref, restep, relevel from
+		(select ceil(rownum/#num#) as page, boardNo, title, memberId, boardDate, count, commentCount, orgFileName, newFileName, cont, ref, restep, relevel from
+		(select boardNo, title, memberId, count, commentCount, orgFileName, newFileName, cont, ref, restep, relevel,
 		case to_char(boardDate) when to_char(sysdate) then to_char(boardDate, 'HH24:MI')
 		else to_char(boardDate, 'YYYY.MM.DD')
 		end as boardDate
@@ -80,4 +80,36 @@
     	lag(boardNo,1,'0') over (order by boardNo) next_boardNo
     	from bls_board where relevel='0') where boardNo=#value#
 	</select>
+	
+	<!-- 해당 게시물 댓글 달기 전 commentCount 증가 -->
+	<update id="updateCommentCount">
+		update bls_board set commentCount=commentCount+1 where boardNo=#value#
+	</update>
+	
+	<!-- 댓글을 DB 에 저장하는 과정 commentNo 하고 commentDate 정보 추가 이때 commentNo 는 bcvo 에 자동 setting 됨 -->
+	<insert id="commentContent" parameterClass="bcvo">
+		<selectKey keyProperty="commentNo" resultClass="int">
+			select bls_board_comment_seq.nextval from dual
+		</selectKey>
+		insert into bls_board_comment(commentNo, boardNo, memberId, commentDate, cont)
+		values(#commentNo#, #boardNo#, #memberId#, sysdate, #cont#)
+	</insert>	
+
+	<!-- 댓글을 쓴 다음에 날짜정보를 보여주기 위해 bcvo 에 setting -->
+	<select id="getCommentDate" resultClass="string">
+		select to_char(commentDate,'YYYY.MM.DD HH24:MI') as commentDate from bls_board_comment where commentNo=#value#
+	</select>
+	
+	<!-- 현재 게시물의 댓글 목록을 가져오는 로직 -->
+	<select id="commentList" resultClass="bcvo">
+		select * from
+		(select boardNo, commentNo, memberId, to_char(commentDate,'YYYY.MM.DD HH24:MI') as commentDate, cont
+		 from bls_board_comment order by commentNo asc)
+		where boardNo=#value#
+	</select>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteComment">
+		delete from bls_board_comment where boardNo=#value#
+	</delete>
 </sqlMap>

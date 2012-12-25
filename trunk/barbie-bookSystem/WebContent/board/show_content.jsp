@@ -1,12 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+  <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#deleteImg").click(function() {
 			if (confirm("삭제 하시겠습니까?"))
 				location.href = "board.do?command=delete&boardNo=${requestScope.bvo.boardNo }&newFileName=${requestScope.bvo.newFileName }&page=${requestScope.page }";
+		});
+		
+		$("#commentBtn").click(function() {
+			if ($("#cont").val() == "") {
+					alert("내용을 입력해주십시오");
+					return;
+			}
+			$("#commentForm").submit();
 		});
 	});
 </script>
@@ -34,23 +43,31 @@ table {
 .prenext{
 	font-size: 10pt;
 }
+.listHref:link{
+		line-height: 5px;
+		text-decoration: none;
+		color: #708491;
+}
+
+.listHref:link.active, visited.active{
+		padding-bottom: 6px;
+		color: #cd1039; 
+}
+
+.listHref:hover{
+		text-decoration: underline;
+		padding-bottom: 6px;
+		color: #cd1039; 
+}
+
 #title {
 	text-align: left;
 }
 #page {
 	font-family: 'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
 }
-#replyPage{
+#commentPage{
 	background: #D2D2FF;
-}
-#replySize1 {
-		width: 100px;
-}
-#replySize2 {
-		width: 50px;
-}
-#replySize3 {
-		width: 450px;
 }
 #prenext1 {
 		width: 50px;
@@ -84,31 +101,44 @@ table {
 				</c:if></td>
 		</tr>
 		<tr>
-			<td colspan="2"><textarea cols="82" rows="12" id="cont"
+			<td colspan="2"><textarea cols="82" rows="12"
 					name="cont" readonly="readonly" disabled="disabled">${bvo.cont }</textarea></td>
 		</tr>
 		<tr>
-			<td colspan="2">&nbsp;<font color="#46649B"><b>덧글 ? 개</b></font> | <b>조회수 ${bvo.count }</b></td>
+			<td colspan="2">&nbsp;<font color="#46649B"><b>덧글 ${fn:length(cList)} 개</b></font> | <b>조회수 ${bvo.count }</b></td>
 		</tr>
 		<tr>
-		
 			<td colspan="2">
-			<div id="replyPage">&nbsp;덧글 페이지<br>
+			<div id="commentPage">
 			<table>
+					<c:forEach items="${requestScope.cList }" var="comment">
+						<tr>
+							<td>&nbsp;<b>${comment.memberId }</b>&nbsp;&nbsp;${comment.commentDate }<br>&nbsp;${comment.cont }</td>
+							<td align="right">
+								<c:if test="${mvo.memberId == comment.memberId }">
+									<a href="#" class="listHref">수정</a>
+								</c:if>
+								<c:if test="${mvo.memberId == 'java' || mvo.memberId == comment.memberId }">
+									<a href="#" class="listHref">삭제</a>
+								</c:if>
+							</td>
+						</tr>
+					</c:forEach>
+				<c:if test="${mvo != null }">
 				<tr>
-					<td id="replySize1"><b>&nbsp;ex) memberId</b></td><td id="replySize2">sysdate</td><td id="replySize3">->reply</td>
+					<td>
+						<form action="board.do" method="post" id="commentForm">
+							<input type="hidden" name="command" value="commentContent">
+							<input type="hidden" name="boardNo" value="${bvo.boardNo }">
+							<input type="hidden" name="memberId" value="${mvo.memberId }">
+							<input type="hidden" name="page" value="${requestScope.page }">
+							<input type="text" name="cont" size="80" id="cont">
+						</form>				
+					</td>
+					<td><input type="image" src="${initParam.root}/img/ui/board/comment.jpg" id="commentBtn"></td>
 				</tr>
-				<tr>
-					<td colspan="3">&nbsp;cont</td>
-				</tr>
-			</table>
-			<br>
-			<table>
-				<tr>
-					<td><textarea cols="70" rows="3" id="cont" name="cont" readonly="readonly"></textarea></td>
-					<td><input type="button" value="덧글입력"></td>
-				</tr>
-			</table>					
+				</c:if>
+			</table>	
 			</div>
 			</td>
 		</tr>
@@ -128,18 +158,38 @@ table {
 	</td>
 	</table>
 	<table>
-		<tr>
-			<td id="prenext1"><img src="${initParam.root}/img/ui/board/pre.jpg"></td>
-			<td id="prenext2"><a href="board.do?command=showContent&boardNo=${requestScope.nextpre.PRE_BOARDNO}&page=${requestScope.page }" class="prenext">${requestScope.nextpre.PRE_TITLE }</a></td>
-			<td id="prenext3">${requestScope.nextpre.MEMBERID }</td>
-			<td id="prenext4">${requestScope.nextpre.BOARDDATE }</td>
-		</tr>
-		<tr>
-			<td id="prenext1"><img src="${initParam.root}/img/ui/board/next.jpg"></td>
-			<td id="prenext2"><a href="board.do?command=showContent&boardNo=${requestScope.nextpre.NEXT_BOARDNO}&page=${requestScope.page }" class="prenext">${requestScope.nextpre.NEXT_TITLE }</a></td>
-			<td id="prenext3">${requestScope.nextpre.MEMBERID }</td>
-			<td id="prenext4">${requestScope.nextpre.BOARDDATE }</td>
-		</tr>
+		<c:if test="${bvo.relevel == 0 }">
+			<tr>
+				<td id="prenext1"><img src="${initParam.root}/img/ui/board/pre.jpg"></td>
+				<td id="prenext2">
+					<c:choose>
+						<c:when test="${requestScope.nextpre.PRE_BOARDNO != 0 }">
+							<a href="board.do?command=showContent&boardNo=${requestScope.nextpre.PRE_BOARDNO}&page=${requestScope.page }" class="prenext">${requestScope.nextpre.PRE_TITLE }</a>
+						</c:when>
+						<c:otherwise>
+							${requestScope.nextpre.PRE_TITLE }
+						</c:otherwise>
+					</c:choose>
+					</td>
+				<td id="prenext3">${requestScope.nextpre.MEMBERID }</td>
+				<td id="prenext4">${requestScope.nextpre.BOARDDATE }</td>
+			</tr>
+			<tr>
+				<td id="prenext1"><img src="${initParam.root}/img/ui/board/next.jpg"></td>
+				<td id="prenext2">
+					<c:choose>
+						<c:when test="${requestScope.nextpre.NEXT_BOARDNO != 0 }">
+							<a href="board.do?command=showContent&boardNo=${requestScope.nextpre.NEXT_BOARDNO}&page=${requestScope.page }" class="prenext">${requestScope.nextpre.NEXT_TITLE }</a>
+						</c:when>
+						<c:otherwise>
+							${requestScope.nextpre.NEXT_TITLE }
+						</c:otherwise>
+					</c:choose>	
+				</td>
+				<td id="prenext3">${requestScope.nextpre.MEMBERID }</td>
+				<td id="prenext4">${requestScope.nextpre.BOARDDATE }</td>
+			</tr>
+		</c:if>
 	</table>
 	</div>
 </center>
