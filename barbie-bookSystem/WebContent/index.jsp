@@ -9,4 +9,4 @@
 <body>
 <jsp:forward page="book.do?command=getBookList&nowPage=1"></jsp:forward>
 </body>
-</html>
+</html> 	

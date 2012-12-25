@@ -12,6 +12,7 @@ public class BoardVO {
 	private String orgFileName; // 업로드한 원본 파일명
 	private String newFileName; // 시간_파일명 변경 파일명
 	private String cont;
+	private String commentCount;
 	private int ref;
 	private int restep;
 	private int relevel;
@@ -22,8 +23,8 @@ public class BoardVO {
 
 	public BoardVO(int boardNo, String title, String memberId,
 			String boardDate, int count, MultipartFile uploadFile,
-			String orgFileName, String newFileName, String cont, int ref,
-			int restep, int relevel) {
+			String orgFileName, String newFileName, String cont,
+			String commentCount, int ref, int restep, int relevel) {
 		super();
 		this.boardNo = boardNo;
 		this.title = title;
@@ -34,6 +35,7 @@ public class BoardVO {
 		this.orgFileName = orgFileName;
 		this.newFileName = newFileName;
 		this.cont = cont;
+		this.commentCount = commentCount;
 		this.ref = ref;
 		this.restep = restep;
 		this.relevel = relevel;
@@ -111,6 +113,14 @@ public class BoardVO {
 		this.cont = cont;
 	}
 
+	public String getCommentCount() {
+		return commentCount;
+	}
+
+	public void setCommentCount(String commentCount) {
+		this.commentCount = commentCount;
+	}
+
 	public int getRef() {
 		return ref;
 	}
@@ -140,7 +150,8 @@ public class BoardVO {
 				+ ", memberId=" + memberId + ", boardDate=" + boardDate
 				+ ", count=" + count + ", uploadFile=" + uploadFile
 				+ ", orgFileName=" + orgFileName + ", newFileName="
-				+ newFileName + ", cont=" + cont + ", ref=" + ref + ", restep="
-				+ restep + ", relevel=" + relevel + "]";
+				+ newFileName + ", cont=" + cont + ", commentCount="
+				+ commentCount + ", ref=" + ref + ", restep=" + restep
+				+ ", relevel=" + relevel + "]";
 	}
 }

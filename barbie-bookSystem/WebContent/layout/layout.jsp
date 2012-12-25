@@ -24,7 +24,7 @@ css로 페이지 레이아웃을 구성
 #main{
 	width: 1200px;
 	padding: 5px;
-	height:600px;
+	height:700px;
 	margin-left: auto; 
 	margin-right: auto;
 }

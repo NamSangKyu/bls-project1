@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import model.vo.BoardCommentVO;
 import model.vo.BoardVO;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
 public class BoardDao {
+	private static final String String = null;
 	private SqlMapClient sqlMapClient;
 
 	public BoardDao(SqlMapClient sqlMapClient) {
@@ -21,8 +23,8 @@ public class BoardDao {
 		return (int) sqlMapClient.insert("board.insert", bvo);
 	}
 
-	public String getDate(int boardNo) throws SQLException {
-		return (String) sqlMapClient.queryForObject("board.getDate", boardNo);
+	public String getBoardDate(int boardNo) throws SQLException {
+		return (String) sqlMapClient.queryForObject("board.getBoardDate", boardNo);
 	}
 
 	public void delete(String boardNo) throws SQLException {
@@ -60,7 +62,24 @@ public class BoardDao {
 	public HashMap NextAndPreContent(String boardNo) throws SQLException {
 		return (HashMap) sqlMapClient.queryForObject("board.NextAndPreContent", boardNo);
 	}
-	
-	
-	
+
+	public int commentContent(BoardCommentVO bcvo) throws SQLException {
+		return (int) sqlMapClient.insert("board.commentContent", bcvo);
+	}
+
+	public String getCommentDate(int commentNo) throws SQLException {
+		return (String) sqlMapClient.queryForObject("board.getCommentDate", commentNo);
+	}
+
+	public ArrayList<BoardCommentVO> commentList(String boardNo) throws SQLException {
+		return (ArrayList<BoardCommentVO>) sqlMapClient.queryForList("board.commentList", boardNo);
+	}
+
+	public void deleteComment(String boardNo) throws SQLException {
+		sqlMapClient.delete("board.deleteComment", boardNo);
+	}
+
+	public void updateCommentCount(int boardNo) throws SQLException {
+		sqlMapClient.update("board.updateCommentCount", boardNo);
+	}
 }
