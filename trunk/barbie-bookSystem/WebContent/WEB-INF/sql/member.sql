@@ -13,7 +13,7 @@ create table bls_member(
 drop table bls_member;
 
 create table bls_book_sbj(
-	subjectNo varchar2(50)
+	subjectNo varchar2(50),
 	subject varchar2(50)
 )
 
