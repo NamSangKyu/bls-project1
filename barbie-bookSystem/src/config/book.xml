@@ -197,6 +197,21 @@ where num<![CDATA[<]]>6
 	<select id="getBookListByWriterCount" parameterClass="String" resultClass="int">
 		select count(*) from (select distinct(isbn) as s_isbn, title, writer, cont, isbn ,loc, s.subject as b_subject, p.publisher as b_publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno and writer like '%' || #value# || '%')
 	</select>
+	
+	<select id="getNewBook" resultClass="java.util.HashMap" parameterClass="String">
+select outputDate,isbn, newbook, title, writer, subject, publisher from (
+select outputDate, ceil(rownum/5) as page , isbn, newbook, title, writer, subject, publisher from (
+select outputDate, isbn, newbook, title, writer, subject, publisher from (
+select distinct(b.isbn), trunc (sysdate-outputDate) as newbook,  b.title, b.writer, s.subject, p.publisher, to_char(b.outputDate,'yyyy-mm-dd') as outputDate from bls_book b , BLS_BOOK_PBS p, BLS_BOOK_SBJ s
+where s.subjectNo=b.subjectNo and p.publisherNo=b.publisherNo)where newbook <![CDATA[<]]>30 order by newbook asc)) where page=#pageNo#
+</select>
+
+<select id="getNewBookCount" resultClass="int">
+select count(*) from (
+select distinct(b.isbn), trunc (sysdate-outputDate) as newbook,  b.title, b.writer, s.subject, p.publisher, to_char(b.outputDate,'yyyy-mm-dd') as outputDate from bls_book b , BLS_BOOK_PBS p, BLS_BOOK_SBJ s
+where s.subjectNo=b.subjectNo and p.publisherNo=b.publisherNo)where newbook <![CDATA[<]]> 30
+
+</select>   
 </sqlMap>
 
 
