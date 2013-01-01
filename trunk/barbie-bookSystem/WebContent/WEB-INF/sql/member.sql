@@ -7,8 +7,7 @@ create table bls_member(
 	subject1 varchar2(50) not null,
 	subject2 varchar2(50) not null,
 	subject3 varchar2(50) not null,
-	orgfilename varchar2(70) ,
-	newfilename varchar2(70)
+	mImg varchar2(50)
 )
 drop table bls_member;
 
