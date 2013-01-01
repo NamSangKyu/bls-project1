@@ -17,7 +17,7 @@
     	select distinct(isbn), title, writer, cont, isbn ,loc, img, s.subject, p.publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno and title = #title#
     </select>
 	<insert id="insert" parameterClass="java.util.HashMap">
-		insert into bls_book(bookNo,isbn,title,writer,cont,loc,img,subjectNo,publisherNo,outputDate) values(#bookno#,#vo.isbn#,#vo.title#,#vo.writer#,#vo.cont#,#vo.loc#,#file#,#vo.subjectNo#,#vo.publisherNo#,to_date(#vo.outputDate#,'MM/DD/YYYY'))
+		insert into bls_book(bookNo,isbn,title,writer,cont,loc,img,subjectNo,publisherNo,outputDate) values(#bookno#,#vo.isbn#,#vo.title#,#vo.writer#,#vo.cont#,#vo.loc#,#file#,#vo.subjectNo#,#vo.publisherNo#,to_date(#vo.outputDate#,'YYYY/MM/DD'))
 	</insert>  	
 	<select id="getBookAllList" resultClass="java.util.HashMap" parameterClass="int">
 		select page, bookno, title, writer,loc, subject, publisher from (select ceil(rownum/10) as page, bookno, title, writer,loc, subject, publisher from (select bookno, title, writer,loc, subject, publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno order by bookno asc)) where page = #page#
