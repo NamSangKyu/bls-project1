@@ -54,7 +54,7 @@ CREATE TABLE bls_book_sbj(
 
 --출판사분류 테이블
 drop table bls_book_pbs;
-
+select * from bls_book_pbs
 CREATE TABLE bls_book_pbs(
  	publisherNo number PRIMARY KEY,
  	publisher varchar2(50)

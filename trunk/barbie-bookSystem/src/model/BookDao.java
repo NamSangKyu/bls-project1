@@ -46,7 +46,11 @@ public class BookDao {
 
 	public ArrayList getBookAllList() throws SQLException {
 		// TODO Auto-generated method stub
-		return (ArrayList) sqlMapClient.queryForList("book.getBookAllList");
+		return (ArrayList) sqlMapClient.queryForList("book.getBookAllList",1);
+	}
+	public ArrayList getBookAllListAdmin(String page) throws SQLException {
+		// TODO Auto-generated method stub
+		return (ArrayList) sqlMapClient.queryForList("book.getBookAllList",Integer.parseInt(page));
 	}
 
 	public HashMap getBookInfoTitle(String title) throws SQLException {
@@ -129,6 +133,7 @@ public class BookDao {
 	}
 	public void insertPublisher(String publisher) throws SQLException {
 		// TODO Auto-generated method stub
+		System.out.println(publisher);
 		sqlMapClient.insert("book.insertPublisher", publisher);
 	}
 	public ArrayList<SubjectVO> getSubjectList() throws SQLException {
@@ -178,5 +183,90 @@ public class BookDao {
 	}
 	public int getAllBookCount() throws SQLException{
 		return (Integer)sqlMapClient.queryForObject("book.getAllBookCount");		// 전체 글수
+	}
+	//출판사 및 분류
+	public void deleteBook(int bookno) throws SQLException {
+		// TODO Auto-generated method stub
+		sqlMapClient.delete("book.deleteBook",bookno);
+	}
+
+	public void deletePublisher(int publisherNo) throws SQLException {
+		// TODO Auto-generated method stub
+		sqlMapClient.delete("book.deletePublisher",publisherNo);
+	}
+
+	public ArrayList<PublisherVO> getPublisher(String publisher) throws SQLException {
+		// TODO Auto-generated method stub
+		return (ArrayList<PublisherVO>) sqlMapClient.queryForList("book.getPublisher", publisher);
+	}
+
+	public void updateBookPublisher(int publisherNo) throws SQLException {
+		// TODO Auto-generated method stub
+		sqlMapClient.update("book.updateBookPublisher", publisherNo);
+	}
+
+	public void updateBookSubject(int subjectNo) throws SQLException {
+		// TODO Auto-generated method stub
+		sqlMapClient.update("book.updateBookSubject", subjectNo);
+	}
+
+	public void deleteSubject(int subjectNo) throws SQLException {
+		// TODO Auto-generated method stub
+		sqlMapClient.delete("book.deleteSubject", subjectNo);
+	}
+
+	public ArrayList<SubjectVO> getSubject(String subject) throws SQLException {
+		// TODO Auto-generated method stub
+		return (ArrayList<SubjectVO>) sqlMapClient.queryForList("book.getSubject", subject);
+	}
+
+	public ArrayList<SubjectVO> getSubjectAdmin(String subject) throws SQLException {
+		// TODO Auto-generated method stub
+		return (ArrayList<SubjectVO>) sqlMapClient.queryForList("book.getSubjectAdmin", subject);
+	}
+	//도서 검색
+	public ArrayList<HashMap> getBookListBySubject(HashMap value) throws SQLException {
+		// TODO Auto-generated method stub
+		return (ArrayList<HashMap>) sqlMapClient.queryForList("book.getBookListBySubject",value);
+	}
+
+	public int getBookListBySubjectCount(String value) throws SQLException {
+		// TODO Auto-generated method stub
+		return (int) sqlMapClient.queryForObject("book.getBookListBySubjectCount", value);
+	}
+
+	public ArrayList<HashMap> getBookListByPublisher(HashMap map) throws SQLException {
+		// TODO Auto-generated method stub
+		System.out.println("getBookListByPublisher");
+		return (ArrayList<HashMap>) sqlMapClient.queryForList("book.getBookListByPublisher",map);
+	}
+
+	public int getBookListByPublisherCount(String value) throws SQLException {
+		// TODO Auto-generated method stub
+		return (int) sqlMapClient.queryForObject("book.getBookListByPublisherCount", value);
+	}
+
+	public ArrayList<HashMap> getBookListByTitle(HashMap value) throws SQLException {
+		// TODO Auto-generated method stub
+		return (ArrayList<HashMap>) sqlMapClient.queryForList("book.getBookListByTitle",value);
+	}
+
+	public int getBookListByTitleCount(String value) throws SQLException {
+		// TODO Auto-generated method stub
+		return (int) sqlMapClient.queryForObject("book.getBookListByTitleCount", value);
+	}
+
+	public ArrayList<HashMap> getBookListByWriter(HashMap value) throws SQLException {
+		// TODO Auto-generated method stub
+		return (ArrayList<HashMap>) sqlMapClient.queryForList("book.getBookListByWriter",value);
+	}
+	public int getBookListByWriterCount(String value) throws SQLException {
+		// TODO Auto-generated method stub
+		return (int) sqlMapClient.queryForObject("book.getBookListByWriterCount", value);
+	}
+
+	public int getContentAllCountAdmin() throws SQLException {
+		// TODO Auto-generated method stub
+		return (int) sqlMapClient.queryForObject("book.getContentAllCountAdmin");
 	}
 }

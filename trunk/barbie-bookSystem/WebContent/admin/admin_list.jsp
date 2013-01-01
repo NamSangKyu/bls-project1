@@ -170,8 +170,10 @@ table {
 	</c:if><br>
 
 <!-- 			출판사 분퓨 등록 부분 -->
- 	<a href="book.do?command=publisher">출판사 등록</a>
+ 		<a href="book.do?command=publisher">출판사 등록</a>
 	<a href="book.do?command=subject">분류 등록</a>
+	<a href="book.do?command=bookInsert">책등록</a>&nbsp;
+	<a href="book.do?command=getBookAllList">도서 삭제/수정</a>
 	</c:when>
 
 	<c:otherwise>

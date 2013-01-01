@@ -2,6 +2,14 @@ package model.vo;
 
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * @author user
+ *
+ */
+/**
+ * @author user
+ *
+ */
 public class BookVO {
 	private int no;
 	private String title;
@@ -12,13 +20,14 @@ public class BookVO {
 	private String writer;
 	private String cont;
 	private MultipartFile file;
+	private String outputDate;
 	
 	@Override
 	public String toString() {
 		return "BookVO [no=" + no + ", title=" + title + ", subjectNo="
 				+ subjectNo + ", publisherNo=" + publisherNo + ", isbn=" + isbn
 				+ ", loc=" + loc + ", writer=" + writer + ", cont=" + cont
-				+ ", file=" + file + "]";
+				+ ", file=" + file + ", date=" + outputDate + "]";
 	}
 	public MultipartFile getFile() {
 		return file;
@@ -74,6 +83,13 @@ public class BookVO {
 	public void setCont(String cont) {
 		this.cont = cont;
 	}
+	public String getOutputDate() {
+		return outputDate;
+	}
+	public void setOutputDate(String outputDate) {
+		this.outputDate = outputDate;
+	}
+	
 	
 	
 }
