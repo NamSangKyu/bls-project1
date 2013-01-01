@@ -19,6 +19,7 @@ public class MemberService {
 	public MemberService(MemberDao memberDao){
 		this.memberDao = memberDao;
 	}
+
 	// 	로그인 전 체크
 	public boolean checkLogin(MemberVO membervo) throws SQLException{
 		String id = memberDao.selectIdForCheck(membervo);

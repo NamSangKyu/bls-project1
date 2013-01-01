@@ -98,7 +98,7 @@ public class BookDao {
 		return (int) sqlMapClient.queryForObject("book.getSubjectNo", subject);
 	}
 
-	
+
 	public int getCommentNO() throws SQLException {
 		return (int) sqlMapClient.queryForObject("book.getCommentNo");
 	}
@@ -109,6 +109,7 @@ public class BookDao {
 	return (ArrayList) sqlMapClient.queryForList("book.getCommentList", isbn);
 	}
 	public  double getAvgScore(int isbn) throws SQLException{
+		System.out.println("Dao avgScore  isbn : " + isbn );
 	return (double) sqlMapClient.queryForObject("book.getAvgScore",isbn);
 	}
 	public ArrayList recommandBook() throws SQLException {
@@ -120,54 +121,62 @@ public class BookDao {
 
 	public ArrayList getSubject() throws SQLException {
 	return (ArrayList) sqlMapClient.queryForList("book.getSubject");
-		
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+	public ArrayList<PublisherVO> getPublisherList() throws SQLException {
+		// TODO Auto-generated method stub
+		return (ArrayList<PublisherVO>) sqlMapClient.queryForList("book.getPublisherList");
+	}
+	public void insertPublisher(String publisher) throws SQLException {
+		// TODO Auto-generated method stub
+		sqlMapClient.insert("book.insertPublisher", publisher);
+	}
+	public ArrayList<SubjectVO> getSubjectList() throws SQLException {
+		// TODO Auto-generated method stub
+		return (ArrayList<SubjectVO>) sqlMapClient.queryForList("book.getSubjectList");
+	}
+	public void insertSubject(String subject) throws SQLException {
+		// TODO Auto-generated method stub
+		sqlMapClient.insert("book.insertSubject", subject);
+	}
+
+	/*
+	 * 		호희 & 전기 코드
+	 */
+	// 책 상태
 	public ArrayList getBookState(int isbn) throws SQLException {
 		return (ArrayList) sqlMapClient.queryForList("book.getBookState", isbn);
 	}
-
-	public void bookResolve(String bookNo) throws SQLException {
-		sqlMapClient.update("book.bookResolve", bookNo);
+	// 예약
+	public void bookReserve(String  bookNo) throws SQLException {
+		sqlMapClient.update("book.bookReserve", bookNo);				// 책 상태 정보 수정
 	}
-
-	public void bookResolveCancle(String bookNo) throws SQLException {
-		sqlMapClient.update("book.bookResolveCancle", bookNo);
+	public void insertBookReesrve(HashMap map) throws SQLException{
+		sqlMapClient.insert("book.insertBookReserve",map);			// 예약테이블 데이터 삽입
 	}
-
-	public ArrayList adminBook() throws SQLException {
-		return (ArrayList) sqlMapClient.queryForList("book.adminBook");
+	// 예약 취소
+	public void deleteBookReserve(HashMap map) throws SQLException{
+		sqlMapClient.delete("book.deleteBookReserve",map);			// 예약 테이블 데이터 삭제
 	}
-
-	public void bookRental(HashMap map) {
+	public ArrayList adminBook(HashMap map) throws SQLException {
+		return (ArrayList) sqlMapClient.queryForList("book.adminBook",map);
 	}
-
-	public void bookRentalCancle(String bookNo) {
+	public Object isReserveData(HashMap map) throws SQLException{
+		return sqlMapClient.queryForObject("book.isReserveData",map);
 	}
-	
-	
-
-public ArrayList<PublisherVO> getPublisherList() throws SQLException {
-	// TODO Auto-generated method stub
-	return (ArrayList<PublisherVO>) sqlMapClient.queryForList("book.getPublisherList");
-}
-public void insertPublisher(String publisher) throws SQLException {
-	// TODO Auto-generated method stub
-	sqlMapClient.insert("book.insertPublisher", publisher);
-}
-public ArrayList<SubjectVO> getSubjectList() throws SQLException {
-	// TODO Auto-generated method stub
-	return (ArrayList<SubjectVO>) sqlMapClient.queryForList("book.getSubjectList");
-}
-public void insertSubject(String subject) throws SQLException {
-	// TODO Auto-generated method stub
-	sqlMapClient.insert("book.insertSubject", subject);
-}
+	public void bookStateRental(String bookNo) throws SQLException {
+		sqlMapClient.update("book.bookStateRental",bookNo);				// rental
+	}
+	public void bookRental(HashMap map) throws SQLException {
+		sqlMapClient.insert("book.bookRental",map);
+	}
+	 public void bookRentalCancel(String bookNo) throws SQLException {
+		 sqlMapClient.update("book.bookRentalCancel",bookNo);
+	}
+	public void changeBookState(HashMap map) throws SQLException{
+		sqlMapClient.update("book.changeBookState",map);			// 북 상태 변화
+	}
+	public int getAllBookCount() throws SQLException{
+		return (Integer)sqlMapClient.queryForObject("book.getAllBookCount");		// 전체 글수
+	}
 }

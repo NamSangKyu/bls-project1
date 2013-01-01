@@ -13,10 +13,12 @@ public class MemberDao {
 	public MemberDao(SqlMapClient sqlMapClient){
 		this.sqlMapClient = sqlMapClient;
 	}
+
 	// 	로그인 전 체크
 	public String selectIdForCheck(MemberVO membervo) throws SQLException{
 		return (String)sqlMapClient.queryForObject("member.selectIdForCheck",membervo);
 	}
+
 	// 	로그인
 	public MemberVO selectMemberForLogin(MemberVO membervo) throws SQLException{
 		return (MemberVO)sqlMapClient.queryForObject("member.selectMemberForLogin",membervo);
