@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <!-- 별칭 지정 -->
 <sqlMap namespace="book">
@@ -12,13 +12,13 @@
     </select>
     <select id="getBookInfoNum" parameterClass="int" resultClass="HashMap">
     	select title, writer, cont, isbn ,loc, s.subject, p.publisher, img from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno and bookno=#bookno#
-    </select> 
+    </select>
     <select id="getBookInfoTitle" parameterClass="java.lang.String" resultClass="java.util.HashMap">
     	select distinct(isbn), title, writer, cont, isbn ,loc, img, s.subject, p.publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno and title = #title#
     </select>
 	<insert id="insert" parameterClass="java.util.HashMap">
 		insert into bls_book(bookNo,isbn,title,writer,cont,loc,img,subjectNo,publisherNo) values(#bookno#,#vo.isbn#,#vo.title#,#vo.writer#,#vo.cont#,#vo.loc#,#file#,#vo.subjectNo#,#vo.publisherNo#)
-	</insert>  	
+	</insert>
 	<select id="getBookAllList" resultClass="java.util.HashMap">
 		select rownum as no, title, writer,loc, b_subject as subject, b_publisher as publisher from (select distinct(isbn), title, writer, cont, isbn ,loc, s.subject as b_subject, p.publisher as b_publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno)
 	</select>
@@ -40,40 +40,39 @@
 	<select id="getSubjectNo" parameterClass="String" resultClass="int">
 		select subjectNo from bls_book_sbj where subject=#subject#
 	</select>
-	
-		
+
+
 	<select id="getCommentNo" resultClass="int">
 	select bls_book_comment_seq.nextval from dual
 	</select>
-	
+
 	<insert id="insertComment">
 	insert into bls_book_comment values(#no#,#isbn#,#writer#,#bookcomment#,#score#)
 	</insert>
 
 	<select id="getCommentList" parameterClass="String" resultClass="model.vo.BookCommentVO">
-<![CDATA[select no, isbn, writer, bookcomment, score 
-from (select rownum as cno, no, isbn, writer, bookcomment, score 
-from BLS_BOOK_COMMENT where isbn=#isbn# order by no desc ) 
-where cno <= 5]]>
+		<![CDATA[select no, isbn, writer, bookcomment, score
+		from (select rownum as cno, no, isbn, writer, bookcomment, score
+		from BLS_BOOK_COMMENT where isbn=#isbn# order by no desc )
+		where cno <= 5]]>
 	</select>
-	
+
 	<select id="getAvgScore" parameterClass="integer" resultClass="double">
 	select round(avg(score),1) from BLS_BOOK_COMMENT where isbn=#isbn#
 	</select>
-	
 
-<select id="recommandBook" resultClass="java.util.HashMap">
-select num, c_isbn, average,title, writer, publisher, subject, loc from (
-select rownum as num ,c_isbn, average,title, writer, publisher, subject, loc from(
-select distinct(c_isbn), average, title, writer, publisherNO, subjectNO, loc from bls_book b,(
-select num, isbn as c_isbn, average from (
-select rownum as num, isbn, average from (
-select isbn, average from (
-select isbn, round(avg(score),1) as average from bls_book_comment c group by isbn)order by average desc))where num<![CDATA[<]]>6)where b.isbn=c_isbn)
-b, bls_book_sbj s, bls_book_pbs p where b.publisherNo=p.publisherNo and b.subjectNo = s.subjectNo order by average desc)
-where num<![CDATA[<]]>6
-</select>
 
+	<select id="recommandBook" resultClass="java.util.HashMap">
+		select num, c_isbn, average,title, writer, publisher, subject, loc from (
+		select rownum as num ,c_isbn, average,title, writer, publisher, subject, loc from(
+		select distinct(c_isbn), average, title, writer, publisherNO, subjectNO, loc from bls_book b,(
+		select num, isbn as c_isbn, average from (
+		select rownum as num, isbn, average from (
+		select isbn, average from (
+		select isbn, round(avg(score),1) as average from bls_book_comment c group by isbn)order by average desc))where num<![CDATA[<]]>6)where b.isbn=c_isbn)
+		b, bls_book_sbj s, bls_book_pbs p where b.publisherNo=p.publisherNo and b.subjectNo = s.subjectNo order by average desc)
+		where num<![CDATA[<]]>6
+	</select>
 
 <select id="recommandBookBySubject" resultClass="java.util.HashMap" parameterClass="String">
 select num, c_isbn, average,title, writer, publisher, subject, loc from (
@@ -86,40 +85,9 @@ select isbn, round(avg(score),1) as average from bls_book_comment c group by isb
 b, bls_book_sbj s, bls_book_pbs p where b.publisherNo=p.publisherNo and b.subjectNo = s.subjectNo and subject=#subject# order by average desc)
 where num<![CDATA[<]]>6
 </select>
-
-
-<select id="getSubject" resultClass="String">
-select subject from BLS_BOOK_SBJ
-</select>
-	
-	
-	
-	
-	
-	
-	
-	
-	<!-- book info 화면을 보여줄 때 해당 도서의 대여 상태 -->
-	<select id="getBookState" resultClass="java.util.HashMap">
-		select b.bookNo, b.title, p.publisher, b.loc, b.bookState from bls_book b, bls_book_pbs p where b.isbn=#value# and b.publisherNo=p.publisherNo
+	<select id="getSubject" resultClass="String">
+		select subject from BLS_BOOK_SBJ
 	</select>
-	
-	<!-- 예약버튼 눌렀을 경우 도서상태 예약중으로 변경 -->
-	<update id="bookResolve">
-		update bls_book set bookState='예약중' where bookNo=#value#
-	</update>
-	
-	<!-- 취소버튼 눌렀을 경우 도서상태  -->
-	<update id="bookResolveCancle">
-		update bls_book set bookState='대여가능' where bookNo=#value#
-	</update>
-	
-	<!-- 관리자모드에서 도서관리 눌렀을 경우 현재 도서 전체 상태를 보여준다. -->
-	<select id="adminBook" resultClass="java.util.HashMap">
-		select b.bookNo, b.title, p.publisher, b.loc, b.bookState from bls_book b, bls_book_pbs p 
-		where b.publisherNo=p.publisherNo
-	</select>
-	
 	<select id="getPublisherList" resultClass="model.vo.PublisherVO">
 		select * from BLS_BOOK_PBS
 	</select>
@@ -132,7 +100,52 @@ select subject from BLS_BOOK_SBJ
 	<insert id="insertSubject" parameterClass="String">
 		insert into BLS_BOOK_SBJ values(bls_book_sbj_seq.nextval,#subject#)
 	</insert>
-	
+
+	<!--
+					호히 & 전기 코드
+	-->
+	<!-- 관리자모드에서 도서관리 눌렀을 경우 현재 도서 전체 상태를 보여준다. -->
+	<select id="adminBook" parameterClass="hashmap"  resultClass="java.util.HashMap">
+		select bookNo, title, publisher, loc, bookState, term, (select '연체' from dual where term >7) as overdue from(
+			select b.bookNo, b.title, p.publisher, b.loc, b.bookState, ceil(rownum/#num#) as page, (
+				select (to_char(sysdate,'yyyymmdd')-to_char(rentalDate,'yyyymmdd'))
+				from bls_book_rental r
+				where r.bookNo = b.bookNo and r.returnDate is null) as term
+			from bls_book b, bls_book_pbs p where b.publisherNo=p.publisherNo)
+		where page=#nowPage#
+	</select>
+	<select id="getAllBookCount" resultClass="int">
+		select count(*) from bls_book
+	</select>
+	<!-- book info 화면을 보여줄 때 해당 도서의 대여 상태 -->
+	<select id="getBookState" resultClass="java.util.HashMap">
+		select b.bookNo, b.title, p.publisher, b.loc, b.bookState from bls_book b, bls_book_pbs p where b.isbn=#value# and b.publisherNo=p.publisherNo
+	</select>
+	<!-- 예약버튼, 대여버튼, 취소버튼, 반납버튼 눌렀을 경우 도서상태  변경 -->
+	<update id="changeBookState" parameterClass="hashmap">
+		update bls_book set bookState=#state# where bookNo=#bookNo#
+	</update>
+	<!-- 예약버튼 후 예약 테이블 데이터 추가 -->
+	<insert id="insertBookReserve">
+		insert into bls_book_reserve(bookNo,memberId,reserveDate) values(#bookNo#,#memberId#,sysdate)
+	</insert>
+	<!--  예약 취소 버튼 -->
+	<delete id="deleteBookReserve">
+		delete from bls_book_reserve where bookNo=#bookNo# and memberId=#memberId#
+	</delete>
+	<!--  관리자 모드시 대여 0. 예약테이블 데이터 검사 	1.번째  책 상태 변화	2. 대여테이블 데이터 삽입	3. 예약취소(위에 취소 이용)	-->
+	<select id="isReserveData" parameterClass="HashMap" resultClass="string">
+		select memberId from bls_book_reserve where memberId=#memberId# and bookNo=#bookNo#
+	</select>
+	<insert id="bookRental" parameterClass="HashMap">
+		insert into bls_book_rental(rentalNo,rentalDate,bookNo,memberId)
+		values(bls_book_rental_seq.nextval,sysdate,#bookNo#,#memberId#)
+	</insert>
+	<!--  대여된 책 반납 -->
+	<update id="bookRentalCancel" parameterClass="string">
+		update bls_book_rental set returnDate=sysdate
+		where bookNo=#bookNo#  and returnDate is null
+	</update>
 </sqlMap>
 
 
