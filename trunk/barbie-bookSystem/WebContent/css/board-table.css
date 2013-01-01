@@ -1,0 +1,195 @@
+table {
+        width: 600px;
+        border-collapse: collapse;
+        font-family: 'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
+        border-bottom: 2px solid #98bf21;
+    }
+    thead, tbody td{
+        font-size: 10pt;
+        border-top: 1px solid #98bf21;
+        border-bottom: 1px solid #98bf21;
+        height: 30px;
+    }
+    th{
+        background-color:#98bf21;
+        color:#ffffff;
+        height: 25px;
+    }
+    tfoot td{
+    	height: 40px;
+    }
+    #title {
+	text-align: left;
+}
+#page {
+	font-family: 'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
+}
+#replyPage{
+	background: #D2D2FF;
+}
+#replySize1 {
+		width: 120px;
+}
+#replySize2 {
+		width: 50px;
+}
+#replySize3 {
+		width: 430px;
+}
+
+
+.prenext{
+	font-size: 10pt;
+}
+.listHref:link{
+		line-height: 5px;
+		text-decoration: none;
+		color: #708491;
+}
+
+.listHref:link.active, visited.active{
+		padding-bottom: 6px;
+		color: #cd1039; 
+}
+
+.listHref:hover{
+		text-decoration: underline;
+		padding-bottom: 6px;
+		color: #cd1039; 
+}
+
+#title {
+	text-align: left;
+}
+#commentAlign td{
+	border: 0px;
+	text-align: center;
+}
+#page {
+	font-family: 'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
+}
+#commentPage{
+	background: #D2D2FF;
+}
+#prenext1 {
+		width: 50px;
+}
+#prenext2 {
+		width: 420px;
+}
+#prenext3 {
+		width: 50px;
+}
+#prenext4 {
+		width: 80px;
+}
+#updateComment{
+	cursor: pointer;
+}
+b{
+	cursor: pointer;
+}
+
+
+
+.listPage table {
+        width: 800px;
+        border-collapse: collapse;
+        text-align: center;
+        font-family: 'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
+        border-bottom: 2px solid #98bf21;
+}
+
+.listPage thead{
+        font-size: 10pt;
+        border-top: 1px solid #98bf21;
+        border-bottom: 1px solid #98bf21;
+        height: 30px;
+}
+
+.listTbody td {
+        font-size: 10pt;
+        border-top: 1px solid #98bf21;
+        border-bottom: 1px solid #98bf21;
+        height: 30px;
+}
+
+.listPage th{
+        background-color:#98bf21;
+        color:#ffffff;
+        height: 25px;
+}
+.listPage tfoot td{
+    	height: 40px;
+    	font-size: 10pt;
+}
+
+.listHref:link{
+		line-height: 5px;
+		text-decoration: none;
+		color: #708491;
+}
+
+.listHref:link.active, visited.active{
+		padding-bottom: 6px;
+		color: #cd1039; 
+}
+
+.listHref:hover{
+		text-decoration: underline;
+		padding-bottom: 6px;
+		color: #cd1039; 
+}
+
+#listTitle {
+		text-align: left;
+		padding-left: 15px;
+}
+#page {
+		font-family: 'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
+}
+#serch{
+	width: 100px;
+	 border-bottom: 0px;
+}
+.arrow{
+		font-size: 5px;
+} 
+.way{
+		font-size: 15px;
+}
+#perPage{
+	position: absolute;
+	margin-left: 920px;
+	margin-top: -30px;
+}
+#criteria0 {
+		width: 30px;
+}
+#criteria1 {
+		width: 30px;
+}
+#criteria2 {
+		width: 420px;
+}
+#criteria3 {
+		width: 100px;
+}
+#criteria4 {
+		width: 120px;
+}
+#criteria5 {
+		width: 50px;
+}
+#criteria6 {
+		width: 50px;
+}
+
+
+
+
+
+
+
+
+
