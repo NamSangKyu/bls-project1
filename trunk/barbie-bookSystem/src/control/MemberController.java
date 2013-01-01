@@ -63,7 +63,9 @@ public class MemberController extends MultiActionController {
 	 */
 	public ModelAndView login(HttpServletRequest request, HttpServletResponse response, MemberVO membervo){
 		MemberVO mvo=null;
-		String path="index";					// 기본 회원 로그인시
+		String path="main.book";					// 기본 회원 로그인시
+		HashMap map=null;
+		
 		try {
 			mvo = memberService.login(membervo);
 			System.out.println("[MemberController]login: "+mvo);
@@ -72,6 +74,8 @@ public class MemberController extends MultiActionController {
 			// mvo 완성 후 session 에 저장
 			HttpSession session = request.getSession();
 			session.setAttribute("membervo", mvo);
+			map=memberService.recommand(mvo);
+			System.out.println("map="+map.toString());
 			if(mvo.getMemberId().equals("java"))			// 이름이 같을시에 관리자 로그인
 				path= "list.admin";
 				ListVO listvo = memberService.list(null);
@@ -79,7 +83,7 @@ public class MemberController extends MultiActionController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return new ModelAndView(path);
+		return new ModelAndView(path,"subject",map);
 	}
 
 	/*
