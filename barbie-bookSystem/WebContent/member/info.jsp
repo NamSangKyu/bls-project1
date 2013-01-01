@@ -25,9 +25,9 @@
 					<td class="name">아이디</td>
 					<td class="value">${sessionScope.membervo.memberId }</td>
 					<td class="file" rowspan="3"><c:choose>
-							<c:when test="${sessionScope.membervo.newfilename !=null }">
+							<c:when test="${sessionScope.membervo.mImg !=null }">
 								<img width="150"
-									src="${initParam.root }/upload/member/${sessionScope.membervo.newfilename}"></td>
+									src="${initParam.root }/upload/member/${sessionScope.membervo.mImg}"></td>
 					</c:when>
 					<c:otherwise>회원의 사진은 없습니다.</c:otherwise>
 					</c:choose>
