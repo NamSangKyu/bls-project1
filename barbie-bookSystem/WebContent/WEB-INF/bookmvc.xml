@@ -14,25 +14,7 @@
 				<value>WEB-INF/SqlMapConfig.xml</value>
 			</property>
 		</bean>
-		
-<!-- dataSource -->
-<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-	<property name="driverClassName">
-		<value>oracle.jdbc.driver.OracleDriver</value>
-	</property>
-	<property name="url">
-		<value>jdbc:oracle:thin:@127.0.0.1:1521:xe</value>		
-	</property>
-	<property name="username">
-		<value>scott</value>
-	</property>
-	<property name="password">
-		<value>tiger</value>
-	</property>
-	<property name="maxActive">
-		<value>30</value>
-	</property>
-</bean>
+
 	<bean id="bookDao" class="model.BookDao">
 		<property name="sqlMapClient">
 			<ref bean="sqlMapClient"/>
@@ -41,19 +23,22 @@
 	<bean id="bookService" class="model.BookService">
 		<property name="dao">
 			<ref bean="bookDao"/>
-		</property>	
+		</property>
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
 	</bean>
 	<bean name="/book.do" class="control.BookController">
 		<property name="methodNameResolver">
 			<ref bean="methodNameResolver"/>
 		</property>
 			<property name="path">
-			<value>C:\\\java-kosta\\bls\\barbie-bookSystem\\WebContent\\upload\\</value>
+			<value>E:\Kosta\project\workspace\project\barbie-bookSystem-step4\\WebContent\\upload\\</value>
 		</property>
 		<property name="service">
 			<ref bean="bookService"/>
 		</property>
 	</bean>
 	<bean id="BookVO" class="model.vo.BookVO"></bean>
-	
+
 </beans>
