@@ -1,22 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<link rel="stylesheet" href="${initParam.root}/css/book-table.css"> 
+<div class="listPage">  
 <table border="1">
 <thead>
 <tr align="center">
-<td>책제목</td>
-<td>책저자</td>
-<td>출판사</td>
-<td>책분류</td>
-<td>출간일</td>
-<td>ISBN</td>
+<th>책제목</th>
+<th>책저자</th>
+<th>출판사</th>
+<th>책분류</th>
+<th>출간일</th>
+<th>ISBN</th>
 </tr>
 </thead>
 <c:forEach items="${requestScope.lvo.list}" var="hi">
@@ -32,6 +27,7 @@
 </tbody>
 </c:forEach>
 </table>
+</div>
 <!-- 이전글 -->
 <c:if test="${requestScope.lvo.bean.previousPageGroup}">
 <a href="book.do?command=newBook&pageNo=${requestScope.lvo.bean.startPageOfPageGroup-1}">
@@ -54,5 +50,3 @@
 <a href="book.do?command=newBook&pageNo=${requestScope.lvo.bean.
 	 endPageOfPageGroup+1}">이후 >></a>
 </c:if> 
-</body>
-</html>
