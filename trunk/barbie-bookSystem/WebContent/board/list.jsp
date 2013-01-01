@@ -28,11 +28,6 @@
 				return;
 			}
 			$("#adminCheckForm").submit();
-			/* var bLChecked = $("input[name=boardList]:checkbox:checked");
-			$.each(bLChecked, function(index, data) {
-				alert($(this).attr('value') + $(this).attr('id'));
-				location.href = "board.do?command=delete&boardNo="+$(this).attr('value')+"&newFileName="+$(this).attr('id')+"&page=${requestScope.page }";
-			}); */
 		});
 	});
 </script>
@@ -116,7 +111,6 @@
 			</tr>
 		</tfoot>
 	</table>
-	
 	<br>
 	<div id="page">
 	<c:if test="${lvo.bean.previousPageGroup }">
