@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class MemberDao {
 
 	// 	회원가입
 	public void insert(MemberVO membervo) throws SQLException{
+		System.out.println("mem:" + membervo);
 		sqlMapClient.insert("member.insertMember",membervo);
 	}
 
@@ -57,6 +59,10 @@ public class MemberDao {
 	// 	 삭제
 	public void deleteMemberById(String memberId) throws SQLException{
 		sqlMapClient.delete("member.deleteMemberById",memberId);
+	}
+	public ArrayList<HashMap> recommand(String subject) throws SQLException {
+	return (ArrayList<HashMap>) sqlMapClient.queryForList("book.recommandBookBySubject", subject);
+		
 	}
 }
 
