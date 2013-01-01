@@ -97,4 +97,12 @@ public class BoardDao {
 	public ArrayList commentList(HashMap map) throws SQLException {
 		return (ArrayList) sqlMapClient.queryForList("board.commentList", map);
 	}
+	public ArrayList getNewBook(String pageNo) throws SQLException {
+		return (ArrayList) sqlMapClient.queryForList("book.getNewBook",pageNo);
+		}
+
+
+		public int getNewBookCount() throws SQLException {
+		return (int) sqlMapClient.queryForObject("book.getNewBookCount");
+		}
 }
