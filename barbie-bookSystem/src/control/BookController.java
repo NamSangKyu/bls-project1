@@ -491,66 +491,51 @@ public class BookController extends MultiActionController {
 				return new ModelAndView("JsonView","result","삭제 실패");
 			}
 		}
-	//도서 검색 모듈
-	public ModelAndView findBook(HttpServletRequest request, HttpServletResponse response) {
-		String find = request.getParameter("serach");
-		HashMap value = new HashMap();
-		value.put("value", request.getParameter("searchValue").toString());
-		
-		ArrayList<HashMap> listVO = null;
-		ListVO list = null;
-		int count=0;
-		int page = 0;
-		if(request.getParameter("page")!=null)
-			page = Integer.parseInt(request.getParameter("page"));
-		if(page==0)
-			page=1;
-		value.put("page", page);
-		System.out.println(value.toString());
-		System.out.println(find);
-		try{
-		switch(find){
-		case "subject":
-			listVO = service.getBookListBySubject(value);
-			count = service.getBookListBySubjectCount(value.get("value").toString());
-			break;
-		case "publisher":
-			listVO = service.getBookListByPublisher(value);
-			count = service.getBookListByPublisherCount(value.get("value").toString());
-			break;
-		case "title":
-			listVO = service.getBookListByTitle(value);
-			count = service.getBookListByTitleCount(value.get("value").toString());
-			break;
-		case "writer":
-			listVO = service.getBookListByWriter(value);
-			count = service.getBookListByWriterCount(value.get("value").toString());
-			break;
+		//도서 검색 모듈
+		public ModelAndView findBook(HttpServletRequest request, HttpServletResponse response) {
+			String find = request.getParameter("serach");
+			HashMap value = new HashMap();
+			value.put("value", request.getParameter("searchValue").toString());
+			
+			ArrayList<HashMap> listVO = null;
+			ListVO list = null;
+			int count=0;
+			int page = 0;
+			if(request.getParameter("page")!=null)
+				page = Integer.parseInt(request.getParameter("page"));
+			if(page==0)
+				page=1;
+			value.put("page", page);
+			System.out.println(value.toString());
+			System.out.println(find);
+			try{
+			switch(find){
+			case "subject":
+				listVO = service.getBookListBySubject(value);
+				count = service.getBookListBySubjectCount(value.get("value").toString());
+				break;
+			case "publisher":
+				listVO = service.getBookListByPublisher(value);
+				count = service.getBookListByPublisherCount(value.get("value").toString());
+				break;
+			case "title":
+				listVO = service.getBookListByTitle(value);
+				count = service.getBookListByTitleCount(value.get("value").toString());
+				break;
+			case "writer":
+				listVO = service.getBookListByWriter(value);
+				count = service.getBookListByWriterCount(value.get("value").toString());
+				break;
+			}
+			}catch(SQLException e){
+				System.out.println(e.getMessage());
+			}
+			list = new ListVO(listVO, new PagingBean(page, count, 5, 5));
+			System.out.println("ListVO : "+list.getList().toString());
+			System.out.println("Count : "+count);
+			request.setAttribute("flag", true);
+			request.setAttribute("serachValue", value.get("value").toString());
+			request.setAttribute("serach", find);
+			return new ModelAndView("list.book","list",list);
 		}
-		}catch(SQLException e){
-			System.out.println(e.getMessage());
-		}
-		
-		list = new ListVO(listVO, new PagingBean(page, count, 5, 5));
-		System.out.println("ListVO : "+list.getList().toString());
-		System.out.println("Count : "+count);
-		request.setAttribute("flag", true);
-		request.setAttribute("serachValue", value.get("value").toString());
-		request.setAttribute("serach", find);
-		return new ModelAndView("list.book","list",list);
-	}
-	public ModelAndView newBook(HttpServletRequest request,
-			HttpServletResponse response){
-	System.out.println("new Book Controller입성완료");
-	String pageNo=request.getParameter("pageNo");
-	ListVO lvo=new ListVO();
-	try {
-		lvo=service.getNewBook(pageNo);
-		System.out.println("newBookList"+lvo);
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-	return new ModelAndView("newbook.book", "lvo", lvo);
-		
-	}
 }
