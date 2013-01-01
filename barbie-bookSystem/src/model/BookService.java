@@ -3,6 +3,7 @@ package model;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import model.vo.BookCommentVO;
 import model.vo.BookVO;
@@ -11,11 +12,19 @@ import model.vo.PagingBean;
 import model.vo.PublisherVO;
 import model.vo.SubjectVO;
 
+import com.ibatis.sqlmap.client.SqlMapClient;
+
+import config.CommonConstants;
+
 public class BookService {
 	private BookDao dao;
+	private SqlMapClient sqlMapClient;
 	public BookService() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	public void setSqlMapClient(SqlMapClient sqlMapClient){
+		this.sqlMapClient = sqlMapClient;
 	}
 	public void setDao(BookDao dao) {
 		this.dao = dao;
@@ -70,7 +79,7 @@ public class BookService {
 		// TODO Auto-generated method stub
 		return dao.getSubjectNo(subject);
 	}
-	
+
 	public HashMap insertComment(BookCommentVO vo) throws SQLException {
 		vo.setNo(dao.getCommentNO());
 		dao.insertComment(vo);
@@ -79,60 +88,28 @@ public class BookService {
 		map.put("list", list );
 		map.put("avgscore",dao.getAvgScore(vo.getIsbn()));
 		return map;
-		
-		}
-		
-		public HashMap getCommentList(String isbn) throws SQLException {
+
+	}
+
+	public HashMap getCommentList(String isbn) throws SQLException {
 		HashMap map=new HashMap();
 		map.put("list", dao.getCommentList(isbn));
+		System.out.println("commentList : " + dao.getCommentList(isbn));
 		map.put("avgscore",dao.getAvgScore(Integer.parseInt(isbn)));
 		return map;
 		}
-		public ArrayList recommandBook() throws SQLException {
+	public ArrayList recommandBook() throws SQLException {
 		return dao.recommandBook();
-			
-		}
-		public ArrayList recommandBook(String subject) throws SQLException {
+	}
+	public ArrayList recommandBook(String subject) throws SQLException {
 		return dao.recommandBook(subject);
-		}
-		public ArrayList getSubject() throws SQLException {
-		return dao.getSubject();		
-		}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	}
+	public ArrayList getSubject() throws SQLException {
+		return dao.getSubject();
+	}
 	public ArrayList getBookState(int isbn) throws SQLException {
 		return dao.getBookState(isbn);
 	}
-	public void bookResolve(String bookNo) throws SQLException {
-		dao.bookResolve(bookNo);
-	}
-	public void bookResolveCancle(String bookNo) throws SQLException {
-		dao.bookResolveCancle(bookNo);
-	}
-	public ArrayList adminBook() throws SQLException {
-		return dao.adminBook();
-	}
-	public void bookRental(String bookNo, String memberId) {
-		HashMap map = new HashMap();
-		map.put("bookNo", bookNo);
-		map.put("memberId", memberId);
-		dao.bookRental(map);
-	}
-	public void bookRentalCancle(String bookNo) {
-		dao.bookRentalCancle(bookNo);
-	}
-
-	
-	
 	public ArrayList<PublisherVO> getPublisherList() throws SQLException {
 		// TODO Auto-generated method stub
 		return dao.getPublisherList();
@@ -152,4 +129,90 @@ public class BookService {
 		return dao.getSubjectList();
 	}
 
+	/*
+	 *  호희 & 전기 코드
+	 */
+	//		예약
+	public void bookReserve(HashMap map) throws SQLException {
+		map.put("state", "예약중");
+		try{
+			sqlMapClient.startTransaction();
+			dao.changeBookState(map);									// 책 상태 정보 수정
+			dao.insertBookReesrve(map);								// 예약 테이블 데이터 삽입
+			sqlMapClient.commitTransaction();
+		}finally{
+			sqlMapClient.endTransaction();						// 트렌잭션 무조건 닫아줘야 한다.
+		}
+	}
+
+	//		예약취소
+	public void bookReserveCancel(HashMap map) throws SQLException {
+		map.put("state", "대여가능");
+		try{
+			sqlMapClient.startTransaction();
+			dao.changeBookState(map);									// 책 상태 수정
+			dao.deleteBookReserve(map);								// 예약 테이블 데이터 삭제
+			sqlMapClient.commitTransaction();
+		}finally{
+			sqlMapClient.endTransaction();						// 트렌잭션 무조건 닫아줘야 한다.
+		}
+	}
+
+	//		관리자가 접근하여 도서관리 View
+	public ListVO adminBook(String nowPage) throws SQLException {
+		if(nowPage == null)
+			nowPage="1";
+		HashMap map = new HashMap();
+		map.put("nowPage", nowPage);
+		map.put("num",CommonConstants.BOOK_CONTENT_NUMBER_PER_PAGE);
+		ArrayList list = dao.adminBook(map);
+		int total = dao.getAllBookCount();
+		PagingBean pb = new PagingBean(Integer.parseInt(nowPage),total,CommonConstants.BOOK_CONTENT_NUMBER_PER_PAGE,CommonConstants.BOOK_PAGEGROUP_NUMBER_PER_PAGE);
+		return new ListVO(list,pb);
+	}
+
+	//		예약-대여 하기전 예약 테이블에 데이터 존재 여부
+	public boolean isReserveData(String bookNo,String memberId) throws SQLException{
+		HashMap map = new HashMap();
+		map.put("memberId",memberId);
+		map.put("bookNo",bookNo);
+		Object obj = dao.isReserveData(map);
+		boolean flag=false;
+		if(obj !=null)
+			flag=true;
+		return flag;
+	}
+
+	//		예약
+	public void bookRental(String bookNo, String memberId, boolean state) throws SQLException {
+		HashMap map = new HashMap();
+		map.put("bookNo", bookNo);
+		map.put("memberId", memberId);
+		map.put("state", "대여중");
+		try{
+			sqlMapClient.startTransaction();
+			dao.changeBookState(map);								// 도서 상태 변화
+			dao.bookRental(map);										// 대여 테이블 데이터 삽입
+			if(state)
+				dao.deleteBookReserve(map);						// 예약 테이블 데이터 삭제
+			sqlMapClient.commitTransaction();
+		}finally{
+			sqlMapClient.endTransaction();						// 트렌잭션 무조건 닫아줘야 한다.
+		}
+	}
+
+	// 	반납
+	public void bookRentalCancel(String bookNo) throws SQLException {
+		HashMap map = new HashMap();
+		map.put("bookNo", bookNo);
+		map.put("state","대여가능");
+		try{
+			sqlMapClient.startTransaction();
+			dao.changeBookState(map);
+			dao.bookRentalCancel(bookNo);
+			sqlMapClient.commitTransaction();
+		}finally{
+			sqlMapClient.endTransaction();
+		}
+	}
 }
