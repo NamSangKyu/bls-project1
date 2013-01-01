@@ -5,25 +5,21 @@
 <script type="text/javascript">
 	$(function() {
 		// file ajax
-		$("#deleteFile_img")
-				.click(
-						function() {
-							$
-									.ajax({
-										type : "post",
-										url : "member.do",
-										data : "command=deleteFile&newfilename=${requestScope.map.membervo.newfilename}",
-										success : function() {
-											alert("성공");
-											$("#filewrap")
-													.html(
-															"<input type='file' name='uploadFile' width='150px'>");
-										},
-										error : function() {
-											alert("실패");
-										}
-									});
-						});
+		$("#deleteFile_img").click(function() {
+			$.ajax({
+				type : "post",
+				url : "member.do",
+				data : "command=deleteFile&mImg=${requestScope.map.membervo.mImg}",
+				success : function() {
+					alert("성공");
+					$("#filewrap")
+					.html("<input type='file' name='uploadFile' width='150px'>");
+				},
+				error : function() {
+					alert("실패");
+				}
+				});
+			});
 		$("#confirm_img").click(function() {
 			alert(1);
 			$("#update_form").submit();
@@ -48,10 +44,8 @@
 						value="${requestScope.map.membervo.name }"> <input
 						type="hidden" name="gender"
 						value="${requestScope.map.membervo.gender }"> <input
-						type="hidden" name="newfilename"
-						value="${requestScope.map.membervo.newfilename }"> <input
-						type="hidden" name="orgfilename"
-						value="${requestScope.map.membervo.orgfilename }">
+						type="hidden" name="mImg"
+						value="${requestScope.map.membervo.mImg }">
 					<!--  값이 null 일경우 값을 Defaule 값을 보낸다.  -->
 					<table class="insert_table" border="0" cellspacing="0">
 						<tr>
@@ -59,8 +53,8 @@
 							<td class="name">아이디</td>
 							<td class="value">${requestScope.map.membervo.memberId }</td>
 							<td class="file" rowspan="3"><span id="filewrap"> <c:choose>
-										<c:when test="${requestScope.map.membervo.orgfilename!=null }">
-						${requestScope.map.membervo.orgfilename } <img id="deleteFile_img"
+										<c:when test="${requestScope.map.membervo.mImg!=null }">
+						${requestScope.map.membervo.mImg } <img id="deleteFile_img"
 												src="${initParam.root }/img/ui/board/delete_btn.jpg">
 										</c:when>
 										<c:otherwise>
