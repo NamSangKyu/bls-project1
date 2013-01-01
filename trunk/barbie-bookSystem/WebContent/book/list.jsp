@@ -1,19 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
+<link rel="stylesheet" href="${initParam.root}/css/book-table.css"> 
     <br><br>
 <center>
 <!-- 도서목록을 게시물로 보여주기 -->
+<div class="listPage">
 <table border="1">
 <thead>
 <tr>
 <!-- 글번호/도서명/출판사/저자명/ISBN -->
-<td>글번호</td>
-<td>도서명</td>
-<td>출판사</td>
-<td>저자명</td>
-<td>분류</td>
-<td>위치</td>
+<th>글번호</th>
+<th>도서명</th>
+<th>출판사</th>
+<th>저자명</th>
+<th>분류</th>
+<th>위치</th>
 </tr>
 </thead>
 <tbody>
@@ -30,6 +32,7 @@
 </c:forEach>
 </tbody>
 </table>
+</div>
 <br><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<!-- 페이징 처리 -->	
 	<%-- 이전 페이지 그룹이 있으면 이미지 보여준다.
