@@ -14,10 +14,10 @@
 		<ref bean="methodNameResolver"/>
 	</property>
 	<property name="memberPath">
-		<value>C:\\servers\\project-tomcat\\webapps\\barbie-bookSystem\\upload\\member\\</value>
+		<value>E:\\Kosta\\project\\tomcat\\webapps\\barbie-bookSystem-m-step4\\upload\\member\\</value>
 	</property>
 	<property name="memberWorkPath">
-		<value>C:\\java-kosta\\bls\\barbie-bookSystem\\WebContent\\upload\\member\\</value>
+		<value>E:\Kosta\project\workspace\project\barbie-bookSystem-step4\\WebContent\\upload\\member\\</value>
 	</property>
 </bean>
 
@@ -32,7 +32,10 @@
 	</constructor-arg>
 </bean>
 </beans>
-
+<!--  PATH
+		member(Server) : E:\\Kosta\\project\\tomcat\\webapps\\barbie-bookSystem-m-step4\\
+		member(workspace) : E:\Kosta\project\workspace\project\barbie-bookSystem-step4\\
+ -->
 
 
 
