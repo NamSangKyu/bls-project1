@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
   <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
 <script src="http://code.jquery.com/jquery-latest.js"></script>
+<link rel="stylesheet" href="${initParam.root }/css/board-table.css">
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#deleteImg").click(function() {
@@ -48,79 +49,6 @@
 		});
 	});
 </script>
-<style>
-table {
-        width: 600px;
-        border-collapse: collapse;
-        font-family: 'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
-        border-bottom: 2px solid #98bf21;
-    }
-    thead, tbody td{
-        font-size: 10pt;
-        border-top: 1px solid #98bf21;
-        border-bottom: 1px solid #98bf21;
-        height: 30px;
-    }
-    th{
-        background-color:#98bf21;
-        color:#ffffff;
-        height: 25px;
-    }
-    tfoot td{
-    	height: 40px;
-    }
-.prenext{
-	font-size: 10pt;
-}
-.listHref:link{
-		line-height: 5px;
-		text-decoration: none;
-		color: #708491;
-}
-
-.listHref:link.active, visited.active{
-		padding-bottom: 6px;
-		color: #cd1039; 
-}
-
-.listHref:hover{
-		text-decoration: underline;
-		padding-bottom: 6px;
-		color: #cd1039; 
-}
-
-#title {
-	text-align: left;
-}
-#commentAlign td{
-	border: 0px;
-	text-align: center;
-}
-#page {
-	font-family: 'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
-}
-#commentPage{
-	background: #D2D2FF;
-}
-#prenext1 {
-		width: 50px;
-}
-#prenext2 {
-		width: 420px;
-}
-#prenext3 {
-		width: 50px;
-}
-#prenext4 {
-		width: 80px;
-}
-#updateComment{
-	cursor: pointer;
-}
-b{
-	cursor: pointer;
-}
-</style>
 <center>
 	<div id="page">
 	<c:set value="${requestScope.bvo }" var="bvo"/>

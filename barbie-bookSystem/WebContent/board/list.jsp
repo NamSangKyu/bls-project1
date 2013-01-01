@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>  
+<link rel="stylesheet" href="${initParam.root }/css/board-table.css">  
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
 	$(document).ready(function() {
@@ -35,100 +36,6 @@
 		});
 	});
 </script>
-<style>
-.listPage table {
-        width: 800px;
-        border-collapse: collapse;
-        text-align: center;
-        font-family: 'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
-        border-bottom: 2px solid #98bf21;
-}
-
-.listPage thead{
-        font-size: 10pt;
-        border-top: 1px solid #98bf21;
-        border-bottom: 1px solid #98bf21;
-        height: 30px;
-}
-
-.listTbody td {
-        font-size: 10pt;
-        border-top: 1px solid #98bf21;
-        border-bottom: 1px solid #98bf21;
-        height: 30px;
-}
-
-.listPage th{
-        background-color:#98bf21;
-        color:#ffffff;
-        height: 25px;
-}
-.listPage tfoot td{
-    	height: 40px;
-    	font-size: 10pt;
-}
-
-.listHref:link{
-		line-height: 5px;
-		text-decoration: none;
-		color: #708491;
-}
-
-.listHref:link.active, visited.active{
-		padding-bottom: 6px;
-		color: #cd1039; 
-}
-
-.listHref:hover{
-		text-decoration: underline;
-		padding-bottom: 6px;
-		color: #cd1039; 
-}
-
-#title {
-		text-align: left;
-		padding-left: 15px;
-}
-#page {
-		font-family: 'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
-}
-#serch{
-	width: 100px;
-	 border-bottom: 0px;
-}
-.arrow{
-		font-size: 5px;
-} 
-.way{
-		font-size: 15px;
-}
-#perPage{
-	position: absolute;
-	margin-left: 920px;
-	margin-top: -30px;
-}
-#criteria0 {
-		width: 30px;
-}
-#criteria1 {
-		width: 30px;
-}
-#criteria2 {
-		width: 420px;
-}
-#criteria3 {
-		width: 100px;
-}
-#criteria4 {
-		width: 120px;
-}
-#criteria5 {
-		width: 50px;
-}
-#criteria6 {
-		width: 50px;
-}
-</style>
 <div><a href="board.do?command=list&page=1"><img src="${initParam.root}/img/ui/layout/freeboard.jpg"></a><br><br></div>
 <div class="listPage">
 	<c:set value="${requestScope.lvo }" var="lvo" />
@@ -162,7 +69,7 @@
 						</c:if>
 					</td>
 					<td><c:if test="${lvo.relevel == 0 }">${lvo.boardNo }</c:if></td>
-					<td id="title">
+					<td id="listTitle">
 						<c:if test="${lvo.relevel != 0 }">
 							<c:forEach begin="1" end="${lvo.relevel }" step="1">
 								&nbsp;&nbsp;

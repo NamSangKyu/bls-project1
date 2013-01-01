@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
+<link rel="stylesheet" href="${initParam.root }/css/board-table.css">
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#insertImg").click(function() {
@@ -16,34 +17,6 @@
 		});	
 	});
 </script>
-<style>
-table {
-        width: 600px;
-        border-collapse: collapse;
-        font-family: 'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
-        border-bottom: 2px solid #98bf21;
-    }
-    thead, tbody td{
-        font-size: 10pt;
-        border-top: 1px solid #98bf21;
-        border-bottom: 1px solid #98bf21;
-        height: 30px;
-    }
-    th{
-        background-color:#98bf21;
-        color:#ffffff;
-        height: 25px;
-    }
-    tfoot td{
-    	height: 40px;
-    }
-#title {
-	text-align: left;
-}
-#page {
-	font-family: 'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
-}
-</style>
 <div><a href="board.do?command=list&page=1"><img src="${initParam.root}/img/ui/layout/freeboard.jpg"></a><br><br></div>
 <center>
 <div id="page">
