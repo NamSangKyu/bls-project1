@@ -4,6 +4,12 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
 	$(document).ready(function() {
+		$("#selectPerPage").val("${requestScope.lvo.bean.numberOfContentPerPage}").attr("selected", "selected");
+
+		$("#selectPerPage").change(function() {
+			location.href="board.do?command=listPageChange&page=1&perPage="+$(this).val();
+		});
+
 		$("#adminCheck").click(function() {
 			if($(this).attr('checked') == 'checked') {
 				$("input[name=boardList]").attr('checked', 'checked');
@@ -86,11 +92,20 @@
 #page {
 		font-family: 'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
 }
+#serch{
+	width: 100px;
+	 border-bottom: 0px;
+}
 .arrow{
 		font-size: 5px;
 } 
 .way{
 		font-size: 15px;
+}
+#perPage{
+	position: absolute;
+	margin-left: 920px;
+	margin-top: -30px;
 }
 #criteria0 {
 		width: 30px;
@@ -117,6 +132,14 @@
 <div><a href="board.do?command=list&page=1"><img src="${initParam.root}/img/ui/layout/freeboard.jpg"></a><br><br></div>
 <div class="listPage">
 	<c:set value="${requestScope.lvo }" var="lvo" />
+	<div id="perPage">
+		<select name="perPage" id="selectPerPage">
+			<option value="4">4개씩</option>
+			<option value="6">6개씩</option>
+			<option value="8">8개씩</option>
+			<option value="10" >10개씩</option>
+		</select>
+	</div>
 	<table>
 		<thead>
 			<tr>
@@ -209,5 +232,23 @@
 			<span class="way">다음</span> <span class="arrow">▶</span>
 		</a>
 	</c:if>
+	<br>
+	<%-- <form action="board.do" id="serchForm">
+	<input type="hidden" name="command" value="serchBoard">
+	<table id="serch">
+		<tr>
+			<td>
+				<select name="serch">
+					<option value="title">제목만</option>
+					<option value="writer">글작성자</option>
+					<option value="commentCont">덧글내용</option>
+					<option value="commentWriter">덧글작성자</option>
+				</select>
+			</td>
+			<td><input type="text" name="text" height="50"></td>
+			<td><input type="image" src="${initParam.root}/img/ui/board/serch.jpg"></td>
+		</tr>
+	</table>
+	</form> --%>
 	</div>
 </div>

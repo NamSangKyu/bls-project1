@@ -30,7 +30,6 @@ create table bls_board_comment(
 	constraint boardNo_fk foreign key(boardNo) references bls_board(boardNo)
 )
 
-
 -- 게시판 sequence
 drop sequence bls_board_seq
 create sequence bls_board_seq nocache;
@@ -38,7 +37,3 @@ create sequence bls_board_seq nocache;
 -- 게시판 댓글 sequence
 drop sequence bls_board_comment_seq
 create sequence bls_board_comment_seq nocache;
-
-select * from
-(select boardNo, commentNo, memberId, to_char(commentDate,'YYYY.MM.DD HH24:MI') as commentDate, cont from bls_board_comment order by commentNo asc)
-where boardNo=120

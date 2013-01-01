@@ -3,7 +3,6 @@ package control;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +21,8 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 public class BoardController extends MultiActionController {
 	private BoardService boardService;
 	private String path;
+	// 게시물 리스트 BOARD_CONTENT_NUMBER_PER_PAGE 값 default 10
+	private int BOARD_CONTENT_NUMBER_PER_PAGE=10;
 
 	public BoardController(BoardService boardService) {
 		super();
@@ -66,19 +67,28 @@ public class BoardController extends MultiActionController {
 	}
 	
 	// 게시물 보여줄 경우 count 증가 후 showContent
-	public ModelAndView showContent(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+	public ModelAndView showContent(HttpServletRequest request, HttpServletResponse response, BoardVO bvo) throws SQLException {
 		String boardNo = request.getParameter("boardNo");
 		String page = request.getParameter("page");
+		String commentPage = request.getParameter("commentPage");
 		// 목록 page 유지 위한 설정
 		request.setAttribute("page", page);
 		// 현재 게시물의 이전, 다음 게시물 현황
 		HashMap map = boardService.NextAndPreContent(boardNo);
 		request.setAttribute("nextpre", map);
 		// 현재 게시물의 댓글 현황
-		ArrayList<BoardCommentVO> cList = boardService.commentList(boardNo);
+		ListVO cList = null;
+		// 게시물 내에서 댓글 페이지 이동 시에는 count 증가 하지 않는다.
+		if (commentPage != null) {
+			cList = boardService.commentList(boardNo, Integer.parseInt(commentPage));
+			bvo = boardService.showContentNoCount(boardNo);
+		} else {
+			cList = boardService.commentList(boardNo, 1);
+			bvo = boardService.showContent(boardNo);
+		}
 		request.setAttribute("cList", cList);
 		// boardNo 에 해당하는 게시물을 보여준다
-		return new ModelAndView("show_content.board", "bvo", boardService.showContent(boardNo));
+		return new ModelAndView("show_content.board", "bvo", bvo);
 	}
 	
 	// 게시물 수정화면을 보여줄 경우 count 증가 없이 showContent
@@ -125,7 +135,7 @@ public class BoardController extends MultiActionController {
 		HashMap map = boardService.NextAndPreContent(boardNo);
 		request.setAttribute("nextpre", map);
 		// 현재 게시물의 댓글 현황
-		ArrayList<BoardCommentVO> cList = boardService.commentList(boardNo);
+		ListVO cList = boardService.commentList(boardNo);
 		request.setAttribute("cList", cList);
 		// boardNo 에 해당하는 게시물을 보여준다
 		return new ModelAndView("show_content.board", "bvo", boardService.showContentNoCount(boardNo));
@@ -145,7 +155,7 @@ public class BoardController extends MultiActionController {
 		// 삭제한 게시물의 현 page 상태를 유지(관리자모드의 경우 게시물 list 에서 삭제가 가능하기 때문에)
 		request.setAttribute("page", page);
 		// 목록 page 이동(page 유지)
-		return new ModelAndView("list.board", "lvo", boardService.list(page));
+		return new ModelAndView("list.board", "lvo", boardService.list(page, BOARD_CONTENT_NUMBER_PER_PAGE));
 	}
 	
 	// 파일삭제
@@ -155,13 +165,21 @@ public class BoardController extends MultiActionController {
 		return new ModelAndView("JsonView");
 	}
 	
+	// 게시물 리스트 BOARD_CONTENT_NUMBER_PER_PAGE 값 변경
+	public ModelAndView listPageChange(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+		String perPage = request.getParameter("perPage");
+		this.BOARD_CONTENT_NUMBER_PER_PAGE = Integer.parseInt(perPage);
+		// 게시물 보여주는 갯수 수정하는 로직
+		return list(request, response);
+	}
+	
 	// 게시물 리스트 보기
 	public ModelAndView list(HttpServletRequest request, HttpServletResponse response) throws SQLException {
 		String page = request.getParameter("page");
 		// 현 page 상태를 유지
 		request.setAttribute("page", page);
 		// 목록 page 이동(page 유지)
-		return new ModelAndView("list.board", "lvo", boardService.list(page));
+		return new ModelAndView("list.board", "lvo", boardService.list(page, BOARD_CONTENT_NUMBER_PER_PAGE));
 	}
 	
 	// 파일 다운로드
@@ -207,13 +225,13 @@ public class BoardController extends MultiActionController {
 		HashMap map = boardService.NextAndPreContent(Integer.toString(bvo.getBoardNo()));
 		request.setAttribute("nextpre", map);
 		// 현재 게시물의 댓글 현황
-		ArrayList<BoardCommentVO> cList = boardService.commentList(Integer.toString(bvo.getBoardNo()));
+		ListVO cList = boardService.commentList(Integer.toString(bvo.getBoardNo()));
 		request.setAttribute("cList", cList);
 		// 게시물 답글이 완료된 게시물을 보여준다
 		return new ModelAndView("show_content.board", "bvo", bvo);
 	}
 	
-	// 게시물 댓글 쓰기 과정(입력시 마다 전체 리스트 비동기 통신)
+	// 게시물 댓글 쓰기 과정
 	public ModelAndView commentContent(HttpServletRequest request, HttpServletResponse response, BoardCommentVO bcvo) throws IllegalStateException, IOException, SQLException {
 		String boardNo = request.getParameter("boardNo");
 		String page = request.getParameter("page");
@@ -225,10 +243,47 @@ public class BoardController extends MultiActionController {
 		HashMap map = boardService.NextAndPreContent(boardNo);
 		request.setAttribute("nextpre", map);
 		// 현재 게시물의 댓글 현황
-		ArrayList<BoardCommentVO> cList = boardService.commentList(boardNo);
+		ListVO cList = boardService.commentList(boardNo);
 		request.setAttribute("cList", cList);
 		// boardNo 에 해당하는 게시물을 보여준다
-		return new ModelAndView("show_content.board", "bvo", boardService.showContent(Integer.toString(bcvo.getBoardNo())));
+		return new ModelAndView("show_content.board", "bvo", boardService.showContentNoCount(Integer.toString(bcvo.getBoardNo())));
+	}
+	
+	// 게시물 댓글 수정 과정
+	public ModelAndView commentUpdate(HttpServletRequest request, HttpServletResponse response, BoardCommentVO bcvo) throws IllegalStateException, IOException, SQLException {
+		String boardNo = request.getParameter("boardNo");
+		String page = request.getParameter("page");
+		// DB 에 게시물 댓글 Update
+		boardService.commentUpdate(bcvo);
+		// 목록 page 유지 위한 설정
+		request.setAttribute("page", page);
+		// 현재 게시물의 이전, 다음 게시물 현황
+		HashMap map = boardService.NextAndPreContent(boardNo);
+		request.setAttribute("nextpre", map);
+		// 현재 게시물의 댓글 현황
+		ListVO cList = boardService.commentList(boardNo);
+		request.setAttribute("cList", cList);
+		// boardNo 에 해당하는 게시물을 보여준다
+		return new ModelAndView("show_content.board", "bvo", boardService.showContentNoCount(Integer.toString(bcvo.getBoardNo())));
+	}
+	
+	// 게시물 댓글 삭제 과정
+	public ModelAndView commentDelete(HttpServletRequest request, HttpServletResponse response, BoardCommentVO bcvo) throws IllegalStateException, IOException, SQLException {
+		String boardNo = request.getParameter("boardNo");
+		String commentNo = request.getParameter("commentNo");
+		String page = request.getParameter("page");
+		// DB 에 게시물 댓글 Delete
+		boardService.commentDelete(bcvo);
+		// 목록 page 유지 위한 설정
+		request.setAttribute("page", page);
+		// 현재 게시물의 이전, 다음 게시물 현황
+		HashMap map = boardService.NextAndPreContent(boardNo);
+		request.setAttribute("nextpre", map);
+		// 현재 게시물의 댓글 현황
+		ListVO cList = boardService.commentList(boardNo);
+		request.setAttribute("cList", cList);
+		// boardNo 에 해당하는 게시물을 보여준다
+		return new ModelAndView("show_content.board", "bvo", boardService.showContentNoCount(Integer.toString(bcvo.getBoardNo())));
 	}
 	
 	// 관리자 게시물 checked 삭제 과정
@@ -250,6 +305,6 @@ public class BoardController extends MultiActionController {
 		// 현 page 상태를 유지
 		request.setAttribute("page", page);
 		// 목록 page 이동(page 유지)
-		return new ModelAndView("list.board", "lvo", boardService.list(page));
+		return new ModelAndView("list.board", "lvo", boardService.list(page, BOARD_CONTENT_NUMBER_PER_PAGE));
 	}
 }

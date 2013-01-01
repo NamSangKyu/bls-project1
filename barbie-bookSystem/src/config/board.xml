@@ -44,6 +44,11 @@
 	<select id="totalContent" resultClass="int">
 		select count(*) from bls_board
 	</select>
+
+	<!-- PagingBean 생성을 위한 전체 댓글 수 -->	
+	<select id="totalComment" resultClass="int">
+		select count(*) from bls_board_comment where boardNo=#value#
+	</select>
 	
 	<!-- PagingBean 을 적용한 전체 게시물 목록(조건추가 1. 작성시간이 오늘 날짜일 경우엔 시간으로만 표기 아닌 경우는 날짜로 표기 -->
 	<select id="list" parameterClass="hashmap" resultClass="boardvo">
@@ -54,6 +59,14 @@
 		else to_char(boardDate, 'YYYY.MM.DD')
 		end as boardDate
 		from bls_board order by ref desc, restep asc)) where page=#page#
+	</select>
+
+	<!-- PagingBean 을 적용한 전체 게시물 댓글 목록 -->
+	<select id="commentList" parameterClass="hashmap" resultClass="bcvo">
+		select commentNo, boardNo, memberId, to_char(commentDate,'YYYY.MM.DD HH24:MI') as commentDate, cont from
+		(select ceil(rownum/#num#) as page, commentNo, boardNo, memberId, commentDate, cont from
+		(select commentNo, boardNo, memberId, commentDate, cont from
+		bls_board_comment order by commentNo asc) where boardNo=#boardNo#) where page=#page#
 	</select>
 	
 	<!-- 답글 작성 전 원글의 restep 보다 큰 값 +1 증가 -->
@@ -72,7 +85,7 @@
 	</insert>	
 	
 	<!-- 현재 게시물의 이전 과 다음 게시물을 가져오는 로직 -->
-	<select id="NextAndPreContent" resultClass="java.util.HashMap">
+	<select id="NextAndPreContent" resultClass="hashmap">
 		select * from(select boardNo, memberId, boardDate,
 		lead(title,1,'이전 게시물이 존재하지 않습니다') over (order by boardNo) pre_title,
     	lead(boardNo,1,'0') over (order by boardNo) pre_boardNo,
@@ -82,8 +95,13 @@
 	</select>
 	
 	<!-- 해당 게시물 댓글 달기 전 commentCount 증가 -->
-	<update id="updateCommentCount">
+	<update id="plusCommentCount">
 		update bls_board set commentCount=commentCount+1 where boardNo=#value#
+	</update>
+	
+	<!-- 해당 게시물 댓글 달기 전 commentCount 감소 -->
+	<update id="minusCommentCount">
+		update bls_board set commentCount=commentCount-1 where boardNo=#value#
 	</update>
 	
 	<!-- 댓글을 DB 에 저장하는 과정 commentNo 하고 commentDate 정보 추가 이때 commentNo 는 bcvo 에 자동 setting 됨 -->
@@ -100,16 +118,18 @@
 		select to_char(commentDate,'YYYY.MM.DD HH24:MI') as commentDate from bls_board_comment where commentNo=#value#
 	</select>
 	
-	<!-- 현재 게시물의 댓글 목록을 가져오는 로직 -->
-	<select id="commentList" resultClass="bcvo">
-		select * from
-		(select boardNo, commentNo, memberId, to_char(commentDate,'YYYY.MM.DD HH24:MI') as commentDate, cont
-		 from bls_board_comment order by commentNo asc)
-		where boardNo=#value#
-	</select>
+	<!-- 댓글 수정 -->
+	<update id="commentUpdate" parameterClass="bcvo">
+		update bls_board_comment set cont=#cont#, commentDate=sysdate where commentNo=#commentNo# 
+	</update>
 	
 	<!-- 댓글 삭제 -->
-	<delete id="deleteComment">
+	<delete id="commentDelete">
+		delete from bls_board_comment where commentNo=#value#
+	</delete>
+	
+	<!-- 해당 게시물 댓글 전체 삭제 -->
+	<delete id="deleteComment" parameterClass="string">
 		delete from bls_board_comment where boardNo=#value#
 	</delete>
 </sqlMap>
