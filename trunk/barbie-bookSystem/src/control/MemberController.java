@@ -32,6 +32,7 @@ public class MemberController extends MultiActionController {
 	public void setMemberWorkPath(String memberWorkPath) {
 		this.memberWorkPath = memberWorkPath;
 	}
+
 	/*
 	 * 			로그아웃
 	 */
@@ -41,6 +42,7 @@ public class MemberController extends MultiActionController {
 		}
 		return new ModelAndView("index");
 	}
+
 	/*
 	 * 			로그인 전 체크 (AJAX)
 	 */
@@ -55,6 +57,7 @@ public class MemberController extends MultiActionController {
 		}
 		return new ModelAndView("JsonView","flag",flag);
 	}
+
 	/*
 	 * 			로그인
 	 */
@@ -78,16 +81,17 @@ public class MemberController extends MultiActionController {
 		}
 		return new ModelAndView(path);
 	}
+
 	/*
 	 *			회원 사진 삭제 (AJAX)
 	 */
 	public ModelAndView deleteFile(HttpServletRequest request, HttpServletResponse response, MemberVO membervo){
-		String newfilename = membervo.getNewfilename();
-		if(newfilename !=null ){
+		String fileName = membervo.getmImg();
+		if(fileName !=null ){
 			//	memberService.deleteFile(membervo.getNewfilename());
-			File file = new File(memberPath+newfilename);
+			File file = new File(memberPath+fileName);
 			//File file1 = new Fiile(workPath+newfilename);
-			System.out.println(file.delete() + " delete status" + newfilename + file.isFile());
+			System.out.println(file.delete() + " delete status" + fileName + file.isFile());
 		}
 		return new ModelAndView("JsonView");
 	}
@@ -111,12 +115,14 @@ public class MemberController extends MultiActionController {
 		}
 		return new ModelAndView("update.member","map",map);
 	}
+
 	/*
 	 * 			회원 정보
 	 */
 	public ModelAndView info(HttpServletRequest request, HttpServletResponse response){
 		return new ModelAndView("info.member");
 	}
+
 	/*
 	 * 			 한명 회원정보
 	 */
@@ -134,7 +140,7 @@ public class MemberController extends MultiActionController {
 	}
 
 	/*
-	 *  			가입하기 전 가입page 호출
+	 *  			회원가입 전 가입 page 호출
 	 */
 	public ModelAndView insertView(HttpServletRequest request, HttpServletResponse response){
 		System.out.println("[CheckController] : insertView 호출");
@@ -160,11 +166,9 @@ public class MemberController extends MultiActionController {
 			MultipartFile mfile=membervo.getUploadFile();
 			System.out.println("getOriginalFilename() :"+mfile.getOriginalFilename());
 			if(mfile.isEmpty() == false){
-				String fileName = mfile.getOriginalFilename();
-				String newfilename = System.currentTimeMillis()+"_"+fileName;
-				membervo.setOrgfilename(fileName);
-				membervo.setNewfilename(newfilename);
-				File copyFile = new File(memberWorkPath+newfilename);						// server
+				String fileName = System.currentTimeMillis()+"_"+mfile.getOriginalFilename();
+				membervo.setmImg(fileName);
+				File copyFile = new File(memberWorkPath+fileName);						// server
 				//File copyFile2 = new File(workPath+newfilename);			// workspace
 				mfile.transferTo(copyFile);
 				//mfile.transferTo(copyFile2);
@@ -193,16 +197,13 @@ public class MemberController extends MultiActionController {
 		try {
 			if(mfile!=null){
 				if(mfile.isEmpty() ==false){
-					String orgfilename = mfile.getOriginalFilename();
-					String newfilename = System.currentTimeMillis()+"_"+orgfilename;
-					File copyFile = new File(memberWorkPath+newfilename);
-					membervo.setNewfilename(newfilename);
-					membervo.setOrgfilename(orgfilename);
-					System.out.println(membervo + " " + orgfilename + newfilename);
+					String fileName = System.currentTimeMillis()+"_"+mfile.getOriginalFilename();
+					File copyFile = new File(memberWorkPath+fileName);
+					membervo.setmImg(fileName);
+					System.out.println(membervo + " " + fileName );
 					mfile.transferTo(copyFile);
 				}else{
-					membervo.setNewfilename(null);
-					membervo.setOrgfilename(null);
+					membervo.setmImg(null);
 				}
 			}
 			if(!membervo.getMemberId().equals("java")){				// 관리자가 아닐때 정보 수정
