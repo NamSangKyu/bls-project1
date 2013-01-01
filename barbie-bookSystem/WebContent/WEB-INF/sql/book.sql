@@ -1,6 +1,6 @@
 --도서 테이블
 drop table bls_book;
-select * from BLS_BOOK;
+
 
 create table bls_book(
 	bookNo number primary key,
@@ -107,8 +107,7 @@ CREATE TABLE bls_book_comment(
 )
 create sequence bls_book_comment_seq nocache;
 
-
--- 도서 예약 테이블
+-- 도서 예약 테이블(사용자)
 CREATE TABLE bls_book_reserve(
 	bookNo number ,
 	memberId varchar2(50) ,
@@ -120,7 +119,7 @@ CREATE TABLE bls_book_reserve(
 select * from bls_book_reserve;
 drop table bls_book_reserve;
 
--- 도서 대여 테이블
+-- 도서 대여 테이블(관리가_대여중)
 CREATE TABLE bls_book_rental(
 	rentalNo number primary key,
 	rentalDate date not null,
@@ -168,7 +167,17 @@ where page=1
 
 
 
+---신간도서!! 
+select outputDate,isbn, newbook, title, writer, subject, publisher from (
+select outputDate, ceil(rownum/5) as page , isbn, newbook, title, writer, subject, publisher from (
+select outputDate, isbn, newbook, title, writer, subject, publisher from (
+select distinct(b.isbn), trunc (sysdate-outputDate) as newbook,  b.title, b.writer, s.subject, p.publisher, to_char(b.outputDate,'yyyy-mm-dd') as outputDate from bls_book b , BLS_BOOK_PBS p, BLS_BOOK_SBJ s
+where s.subjectNo=b.subjectNo and p.publisherNo=b.publisherNo)where newbook<30 order by newbook asc)) where page='1';
 
+--신간도서 전체 count구하기 
+select count(*) from (
+select distinct(b.isbn), trunc (sysdate-outputDate) as newbook,  b.title, b.writer, s.subject, p.publisher, to_char(b.outputDate,'yyyy-mm-dd') as outputDate from bls_book b , BLS_BOOK_PBS p, BLS_BOOK_SBJ s
+where s.subjectNo=b.subjectNo and p.publisherNo=b.publisherNo)where newbook<30;
 
 
 
