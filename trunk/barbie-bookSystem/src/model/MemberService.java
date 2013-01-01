@@ -36,6 +36,27 @@ public class MemberService {
 		MemberVO mvo =  memberDao.selectMemberForLogin(membervo);
 		return mvo;
 	}
+	//로그인 사용자에 따른 채추천 메소드
+	public HashMap recommand(MemberVO memberVO) throws SQLException{
+	String subject1=memberVO.getSubject1();
+	String subject2=memberVO.getSubject2();
+	String subject3=memberVO.getSubject3();
+	System.out.println(subject1+" "+subject2+" "+subject3);
+	HashMap map=new HashMap();
+	ArrayList list=new ArrayList();
+
+	list=memberDao.recommand(subject1);
+	map.put("subject1", list);
+	System.out.println("list="+list);
+	list=memberDao.recommand(subject2);
+	map.put("subject2", list);
+	System.out.println("list="+list);
+	list=memberDao.recommand(subject3);
+	map.put("subject3",list);
+	System.out.println("list="+list);
+	return map;
+		
+	}
 
 	// 	회원가입
 	public void insert(MemberVO membervo) throws SQLException{
