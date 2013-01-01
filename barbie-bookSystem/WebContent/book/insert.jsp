@@ -82,7 +82,9 @@
 <link rel="stylesheet" href="/resources/demos/style.css" />    
 <script>    
 $(function() {        
-	$( "#datepicker" ).datepicker();    
+	$("#datepicker").datepicker({
+	  	dateFormat:"yy/mm/dd"
+	}); //date picker 
 });   
 </script>
 
