@@ -1,12 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>    
-    
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<link rel="stylesheet" href="${initParam.root}/css/book-table.css">  
+
 <script type="text/javascript">
 $(document).ready(function(){
 	$.ajax({
@@ -49,15 +45,15 @@ $(document).ready(function(){
 <select id="subject">
 <option value="">--분야선택---</option>
 </select>
-
+<div class="listPage">
 <table border="1">
 <thead>
 <tr>
-<td>책제목</td>
-<td>글쓴이</td>
-<td>평점</td>
-<td>ISBN</td>
-<td>분류</td>
+<th>책제목</th>
+<th>글쓴이</th>
+<th>평점</th>
+<th>ISBN</th>
+<th>분류</th>
 </tr>
 </thead>
 
@@ -74,5 +70,4 @@ $(document).ready(function(){
 </tbody>
 
 </table>
-</body>
-</html>
+</div>
