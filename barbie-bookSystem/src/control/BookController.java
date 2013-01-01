@@ -70,7 +70,21 @@ public class BookController extends MultiActionController {
 		System.out.println("file upload ok~" + copyFile.getName());
 		return fileName;
 	}
-
+	public ModelAndView getBookInfoNo(HttpServletRequest request,
+			HttpServletResponse response) {
+		String bookno = request.getParameter("no");
+		HashMap map = null;
+		try {
+			map = service.getBookInfo(Integer.parseInt(bookno));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ModelAndView("book_info.admin","map",map);
+	}
 	public ModelAndView insert(HttpServletRequest request,
 			HttpServletResponse response, BookVO vo) {
 		System.out.println("insert");
@@ -107,16 +121,22 @@ public class BookController extends MultiActionController {
 		return new ModelAndView("info.book", "map", map);
 	}
 
+
 	public ModelAndView getBookAllList(HttpServletRequest request,
 			HttpServletResponse response) {
-		ArrayList list = new ArrayList();
+		ListVO vo = null;
+		String page = request.getParameter("nowPage");
 		try {
-			list = service.getBookAllList();
+			if(page!=null)
+				vo = service.getBookAllList(page);
+			else
+				vo = service.getBookAllList();
+			System.out.println(vo.toString());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return new ModelAndView("list.book", "list", list);
+		return new ModelAndView("book_delete.admin", "lvo", vo);
 	}
 
 	public ModelAndView getBookInfoTitle(HttpServletRequest request,
@@ -290,7 +310,7 @@ public class BookController extends MultiActionController {
 	public ModelAndView insertPublusher(HttpServletRequest request,
 			HttpServletResponse response, BookCommentVO vo) {
 		ArrayList<PublisherVO> list = null;
-		String publisher = request.getParameter("Publisher");
+		String publisher = request.getParameter("publisher");
 		System.out.println(publisher);
 		try {
 			list = service.insertPublisher(publisher);
@@ -421,5 +441,101 @@ public class BookController extends MultiActionController {
 		String bookNo = request.getParameter("bookNo");
 		service.bookRentalCancel(bookNo);
 		return new ModelAndView("JsonView","isReserve",true);
+	}
+	//admin 도서분류, 출판사 코드 삭제 부분
+		public ModelAndView getPublisher(HttpServletRequest request, HttpServletResponse response){
+			String publisher = request.getParameter("publisher");
+			ArrayList<PublisherVO> list = null;
+			try {
+				list = service.getPublisher(publisher);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(list.toString());
+			return new ModelAndView("JsonView", "list", list);
+
+		}
+		public ModelAndView deletePublisher(HttpServletRequest request, HttpServletResponse response){
+			int publisherNo = Integer.parseInt(request.getParameter("publisherNo"));
+			try {
+				service.deletePublisher(publisherNo);
+				return new ModelAndView("JsonView","result","삭제 성공");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return new ModelAndView("JsonView","result","삭제 실패");
+			}
+		}
+		public ModelAndView getSubjectAdmin(HttpServletRequest request, HttpServletResponse response){
+			String subject = request.getParameter("subject");
+			ArrayList<SubjectVO> list = null;
+			try {
+				list = service.getSubjectAdmin(subject);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(list.toString());
+			return new ModelAndView("JsonView", "list", list);
+
+		}
+		public ModelAndView deleteSubjectAdmin(HttpServletRequest request, HttpServletResponse response){
+			int subjectNo = Integer.parseInt(request.getParameter("subjectNo"));
+			try {
+				service.deleteSubject(subjectNo);
+				return new ModelAndView("JsonView","result","삭제 성공");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return new ModelAndView("JsonView","result","삭제 실패");
+			}
+		}
+	//도서 검색 모듈
+	public ModelAndView findBook(HttpServletRequest request, HttpServletResponse response) {
+		String find = request.getParameter("serach");
+		HashMap value = new HashMap();
+		value.put("value", request.getParameter("searchValue").toString());
+		
+		ArrayList<HashMap> listVO = null;
+		ListVO list = null;
+		int count=0;
+		int page = 0;
+		if(request.getParameter("page")!=null)
+			page = Integer.parseInt(request.getParameter("page"));
+		if(page==0)
+			page=1;
+		value.put("page", page);
+		System.out.println(value.toString());
+		System.out.println(find);
+		try{
+		switch(find){
+		case "subject":
+			listVO = service.getBookListBySubject(value);
+			count = service.getBookListBySubjectCount(value.get("value").toString());
+			break;
+		case "publisher":
+			listVO = service.getBookListByPublisher(value);
+			count = service.getBookListByPublisherCount(value.get("value").toString());
+			break;
+		case "title":
+			listVO = service.getBookListByTitle(value);
+			count = service.getBookListByTitleCount(value.get("value").toString());
+			break;
+		case "writer":
+			listVO = service.getBookListByWriter(value);
+			count = service.getBookListByWriterCount(value.get("value").toString());
+			break;
+		}
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		list = new ListVO(listVO, new PagingBean(page, count, 5, 5));
+		System.out.println("ListVO : "+list.getList().toString());
+		System.out.println("Count : "+count);
+		request.setAttribute("flag", true);
+		request.setAttribute("serachValue", value.get("value").toString());
+		request.setAttribute("serach", find);
+		return new ModelAndView("list.book","list",list);
 	}
 }

@@ -9,6 +9,7 @@ create table bls_member(
 	subject3 varchar2(50) not null,
 	mImg varchar2(50)
 )
+select * from bls_member
 drop table bls_member;
 
 create table bls_book_sbj(

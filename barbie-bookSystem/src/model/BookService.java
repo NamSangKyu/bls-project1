@@ -36,9 +36,21 @@ public class BookService {
 		// TODO Auto-generated method stub
 		return dao.getBookInfo(bookno);
 	}
-	public ArrayList getBookAllList() throws SQLException {
+	public ListVO getBookAllList() throws SQLException {
 		// TODO Auto-generated method stub
-		return dao.getBookAllList();
+		ListVO vo = new ListVO();
+		vo.setBean(new PagingBean(1, dao.getContentAllCountAdmin(),10,10 ));
+		System.out.println(dao.getContentAllCount());
+		vo.setList(dao.getBookAllList());
+		return vo;
+	}
+	public ListVO getBookAllList(String page) throws SQLException {
+		// TODO Auto-generated method stub
+		ListVO vo = new ListVO();
+		vo.setBean(new PagingBean(Integer.parseInt(page), dao.getContentAllCountAdmin(),10,10 ));
+		System.out.println(dao.getContentAllCount());
+		vo.setList(dao.getBookAllListAdmin(page));
+		return vo;
 	}
 	public HashMap getBookInfoTitle(String title) throws SQLException {
 		// TODO Auto-generated method stub
@@ -128,7 +140,25 @@ public class BookService {
 		dao.insertSubject(subject);
 		return dao.getSubjectList();
 	}
-
+	public ArrayList<PublisherVO> getPublisher(String publisher) throws SQLException {
+		// TODO Auto-generated method stub
+		return dao.getPublisher(publisher);
+	}
+	public ArrayList<SubjectVO> getSubjectAdmin(String subject) throws SQLException {
+		// TODO Auto-generated method stub
+		return dao.getSubjectAdmin(subject);
+	}
+	public void deletePublisher(int publisherNo) throws SQLException {
+		// TODO Auto-generated method stub
+		dao.updateBookPublisher(publisherNo);
+		dao.deletePublisher(publisherNo);
+	}
+	public void deleteSubject(int subjectNo) throws SQLException {
+		// TODO Auto-generated method stub
+		dao.updateBookSubject(subjectNo);
+		dao.deleteSubject(subjectNo);
+		
+	}
 	/*
 	 *  호희 & 전기 코드
 	 */
@@ -214,5 +244,38 @@ public class BookService {
 		}finally{
 			sqlMapClient.endTransaction();
 		}
+	}
+	//도서 검색
+	public ArrayList<HashMap> getBookListBySubject(HashMap value) throws SQLException {
+		// TODO Auto-generated method stub
+		return dao.getBookListBySubject(value);
+	}
+	public int getBookListBySubjectCount(String value) throws SQLException {
+		// TODO Auto-generated method stub
+		return dao.getBookListBySubjectCount(value);
+	}
+	public ArrayList<HashMap> getBookListByPublisher(HashMap value) throws SQLException {
+		// TODO Auto-generated method stub
+		return dao.getBookListByPublisher(value);
+	}
+	public int getBookListByPublisherCount(String value) throws SQLException {
+		// TODO Auto-generated method stub
+		return dao.getBookListByPublisherCount(value);
+	}
+	public ArrayList<HashMap> getBookListByTitle(HashMap value) throws SQLException {
+		// TODO Auto-generated method stub
+		return dao.getBookListByTitle(value);
+	}
+	public int getBookListByTitleCount(String value) throws SQLException {
+		// TODO Auto-generated method stub
+		return dao.getBookListByTitleCount(value);
+	}
+	public ArrayList<HashMap> getBookListByWriter(HashMap value) throws SQLException {
+		// TODO Auto-generated method stub
+		return dao.getBookListByWriter(value);
+	}
+	public int getBookListByWriterCount(String value) throws SQLException {
+		// TODO Auto-generated method stub
+		return dao.getBookListByWriterCount(value);
 	}
 }

@@ -17,10 +17,10 @@
     	select distinct(isbn), title, writer, cont, isbn ,loc, img, s.subject, p.publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno and title = #title#
     </select>
 	<insert id="insert" parameterClass="java.util.HashMap">
-		insert into bls_book(bookNo,isbn,title,writer,cont,loc,img,subjectNo,publisherNo) values(#bookno#,#vo.isbn#,#vo.title#,#vo.writer#,#vo.cont#,#vo.loc#,#file#,#vo.subjectNo#,#vo.publisherNo#)
-	</insert>
-	<select id="getBookAllList" resultClass="java.util.HashMap">
-		select rownum as no, title, writer,loc, b_subject as subject, b_publisher as publisher from (select distinct(isbn), title, writer, cont, isbn ,loc, s.subject as b_subject, p.publisher as b_publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno)
+		insert into bls_book(bookNo,isbn,title,writer,cont,loc,img,subjectNo,publisherNo,outputDate) values(#bookno#,#vo.isbn#,#vo.title#,#vo.writer#,#vo.cont#,#vo.loc#,#file#,#vo.subjectNo#,#vo.publisherNo#,to_date(#vo.outputDate#,'MM/DD/YYYY'))
+	</insert>  	
+	<select id="getBookAllList" resultClass="java.util.HashMap" parameterClass="int">
+		select page, bookno, title, writer,loc, subject, publisher from (select ceil(rownum/10) as page, bookno, title, writer,loc, subject, publisher from (select bookno, title, writer,loc, subject, publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno order by bookno asc)) where page = #page#
 	</select>
 	<select id="getContentAllCount" resultClass="int">
 		select count(distinct(isbn)) from BLS_BOOK
@@ -40,7 +40,9 @@
 	<select id="getSubjectNo" parameterClass="String" resultClass="int">
 		select subjectNo from bls_book_sbj where subject=#subject#
 	</select>
-
+	<select id="getContentAllCountAdmin" resultClass="int">
+		select count(isbn) from BLS_BOOK
+	</select>
 
 	<select id="getCommentNo" resultClass="int">
 	select bls_book_comment_seq.nextval from dual
@@ -146,6 +148,55 @@ where num<![CDATA[<]]>6
 		update bls_book_rental set returnDate=sysdate
 		where bookNo=#bookNo#  and returnDate is null
 	</update>
+	<!-- admin 도서분류, 출판사 코드 삭제 부분 -->
+	<!-- 출판사 삭제 -->
+	<delete id="deletePublisher" parameterClass="int">
+		delete from bls_book_pbs where publisherNo = #publisherNo#
+	</delete>
+	
+	<select id="getPublisher" resultClass="model.vo.PublisherVO" parameterClass="String">
+		select * from bls_book_pbs where publisher like '$%publisher$%'
+	</select>
+	<update id="updateBookPublisher" parameterClass="int">
+		update BLS_BOOK set publisherNo=0 where publisherNo = #publisherNo#
+	</update>
+	<delete id="deleteSubject" parameterClass="int">
+		delete from bls_book_sbj where subjectNo = #subjectNo#
+	</delete>
+	
+	<select id="getSubjectAdmin" resultClass="model.vo.SubjectVO" parameterClass="String">
+		select * from bls_book_sbj where subject like '$%subject$%'
+	</select>
+	<update id="updateBookSubject" parameterClass="int">
+		update BLS_BOOK set subjectNo=0 where subjectNo = #subjectNo#
+	</update>
+	<!-- find 검색 모듈 -->
+	<select id="getBookListBySubject" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+		select no,page, title, writer,loc, subject, publisher, s_isbn as isbn from (select rownum as no,ceil( rownum /5) as page, title, writer,loc, b_subject as subject, b_publisher as publisher, s_isbn from (select distinct(isbn) as s_isbn, title, writer, cont, isbn ,loc, s.subject as b_subject, p.publisher as b_publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno and subject=#value#)) where page = #page#	
+	</select>
+	<select id="getBookListBySubjectCount" parameterClass="String" resultClass="int">
+		select count(*) from (select distinct(isbn) as s_isbn, title, writer, cont, isbn ,loc, s.subject as b_subject, p.publisher as b_publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno and subject = #value#)
+	</select>
+	
+	<select id="getBookListByPublisher" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+		select no, page, title, writer,loc, subject, publisher, s_isbn as isbn from (select rownum as no,ceil( rownum /5) as page, title, writer,loc, b_subject as subject, b_publisher as publisher, s_isbn from (select distinct(isbn) as s_isbn, title, writer, cont, isbn ,loc, s.subject as b_subject, p.publisher as b_publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno and publisher like '%' || #value# || '%')) where page = #page# 
+	</select>
+	<select id="getBookListByPublisherCount" parameterClass="String" resultClass="int">
+		select count(*) from (select distinct(isbn) as s_isbn, title, writer, cont, isbn ,loc, s.subject as b_subject, p.publisher as b_publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno and publisher = #value#)
+	</select>
+	
+	<select id="getBookListByTitle" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+		select no,page, title, writer,loc, subject, publisher, s_isbn as isbn from (select rownum as no,ceil( rownum /5) as page, title, writer,loc, b_subject as subject, b_publisher as publisher, s_isbn from (select distinct(isbn) as s_isbn, title, writer, cont, isbn ,loc, s.subject as b_subject, p.publisher as b_publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno and title like '%' || #value# || '%')) where page = #page#
+	</select>
+	<select id="getBookListByTitleCount" parameterClass="String" resultClass="int">
+		select count(*) from (select distinct(isbn) as s_isbn, title, writer, cont, isbn ,loc, s.subject as b_subject, p.publisher as b_publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno and title like '%' || #value# || '%')
+	</select>
+	<select id="getBookListByWriter" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+		select no,page, title, writer,loc, subject, publisher, s_isbn as isbn from (select rownum as no,ceil( rownum /5) as page, title, writer,loc, b_subject as subject, b_publisher as publisher, s_isbn from (select distinct(isbn) as s_isbn, title, writer, cont, isbn ,loc, s.subject as b_subject, p.publisher as b_publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno and writer like '%' || #value# || '%')) where page = #page#
+	</select>
+	<select id="getBookListByWriterCount" parameterClass="String" resultClass="int">
+		select count(*) from (select distinct(isbn) as s_isbn, title, writer, cont, isbn ,loc, s.subject as b_subject, p.publisher as b_publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno and writer like '%' || #value# || '%')
+	</select>
 </sqlMap>
 
 
