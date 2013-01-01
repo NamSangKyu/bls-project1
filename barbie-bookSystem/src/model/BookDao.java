@@ -269,4 +269,12 @@ public class BookDao {
 		// TODO Auto-generated method stub
 		return (int) sqlMapClient.queryForObject("book.getContentAllCountAdmin");
 	}
+	public ArrayList getNewBook(String pageNo) throws SQLException {
+		return (ArrayList) sqlMapClient.queryForList("book.getNewBook",pageNo);
+		}
+
+
+		public int getNewBookCount() throws SQLException {
+		return (int) sqlMapClient.queryForObject("book.getNewBookCount");
+		}
 }
