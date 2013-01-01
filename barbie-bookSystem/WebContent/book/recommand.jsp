@@ -34,7 +34,7 @@ $(document).ready(function(){
 		success:function(data){ 
 		 bookList="";
 		 for(i=0; i<data.list.length; i++){
-		bookList+="<tr><td>"+data.list[i].TITLE+"</td><td>"+data.list[i].WRITER+"</td><td>"+data.list[i].AVERAGE+"</td><td>"+data.list[i].C_ISBN+"</td><td>"+data.list[i].SUBJECT+"</td></tr>";	 
+		 bookList+="<tr><td><a href='book.do?command=getBookInfoIsbn&isbn="+data.list[i].C_ISBN+"'>"+data.list[i].TITLE+"</a></td><td>"+data.list[i].WRITER+"</td><td>"+data.list[i].AVERAGE+"</td><td>"+data.list[i].C_ISBN+"</td><td>"+data.list[i].SUBJECT+"</td></tr>";	 
 		 }
 		$("#tableBook").html(bookList);
 		}//callback함
