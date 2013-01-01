@@ -278,4 +278,15 @@ public class BookService {
 		// TODO Auto-generated method stub
 		return dao.getBookListByWriterCount(value);
 	}
+	public ListVO getNewBook(String pageNo) throws SQLException {
+	if(pageNo==null||pageNo.equals("")){
+	pageNo="1";	
+	}
+	ArrayList list=new ArrayList();
+	list=dao.getNewBook(pageNo);
+	int total=dao.getNewBookCount();
+	PagingBean bean=new PagingBean(Integer.parseInt(pageNo), total,5,5);
+	ListVO lvo=new ListVO(list,bean);
+	return lvo;
+	}
 }
