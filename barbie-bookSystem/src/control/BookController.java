@@ -13,6 +13,7 @@ import model.BookService;
 import model.vo.BookCommentVO;
 import model.vo.BookVO;
 import model.vo.ListVO;
+import model.vo.PagingBean;
 import model.vo.PublisherVO;
 import model.vo.SubjectVO;
 
@@ -210,66 +211,6 @@ public class BookController extends MultiActionController {
 		return new ModelAndView("JsonView", "subjectNo", subjectNo);
 	}
 
-	// 여기서부터 호희 추가로직
-	// 북 정보 뽑아올때 해당 북에 대한 예약 목록 가져오는 로직
-	public ModelAndView getBookInfoIsbn(HttpServletRequest request,
-			HttpServletResponse response) throws SQLException {
-		int isbn = Integer.parseInt(request.getParameter("isbn"));
-		HashMap map = new HashMap();
-		try {
-			map = service.getBookInfoIsbn(isbn);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// 도서 info 볼 때 도서상태 보기위한 로직
-		ArrayList list = service.getBookState(isbn);
-		request.setAttribute("list", list);
-
-		return new ModelAndView("info.book", "map", map);
-	}
-
-	// 예약 버튼을 눌렀을 경우 도서상태 예약 취소 상태으로 바뀌는 Ajax
-	public ModelAndView bookResolve(HttpServletRequest request,
-			HttpServletResponse response) throws SQLException {
-		String bookNo = request.getParameter("bookNo");
-		service.bookResolve(bookNo);
-		return new ModelAndView("JsonView");
-	}
-
-	// 예약 취소 버튼을 눌렀을 경우 도서상태 예약상태로 바뀌는 Ajax
-	public ModelAndView bookResolveCancle(HttpServletRequest request,
-			HttpServletResponse response) throws SQLException {
-		System.out.println("ㅎㅎ");
-		String bookNo = request.getParameter("bookNo");
-		service.bookResolveCancle(bookNo);
-		return new ModelAndView("JsonView");
-	}
-
-	// 추가적인 로직인데 관리자가 로그인 하여 도서관리를 눌렀을 경우 도서전체에 대한 상태가 보여짐
-	public ModelAndView adminBook(HttpServletRequest request,
-			HttpServletResponse response) throws SQLException {
-		ArrayList list = service.adminBook();
-		return new ModelAndView("admin_list.admin", "list", list);
-	}
-
-	// 관리자 도서관리 에서 대여 할 경우 진행될 소스
-	public ModelAndView bookRental(HttpServletRequest request,
-			HttpServletResponse response) throws SQLException {
-		String bookNo = request.getParameter("bookNo");
-		String memberId = request.getParameter("memberId");
-		service.bookRental(bookNo, memberId);
-		return new ModelAndView("JsonView");
-	}
-
-	// 관리자 도서관리 에서 반납 할 경우 진행될 소스
-	public ModelAndView bookRentalCancle(HttpServletRequest request,
-			HttpServletResponse response) throws SQLException {
-		String bookNo = request.getParameter("bookNo");
-		service.bookRentalCancle(bookNo);
-		return new ModelAndView("JsonView");
-	}
-
 	// list 로 넣어야지!!
 	public ModelAndView insertComment(HttpServletRequest request,
 			HttpServletResponse response, BookCommentVO vo) {
@@ -400,4 +341,85 @@ public class BookController extends MultiActionController {
 		return new ModelAndView("subject.admin");
 	}
 
+	/*
+	 * 여기서부터 호희 추가로직
+	 */
+	// 북 정보 뽑아올때 해당 북에 대한 예약 목록 가져오는 로직 ( 상규 공용 로직)
+	public ModelAndView getBookInfoIsbn(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException {
+		int isbn = Integer.parseInt(request.getParameter("isbn"));
+		HashMap map = new HashMap();
+		try {
+			map = service.getBookInfoIsbn(isbn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		ArrayList list = service.getBookState(isbn);			// 도서 info 볼 때 도서상태 보기위한 로직
+		request.setAttribute("list", list);
+		return new ModelAndView("info.book", "map", map);
+	}
+
+	// 관리자가 로그인 하여 도서관리를 눌렀을 경우 도서전체에 대한 상태가 보여짐
+	public ModelAndView adminBook(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException {
+		ListVO listvo = service.adminBook(request.getParameter("nowPage"));
+		PagingBean pb = listvo.getBean();
+		return new ModelAndView("admin_list.admin", "listvo", listvo);
+	}
+
+	// 예약 버튼을 눌렀을 경우 도서상태 예약 취소 상태으로 바뀌는 Ajax
+	// 1. 도서상태 변경 2. 예약테이블 테이터 삽입
+	public ModelAndView bookReserve(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException {
+		String bookNo = request.getParameter("bookNo");
+		String memberId = request.getParameter("memberId");
+		HashMap map = new HashMap();
+		map.put("bookNo", bookNo);			map.put("memberId", memberId);
+		System.out.println("reserve call : " +map);											// Test
+		service.bookReserve(map);
+		return new ModelAndView("JsonView");
+	}
+
+	// 예약 취소 버튼을 눌렀을 경우 도서상태 예약상태로 바뀌는 Ajax
+	// 1. 도서 상태 변경 2. 예약테이블 데이터 삭제
+	public ModelAndView bookReserveCancel(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException {
+		String bookNo = request.getParameter("bookNo");
+		String memberId = request.getParameter("memberId");
+		HashMap map = new HashMap();
+		map.put("bookNo", bookNo);			map.put("memberId", memberId);
+		System.out.println("reserve cancle call : " + map);								// Test
+		service.bookReserveCancel(map);
+		return new ModelAndView("JsonView");
+	}
+
+	// 관리자 도서관리 에서 대여 할 경우 진행될 소스  Rental
+	// 예약중 - 1. 예약 테이블에 데이터 존재하는지 검사 2. 예약 테이블 데이터 삭제 3. 책 상태 변경 4. 대여테이블 데이터 삽입
+	// 대여가능 - 1. 책 상태 변경 2. 대여 테이블 데이터 삽입
+	public ModelAndView bookRental(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException {
+		String bookNo = request.getParameter("bookNo");
+		String memberId = request.getParameter("memberId");
+		String bookState = request.getParameter("bookState");
+		System.out.println("bookState !!! " +bookState );									// Test
+		boolean flag=false;	// default 값
+		if(bookState.equals("예약중")){
+			flag= service.isReserveData(bookNo,memberId);				// 둘다 스트링으로 받았는데 가능하는지 궁금
+			if(flag)// 존재할때
+				service.bookRental(bookNo, memberId, true);
+		}else{
+			service.bookRental(bookNo, memberId, false);
+			flag=true;
+		}
+		return new ModelAndView("JsonView","isReserve",flag);		// 여기 flag 값은 대여성공 여부 false = 아이디 값을 잘못 넣음
+	}
+
+	// 관리자 도서관리 에서 반납 할 경우 진행될 소스	Return
+	// 반납 - 1. 도서 상태 변경 2. 대여테이블 데이터 returnDate 추가
+	public ModelAndView bookRentalCancel(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException {
+		String bookNo = request.getParameter("bookNo");
+		service.bookRentalCancel(bookNo);
+		return new ModelAndView("JsonView","isReserve",true);
+	}
 }
