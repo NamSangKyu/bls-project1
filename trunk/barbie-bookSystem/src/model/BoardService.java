@@ -46,14 +46,13 @@ public class BoardService {
 		boardDao.updateContent(bvo);
 	}
 
-	public ListVO list(String page) throws SQLException {
-		System.out.println("3333333333333333333333333333333333" + page);
+	public ListVO list(String page, int perPage) throws SQLException {
 		int totalContent = boardDao.totalContent();
-		PagingBean bean = new PagingBean(Integer.parseInt(page), totalContent, CommonConstants.BOARD_CONTENT_NUMBER_PER_PAGE, CommonConstants.BOARD_PAGEGROUP_NUMBER_PER_PAGE);
+		PagingBean bean = new PagingBean(Integer.parseInt(page), totalContent, perPage, CommonConstants.BOARD_PAGEGROUP_NUMBER_PER_PAGE);
 		
 		HashMap map = new HashMap();
 		map.put("page", page);
-		map.put("num", CommonConstants.BOARD_CONTENT_NUMBER_PER_PAGE);
+		map.put("num", perPage);
 		
 		ArrayList list = boardDao.list(map);
 		ListVO lvo = new ListVO(list, bean);
@@ -63,7 +62,6 @@ public class BoardService {
 
 	public void deleteFile(String newFileName) {
 		File f=new File(newFileName);
-		System.out.println(newFileName+" file remove:"+f.delete());
 	}
 
 	public void replyContent(BoardVO bvo) throws SQLException {
@@ -83,16 +81,40 @@ public class BoardService {
 
 	public void commentContent(BoardCommentVO bcvo) throws SQLException {
 		// 게시물에 댓글 달기 전 해당 게시물 commentCount 증가
-		boardDao.updateCommentCount(bcvo.getBoardNo());
+		boardDao.plusCommentCount(bcvo.getBoardNo());
 		// 댓글을 db에 저장하는 과정 commentNo 하고 commentDate 정보 추가
 		int commentNo = boardDao.commentContent(bcvo);
 		// 입력 되어진 해당 댓글의 commentDate 정보를 bcvo 에 setting 하는 과정(commentNo 의 경우는 insert 시에 setting)
 		String commentDate = boardDao.getCommentDate(commentNo);
 		bcvo.setCommentDate(commentDate);
-		System.out.println("insert 후의 bcvo" + bcvo);
 	}
 
-	public ArrayList<BoardCommentVO> commentList(String boardNo) throws SQLException {
-		return boardDao.commentList(boardNo);
+	public ListVO commentList(String boardNo, int commentPage) throws SQLException {
+		int totalComment = boardDao.totalComment(boardNo);
+		PagingBean bean = new PagingBean(commentPage, totalComment, CommonConstants.BOARD_COMMENT_NUMBER_PER_PAGE, CommonConstants.BOARD_PAGEGROUP_NUMBER_PER_PAGE);
+		HashMap map = new HashMap();
+		map.put("page", commentPage);
+		map.put("num", CommonConstants.BOARD_COMMENT_NUMBER_PER_PAGE);
+		map.put("boardNo", boardNo);
+		
+		ArrayList list = boardDao.commentList(map);
+		ListVO lvo = new ListVO(list, bean);
+	
+		return lvo;
+	}
+	
+	public ListVO commentList(String boardNo) throws SQLException {
+		return commentList(boardNo, 1);
+	}
+
+	public void commentUpdate(BoardCommentVO bcvo) throws SQLException {
+		boardDao.commentUpdate(bcvo);
+	}
+
+	// 댓글을 지울 경우 commentCount 감소
+	public void commentDelete(BoardCommentVO bcvo) throws SQLException {
+		// 게시물에 댓글 달기 전 해당 게시물 commentCount 감소
+		boardDao.minusCommentCount(bcvo.getBoardNo());
+		boardDao.commentDelete(bcvo.getCommentNo());
 	}
 }

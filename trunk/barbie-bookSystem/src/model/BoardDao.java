@@ -11,7 +11,6 @@ import model.vo.BoardVO;
 import com.ibatis.sqlmap.client.SqlMapClient;
 
 public class BoardDao {
-	private static final String String = null;
 	private SqlMapClient sqlMapClient;
 
 	public BoardDao(SqlMapClient sqlMapClient) {
@@ -71,15 +70,31 @@ public class BoardDao {
 		return (String) sqlMapClient.queryForObject("board.getCommentDate", commentNo);
 	}
 
-	public ArrayList<BoardCommentVO> commentList(String boardNo) throws SQLException {
-		return (ArrayList<BoardCommentVO>) sqlMapClient.queryForList("board.commentList", boardNo);
-	}
-
 	public void deleteComment(String boardNo) throws SQLException {
 		sqlMapClient.delete("board.deleteComment", boardNo);
 	}
 
-	public void updateCommentCount(int boardNo) throws SQLException {
-		sqlMapClient.update("board.updateCommentCount", boardNo);
+	public void plusCommentCount(int boardNo) throws SQLException {
+		sqlMapClient.update("board.plusCommentCount", boardNo);
+	}
+	
+	public void minusCommentCount(int boardNo) throws SQLException {
+		sqlMapClient.update("board.minusCommentCount", boardNo);
+	}
+
+	public void commentUpdate(BoardCommentVO bcvo) throws SQLException {
+		sqlMapClient.update("board.commentUpdate", bcvo);
+	}
+
+	public void commentDelete(int commentNo) throws SQLException {
+		sqlMapClient.delete("board.commentDelete", commentNo);
+	}
+
+	public int totalComment(String boardNo) throws SQLException {
+		return (int) sqlMapClient.queryForObject("board.totalComment", boardNo);
+	}
+
+	public ArrayList commentList(HashMap map) throws SQLException {
+		return (ArrayList) sqlMapClient.queryForList("board.commentList", map);
 	}
 }

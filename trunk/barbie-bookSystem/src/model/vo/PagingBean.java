@@ -1,6 +1,5 @@
 package model.vo;
 
-import config.CommonConstants;
 
 public class PagingBean {
 	private int nowPage;
@@ -10,7 +9,7 @@ public class PagingBean {
 	// 한 페이지 그룹내 페이지 수
 	private int numberOfPageGroup;
 
-	// PagingBean을 통해 페이징 로직을 정의하기 위해서는 전체 게시물 수와 현재 페이지 넘버를 필요로 한다.
+	// PagingBean 을 통해 페이징 로직을 정의하기 위해서는 전체 게시물 수와 현재 페이지 넘버를 필요로 한다.
 	// 추가적으로 업무(member, board, book) 에 맞는 상수를 생성자에서 받는다.
 	public PagingBean(int nowPage, int totalContent, int numberOfContentPerPage,int numberOfPageGroup) {
 		super();
@@ -19,11 +18,20 @@ public class PagingBean {
 		this.numberOfContentPerPage = numberOfContentPerPage;
 		this.numberOfPageGroup = numberOfPageGroup;
 	}
-
+	
+	// 댓글 페이징 관련해서 추가된 메서드. 현재 댓글의 총 개수를 간단하게 표현해주기 위해서 사용
+	public int getTotalContent() {
+		return totalContent;
+	}
+	
+	// 우측 상단의 한 화면에 보여지는 게시물의 개수의 default select 를 유지하기 위해
+	public int getNumberOfContentPerPage() {
+		return numberOfContentPerPage;
+	}
+	
 	public int getNowPage() {
 		return nowPage;
 	}
-
 	// 총 페이지 수 리턴 ex) 총게시물 수 - 15 개 , 한화면에서 보여질 게시물 수 - 5개 몇페이지 ? 총 3 페이지 16개면 총
 	// 4페이지 총게시물수 % 한페이지에 보여질 게시물수 0 이면 나눈 값 0 이 아니면 나눈 값 + 1
 	public int getTotalPage() {

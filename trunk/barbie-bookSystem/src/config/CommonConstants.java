@@ -9,6 +9,7 @@ public interface CommonConstants {
 	 *  한 페이지에서 보여질 게시물 수 , 한페이지에 보여질 페이지 그룹의 페이지수
 	 */
 	int BOARD_CONTENT_NUMBER_PER_PAGE=10;
+	int BOARD_COMMENT_NUMBER_PER_PAGE=5;
 	int BOARD_PAGEGROUP_NUMBER_PER_PAGE=4;
 
 	/**			Book
