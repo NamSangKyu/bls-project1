@@ -12,7 +12,7 @@
   			});
   			//			취소 버튼
   			$("#cancel_img").click(function(){
-  				location.href="${initParam.root}/index1.jsp";
+  				location.href=document.referrer;
   			});
   			//			아이디 체크
   			//$("#memberId")
