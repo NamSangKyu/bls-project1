@@ -11,6 +11,7 @@ create table bls_book(
  	cont varchar2(4000) not null,
  	loc varchar2(50) not null,
  	img varchar2(1000),
+ 	outputDate date not null,
  	bookState varchar2(50) default '대여가능',
  	subjectNo number not null,
  	publisherNo number not null,
