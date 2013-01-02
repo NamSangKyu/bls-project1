@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
  <script src="http://code.jquery.com/jquery-latest.js"></script>
- <%-- <script type="text/javascript" src="${initParam.root }/WEB-INF/js/jquery-1.8.2.js"></script> --%>
+ <link rel="stylesheet" href="${initParam.root }/css/board-table.css" />
  <script type="text/javascript">
  	$(function(){
  		$("#list_img").click(function(){
@@ -18,21 +18,17 @@
  		})
  	});
  </script>
- <link rel="stylesheet" href="${initParam.root }/css/member.css"/>
-<center>
-<div class="title">회원 정보</div>
+<br><div class="font_style">회원 정보</div><br><br>
 <form action="member.do" method="post" id="info_form">
 	<input type="hidden" name="command" value="update">
 	<table class="insert_table" border="0" cellspacing="0">
 		<tr>
-			<td class="name">아이디</td>
+			<td class="name" width="100px">아이디</td>
 			<td class="value">${requestScope.membervo.memberId }</td>
-			<td class="file" rowspan="3">
+			<td class="file" rowspan="3" width="200px">
 				<c:choose>
-					<c:when test="${requestScope.membervo.newfilename !=null }">
-
-					<img width="150"  src="${initParam.root }/upload/member/${requestScope.membervo.newfilename}"></c:when>
-
+					<c:when test="${requestScope.membervo.mImg !=null }">
+						<img  src="${initParam.root }/upload/member/${requestScope.membervo.mImg}"></c:when>
 					<c:otherwise>회원의 사진은 없습니다.</c:otherwise>
 				</c:choose>
 			</td>
@@ -61,8 +57,7 @@
 			</td>
 		</tr>
 	</table>
-</form>
-	<img style="padding: 10px" src="${initParam.root }/img/ui/board/modify_btn.jpg" id="update_img" >
-	<img style="padding: 10px"  src="${initParam.root}/img/ui/board/delete_btn.jpg" id="delete_img">
-	<img style="padding: 10px"  src="${initParam.root}/img/ui/board/list_btn.jpg" id="list_img">
-</center>
+</form><br>
+	<input style="font-size:12pt;" class="button_section" type="button" id="update_img" value="수정">
+	<input style="font-size:12pt;" class="button_section" type="button" id="delete_img" value="삭제">
+	<input style="font-size:12pt;" class="button_section" type="button" id="list_img" value="목록">
