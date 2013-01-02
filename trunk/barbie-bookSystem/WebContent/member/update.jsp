@@ -25,7 +25,7 @@
 		});
 		$("#cancel_img").click(function() {
 			if (confirm("취소하시겠습니까?"))
-				location.href = "index.jsp";
+				location.href=document.referrer;		// 이전 페이지로 이동
 		});
 	});
 </script>
@@ -115,7 +115,7 @@
 		<c:otherwise>
 			<script type="text/javascript">
 				alert("로그인 하셔야 합니다.");
-				location.href = "index.jsp";
+				location.href = document.referrer;		// 이전 페이지로 이동
 			</script>
 		</c:otherwise>
 	</c:choose>
