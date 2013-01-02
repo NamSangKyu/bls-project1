@@ -44,7 +44,7 @@
 	<c:when test="${requestScope.flag==false}">
 	 <c:if test="${requestScope.list.bean.previousPageGroup}">
 	 <a href=
-	 "board.do?command=list&nowPage=${requestScope.list.bean.
+	 "board.do?command=getBookList&nowPage=${requestScope.list.bean.
 	 startPageOfPageGroup-1}"><<</a>
 	 </c:if>
 	 &nbsp;&nbsp;
@@ -81,6 +81,7 @@
 	 </c:if>
 	 </c:when>
 	 <c:otherwise>
+	 
 		 <c:if test="${requestScope.list.bean.previousPageGroup}">
 	 <a href=
 	 "board.do?command=findbook&page=${requestScope.list.bean.
@@ -124,10 +125,10 @@
 	 <form action="book.do" method="get">
 	 <input type="hidden" name="command" value="findBook"> 
 			<select name="serach">
-				<option value="subject">분야</option>
+				<option value="subject">분류</option>
 				<option value="publisher">출판사</option>
 				<option value="title">책제목</option>
 				<option value="writer">저자</option>
 			</select><input type="text" name="searchValue">
 			<input type="submit" value="검색">	 
-	 </form>	  
+	 </form>
