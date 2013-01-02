@@ -538,4 +538,18 @@ public class BookController extends MultiActionController {
 			request.setAttribute("serach", find);
 			return new ModelAndView("list.book","list",list);
 		}
+		public ModelAndView newBook(HttpServletRequest request,
+				HttpServletResponse response){
+		System.out.println("new Book Controller입성완료");
+		String pageNo=request.getParameter("pageNo");
+		ListVO lvo=new ListVO();
+		try {
+			lvo=service.getNewBook(pageNo);
+			System.out.println("newBookList"+lvo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return new ModelAndView("newbook.book", "lvo", lvo);
+			
+		}
 }
