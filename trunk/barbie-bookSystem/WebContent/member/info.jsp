@@ -9,8 +9,8 @@
 						function() {
 							location.href = "member.do?command=updateView&memberId=${sessionScope.membervo.memberId}";
 						});
-		$("#index_btn").click(function() {
-			location.href = "index.jsp";
+		$("#index_btn").click(function() {					// 처음 페이지로
+			location.href = "book.do?command=getBookList&nowPage=1";
 		});
 	});
 </script>
@@ -59,7 +59,7 @@
 	<c:otherwise>
 		<script type="text/javascript">
 			alert("로그인 하셔야 됩니다.");
-			location.href="index.jsp";
+			location.href=document.referrer;
 		</script>
 	</c:otherwise>
 </c:choose>
