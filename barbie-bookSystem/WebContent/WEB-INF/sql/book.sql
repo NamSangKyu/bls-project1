@@ -1,7 +1,8 @@
 --도서 테이블
 drop table bls_book;
 select * from BLS_BOOK
-
+delete from bls_book
+delete from BLS_BOOK_COMMENT
 create table bls_book(
 	bookNo number primary key,
 	isbn number not null,
