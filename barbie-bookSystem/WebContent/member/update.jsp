@@ -13,7 +13,7 @@
 				success : function() {
 					alert("성공");
 					$("#filewrap")
-					.html("<input type='file' name='uploadFile' width='150px'>");
+					.html("<input type='file' name='uploadFile'>");
 				},
 				error : function() {
 					alert("실패");
@@ -21,17 +21,18 @@
 				});
 			});
 		$("#confirm_img").click(function() {
-			alert(1);
 			$("#update_form").submit();
 		});
 		$("#cancel_img").click(function() {
 			if (confirm("취소하시겠습니까?"))
-				location.href = "index1.jsp";
+				location.href = "index.jsp";
 		});
 	});
 </script>
-<link rel="stylesheet" href="${initParam.root }/css/member.css">
-	<div class="title">회원 수정</div>
+<link rel="stylesheet" href="${initParam.root }/css/board-table.css" />
+<br>
+	<div class="font_style">회원 수정</div>
+	<br><br>
 	<c:choose>
 		<c:when test="${sessionScope.membervo != null }">
 			<div>
@@ -50,23 +51,21 @@
 					<table class="insert_table" border="0" cellspacing="0">
 						<tr>
 							<!-- e6e6fa -->
-							<td class="name">아이디</td>
+							<td class="name" width="100px">아이디</td>
 							<td class="value">${requestScope.map.membervo.memberId }</td>
-							<td class="file" rowspan="3"><span id="filewrap"> <c:choose>
-										<c:when test="${requestScope.map.membervo.mImg!=null }">
-						${requestScope.map.membervo.mImg } <img id="deleteFile_img"
-												src="${initParam.root }/img/ui/board/delete_btn.jpg">
-										</c:when>
-										<c:otherwise>
-											<input type="file" name="uploadFile">
-										</c:otherwise>
-									</c:choose>
+							<td class="file_section" rowspan="3" width="200px"><span id="filewrap"> <c:choose>
+									<c:when test="${requestScope.map.membervo.mImg!=null }">
+										<img id="deleteFile_img" src="${initParam.root }/img/ui/board/delete_btn.jpg">
+									</c:when>
+									<c:otherwise>
+										<input type="file" name="uploadFile">
+									</c:otherwise>
+								</c:choose>
 							</span></td>
 						</tr>
 						<tr>
 							<td class="name">비밀번호</td>
-							<td class="value"><input type="password" name="pass"
-								id="pass"></td>
+							<td class="value"><input type="password" name="pass" id="pass"></td>
 						</tr>
 						<tr>
 							<td class="name">이름</td>
@@ -75,11 +74,13 @@
 						<tr>
 							<td class="name">성별</td>
 							<td class="value">${requestScope.map.membervo.gender }</td>
+							<td></td>
 						</tr>
 						<tr>
 							<td class="name">이메일</td>
 							<td class="value"><input type="text" name="email" id="email"
 								value="${requestScope.map.membervo.email }"></td>
+							<td></td>
 						</tr>
 						<tr>
 							<td class="name">관심사항</td>
@@ -89,27 +90,25 @@
 									<c:choose>
 										<c:when
 											test="${sbjList.SUBJECT == requestScope.map.membervo.subject1
-						or sbjList.SUBJECT == requestScope.map.membervo.subject2
-						or sbjList.SUBJECT == requestScope.map.membervo.subject3}">
-											<input type="checkbox" name="sbj" value="${sbjList.SUBJECT}"
-												checked="checked">${sbjList.SUBJECT }
-					</c:when>
+													or sbjList.SUBJECT == requestScope.map.membervo.subject2
+													or sbjList.SUBJECT == requestScope.map.membervo.subject3}">
+											<input type="checkbox" name="sbj" value="${sbjList.SUBJECT}"checked="checked">${sbjList.SUBJECT }
+										</c:when>
 										<c:otherwise>
 											<input type="checkbox" name="sbj" value="${sbjList.SUBJECT}">${sbjList.SUBJECT }
-					</c:otherwise>
+										</c:otherwise>
 									</c:choose>
 									<c:if test="${num.count%3==0 }">
 										<br>
 									</c:if>
 								</c:forEach></td>
+								<td></td>
 						</tr>
 					</table>
-				</form>
+				</form><br>
 				<div id="button_wrap">
-					<img style="padding: 10px"
-						src="${initParam.root }/img/ui/board/confirm.gif" id="confirm_img">
-					<img style="padding: 10px"
-						src="${initParam.root }/img/ui/board/cancel.jpg" id="cancel_img">
+					<input style="font-size:12pt;" type="button" class="button_section" name="confirm_img" id="confirm_img" value="완료" >&nbsp
+					<input style="font-size:12pt;" type="button" class="button_section"  type="button" name="cancel_img" id="cancel_img" value="취소">
 				</div>
 			</div>
 		</c:when>
