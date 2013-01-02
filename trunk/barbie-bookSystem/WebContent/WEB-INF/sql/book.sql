@@ -1,6 +1,6 @@
 --도서 테이블
 drop table bls_book;
-
+select * from BLS_BOOK
 
 create table bls_book(
 	bookNo number primary key,

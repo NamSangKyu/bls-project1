@@ -158,7 +158,7 @@ public class BookController extends MultiActionController {
 		ListVO list = service.getBookList(nowPage);
 		System.out.println("paging 완료");
 		System.out.println(list.getBean().getEndPageOfPageGroup());
-
+		request.setAttribute("flag", false);
 		return new ModelAndView("list.book", "list", list);
 	}
 
