@@ -31,7 +31,8 @@
 		});
 	});
 </script>
-<div><a href="board.do?command=list&page=1"><img src="${initParam.root}/img/ui/layout/freeboard.jpg"></a><br><br></div>
+
+<br><div class="font_style">게시판 리스트</div><br><br>
 <div class="listPage">
 	<c:set value="${requestScope.lvo }" var="lvo" />
 	<div id="perPage">
@@ -134,6 +135,7 @@
 		</a>
 	</c:if>
 	<br>
+
 	<%-- <form action="board.do" id="serchForm">
 	<input type="hidden" name="command" value="serchBoard">
 	<table id="serch">
