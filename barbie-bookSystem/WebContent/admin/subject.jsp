@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<link rel="stylesheet" href="${initParam.root}/css/book-table.css">
 <script type="text/javascript">
 	$(document).ready(function() {
 		var list = null;
@@ -69,7 +70,7 @@
 </tr>
 <tr align="center">
 <td colspan="2">
-	<table border="1">
+	<table border="0">
 		<tr align="center">
 		<th>코드</th><th>도서분류</th><th>옵션</th>
 		</tr>

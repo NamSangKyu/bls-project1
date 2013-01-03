@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="${initParam.root}/css/book-table.css"> 
+<br><div class="font_style">신간 도서</div><br><br>
 <div class="listPage">  
 <table border="0">
 <thead>
@@ -28,6 +29,7 @@
 </c:forEach>
 </table>
 </div>
+<br>
 <!-- 이전글 -->
 <c:if test="${requestScope.lvo.bean.previousPageGroup}">
 <a href="book.do?command=getNewBookList&pageNo=${requestScope.lvo.bean.startPageOfPageGroup-1}"> << </a>
