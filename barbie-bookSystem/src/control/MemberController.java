@@ -34,6 +34,20 @@ public class MemberController extends MultiActionController {
 	}
 
 	/*
+	 * 			가입 전 ID 체크
+	 */
+	public ModelAndView checkIdForInsert(HttpServletRequest request, HttpServletResponse response){
+		boolean  flag = true;
+		try {
+			flag = memberService.checkIdForInsert(request.getParameter("memberId"));
+			System.out.println("[MemberController] : "+flag);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return new ModelAndView("JsonView","flag",flag);
+	}
+
+	/*
 	 * 			로그아웃
 	 */
 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response,HttpSession session, MemberVO membervo){
@@ -41,6 +55,33 @@ public class MemberController extends MultiActionController {
 			session.invalidate();
 		}
 		return new ModelAndView("index");
+	}
+
+	/*
+	 * 			탈퇴 전 화면
+	 */
+	public ModelAndView viewDrop(HttpServletRequest request,HttpServletResponse response){
+		return new ModelAndView("member/drop");
+	}
+
+	/*
+	 * 			탈퇴
+	 */
+	public ModelAndView checkMemberForDrop(HttpServletRequest request,HttpServletResponse response,HttpSession session){
+		System.out.println("checkMemberForDrop");
+		HashMap map = new HashMap();
+		map.put("memberId",((MemberVO)session.getAttribute("membervo")).getMemberId());
+		map.put("password", request.getParameter("password"));
+		String state="";
+		try {
+			state = memberService.dropMember(map);
+			System.out.println(state);
+			if(state.equals("탈퇴"))
+				session.invalidate();						// 로그아웃
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return new ModelAndView("JsonView","state",state);
 	}
 
 	/*
@@ -65,7 +106,7 @@ public class MemberController extends MultiActionController {
 		MemberVO mvo=null;
 		String path="main.book";					// 기본 회원 로그인시
 		HashMap map=null;
-		
+
 		try {
 			mvo = memberService.login(membervo);
 			System.out.println("[MemberController]login: "+mvo);

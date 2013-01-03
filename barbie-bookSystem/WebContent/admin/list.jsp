@@ -1,17 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<link rel="stylesheet" href="${initParam.root }/css/member.css"/>
+<link rel="stylesheet" href="${initParam.root }/css/board-table.css" />
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 	$(function(){
-		$("#search_btn").click(function(){
+		$("#search_img").click(function(){
 			alert($("#condition").val());
 		});
 	});
 </script>
-<center>
-<div class="title">회원 리스트</div>
+<br><div class="font_style">회원 리스트</div><br><br>
 <input type="hidden" name="isSearch" value="false">
 <table class="board_table" cellspacing="0">
 	<thead>
@@ -32,7 +31,7 @@
 <div id="paging" style ="padding: 10px" >
 <!-- 전 페이지 그룹으로  -->
 <c:if test="${requestScope.listvo.bean.previousPageGroup }">
-	<a  href="member.do?command=list&nowPage=${requestScope.listvo.bean.startPageOfPageGroup -1}">좌</a></c:if>
+	<a  href="member.do?command=list&nowPage=${requestScope.listvo.bean.startPageOfPageGroup -1}" class="font_style">이전</a></c:if>
 
 <!-- 페이지 그룹 숫자 -->
 <c:forEach begin="${requestScope.listvo.bean.startPageOfPageGroup }" end="${requestScope.listvo.bean.endPageOfPageGroup }" var="list">
@@ -46,8 +45,8 @@
 
 <!-- 다음 페이지 그룹으로 -->
 <c:if test="${requestScope.listvo.bean.nextPageGroup }">
-	<a href="member.do?command=list&nowPage=${requestScope.listvo.bean.endPageOfPageGroup +1}">>></a></c:if>
-</div>
+	<a href="member.do?command=list&nowPage=${requestScope.listvo.bean.endPageOfPageGroup +1}" class="font_style">다음</a></c:if>
+</div><br>
 
 <div id="search_wrap">
 	<select id="condition" name="condition">
@@ -57,9 +56,9 @@
 		<option value="by_name">이름</option>
 	</select>
 	<input type="text" maxlength="10" id="search_text">
-	<input type="button" id="search_btn" value="검색">
+	<input style="font-size:12pt;" class="button_section" type="button" id="search_img" value="검색">
 </div>
-</center>
+
 
 
 

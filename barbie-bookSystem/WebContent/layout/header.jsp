@@ -80,42 +80,39 @@
                                 top: 3px;
                                 left: 3px;
                               }
-
-
 #login {
 	position: absolute;
-	margin-left: 950px;
-	margin-top: 5px;
+	margin-left: 970px;
+	margin-top: 3px;
 }
-
 #login_imgs {
 	position: absolute;
 	margin-left: 1046px;
 }
+
 </style>
 <div id="">
 <c:choose><c:when test="${sessionScope ==null or sessionScope.membervo == null }">
-	<div id="login">
-		<form action="member.do" method="post" id="login_form" >
+	<form action="member.do" method="post" id="login_form" >
+	<div id="login" >
 			<input type="hidden" name="command" value="login">
 			<input type="text" id="memberId" name="memberId" size="10" style="height: 15px; width: 70px" placeholder="아이디"><br>
-			<input type="password" id="pass" name="pass" size="10" style="height: 15px; width: 70px" placeholder="비밀번호">
-		</form>
+			<input type="password" id="pass" name="pass" size="10" style="height: 15px; width: 70px" placeholder="비밀번호"><br>
+			<!-- <input type="submit" id="" name="" value=""  style="visibility:hidden"> -->
 	</div>
 	<div id="login_imgs">
 		<input type="image" src="${initParam.root}/img/ui/layout/login.jpg" id="loginImg">
 		<input type="image" src="${initParam.root}/img/ui/layout/join.jpg" id="joinImg">
 	</div>
+	</form>
 </c:when>
 <c:otherwise>
 	<div id="login">
-		${sessionScope.membervo.name} 님<br>
-		 환영합니다.
+		<p class="font_style">${sessionScope.membervo.name} 님</p><br>
 	</div>
-	<div id="login_imgs">
-		<input type="button" name="logout" id="logout" value="로그아웃"><br>
-		<input type='button' name='myLibrary' id='myLibrary' value='내 서고'><br>
-		<input type='button' name='myInfo' id='myInfo' value='내 정보'>
+	<div id="login_imgs" align="left">
+		<br><a href="#" class="button_section" id="logout" name="logout">로그아웃</a><br>
+		<a href="#" class="button_section" id="myInfo" name="myInfo">내정보</a>
 	</div>
 </c:otherwise>
 </c:choose>
@@ -125,7 +122,7 @@
 		<ul id="navCircle">
 			<li><a href="book.do?command=getBookList&nowPage=1" class="wrapper">도서검색</a></li>
 			<li><a href="book.do?command=recommandBook" class="wrapper">추천도서</a></li>
-			<li><a href="book.do?command=newBook" class="wrapper">신간도서</a></li>
+			<li><a href="#" class="wrapper">신간도서</a></li>
 			<li><a href="board.do?command=list&page=1" class="wrapper">자유게시판</a></li>
 		</ul>
 	</c:when>
