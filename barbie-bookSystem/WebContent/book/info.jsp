@@ -80,7 +80,7 @@ table tr,td {
 		<td>
 			<form name="commentForm">
 <input type="hidden" name="command" value="insertComment">
-<input type="hidden" name="writer" value="userId">
+<input type="hidden" name="writer" value="${sessionScope.membervo.memberId }">
 <input type="hidden" name="isbn" value="${requestScope.map.ISBN }">
 <table border="1" width="450"  height="300">
 <thead>

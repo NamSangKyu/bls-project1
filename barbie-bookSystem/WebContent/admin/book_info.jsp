@@ -157,7 +157,7 @@ table tr,td {
 	<tr>
 		<td>
 			<span class="resolve"> 도서현황
-	<table border="1" width="450"> 
+	<%-- <table border="1" width="450"> 
 		<tr>
 			<td>도서번호</td>
 			<td>도서명</td>
@@ -185,7 +185,7 @@ table tr,td {
 				</td>
 			</tr>
 		</c:forEach>
-	</table>
+	</table> --%>
 </span>
 			
 		</td> 
