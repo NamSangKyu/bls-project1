@@ -32,7 +32,7 @@
 		select distinct(isbn), title, writer, cont, isbn ,loc, img, s.subject, p.publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno and isbn=#isbn#
 	</select>
 	<update id="updateBookInfo" parameterClass="java.util.HashMap">
-		update BLS_BOOK set title=#title#, writer=#writer#, cont=#cont#, loc=#loc#, subjectNo=#subjectNo#, publisherNo=#publisherNo# where isbn=#isbn#
+		update BLS_BOOK set title=#title#, writer=#writer#, cont=#cont#, loc=#loc#, subjectNo=#subjectNo#, publisherNo=#publisherNo#, outputDate=to_date(#outputDate#,'YYYY/MM/DD') where isbn=#isbn#
 	</update>
 	<select id="getPublisherNo" parameterClass="String" resultClass="int">
 		select publisherNo from bls_book_pbs where publisher=#publisher#
@@ -162,7 +162,7 @@ where num<![CDATA[<]]>6
 	</delete>
 
 	<select id="getPublisher" resultClass="model.vo.PublisherVO" parameterClass="String">
-		select * from bls_book_pbs where publisher like '$%publisher$%'
+		select * from bls_book_pbs where publisher like '%' || #publisher# || '%'
 	</select>
 	<update id="updateBookPublisher" parameterClass="int">
 		update BLS_BOOK set publisherNo=0 where publisherNo = #publisherNo#
@@ -172,7 +172,7 @@ where num<![CDATA[<]]>6
 	</delete>
 
 	<select id="getSubjectAdmin" resultClass="model.vo.SubjectVO" parameterClass="String">
-		select * from bls_book_sbj where subject like '$%subject$%'
+		select * from bls_book_sbj where subject like '%' || #subject# || '%'
 	</select>
 	<update id="updateBookSubject" parameterClass="int">
 		update BLS_BOOK set subjectNo=0 where subjectNo = #subjectNo#
