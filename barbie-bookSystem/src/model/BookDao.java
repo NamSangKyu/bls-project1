@@ -43,7 +43,7 @@ public class BookDao {
 		return (HashMap) sqlMapClient.queryForObject("book.getBookInfoNum",
 				bookno);
 	}
-	
+
 	public ArrayList getBookAllList() throws SQLException {
 		// TODO Auto-generated method stub
 		return (ArrayList) sqlMapClient.queryForList("book.getBookAllList",1);
@@ -149,8 +149,8 @@ public class BookDao {
 	 * 		호희 & 전기 코드
 	 */
 	// 책 상태
-	public ArrayList getBookState(int isbn) throws SQLException {
-		return (ArrayList) sqlMapClient.queryForList("book.getBookState", isbn);
+	public ArrayList getBookState(HashMap map) throws SQLException {
+		return (ArrayList) sqlMapClient.queryForList("book.getBookState", map);
 	}
 	// 예약
 	public void bookReserve(String  bookNo) throws SQLException {
