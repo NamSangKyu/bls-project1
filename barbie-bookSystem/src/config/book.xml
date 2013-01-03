@@ -88,7 +88,7 @@ b, bls_book_sbj s, bls_book_pbs p where b.publisherNo=p.publisherNo and b.subjec
 where num<![CDATA[<]]>6
 </select>
 	<select id="getSubject" resultClass="String">
-		select subject from BLS_BOOK_SBJ
+		select subject from BLS_BOOK_SBJ where subjectNo > 0
 	</select>
 	<select id="getPublisherList" resultClass="model.vo.PublisherVO">
 		select * from BLS_BOOK_PBS
