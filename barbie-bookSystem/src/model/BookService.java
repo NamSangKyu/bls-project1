@@ -187,7 +187,10 @@ public class BookService {
 			sqlMapClient.endTransaction();						// 트렌잭션 무조건 닫아줘야 한다.
 		}
 	}
-
+	public void deleteBook(int bookno) throws SQLException {
+		// TODO Auto-generated method stub
+		dao.deleteBook(bookno);
+	}
 	//		관리자가 접근하여 도서관리 View
 	public ListVO adminBook(String nowPage) throws SQLException {
 		if(nowPage == null)

@@ -43,7 +43,7 @@ public class BookDao {
 		return (HashMap) sqlMapClient.queryForObject("book.getBookInfoNum",
 				bookno);
 	}
-
+	
 	public ArrayList getBookAllList() throws SQLException {
 		// TODO Auto-generated method stub
 		return (ArrayList) sqlMapClient.queryForList("book.getBookAllList",1);
