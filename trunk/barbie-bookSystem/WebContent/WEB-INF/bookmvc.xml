@@ -33,7 +33,7 @@
 			<ref bean="methodNameResolver"/>
 		</property>
 			<property name="path">
-			<value>E:\Kosta\project\workspace\project\barbie-bookSystem-step4\\WebContent\\upload\\</value>
+			<value>C:\\java-kosta\\bls\\barbie-bookSystem\\WebContent\\</value>
 		</property>
 		<property name="service">
 			<ref bean="bookService"/>
