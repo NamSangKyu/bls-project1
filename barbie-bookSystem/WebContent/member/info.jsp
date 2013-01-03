@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<link rel="stylesheet" href="${initParam.root }/css/board-table.css" />
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 	$(function() {
@@ -9,28 +10,31 @@
 						function() {
 							location.href = "member.do?command=updateView&memberId=${sessionScope.membervo.memberId}";
 						});
-		$("#index_btn").click(function() {					// 처음 페이지로
+		$("#index_btn").click(function() {
 			location.href = "book.do?command=getBookList&nowPage=1";
 		});
+		$("#drop_btn").click(function(){
+			window.open("member.do?command=viewDrop","회원탈퇴","width=350,height=200,toolbar=no,status=no,location=no");
+		})
 	});
 </script>
-<link rel="stylesheet" href="${initParam.root }/css/member.css" />
-<div class="title">회원 정보</div>
+
+<br><div class="font_style">회원 정보</div><br><br>
 <c:choose>
 	<c:when test="${sessionScope.membervo != null }">
-		<form action="member.do" method="post" id="info_form">
+		<form action="member.do" method="post" id="info_form" name="info_form">
 			<input type="hidden" name="command" value="updateView">
 			<table class="insert_table" border="0" cellspacing="0">
 				<tr>
-					<td class="name">아이디</td>
+					<td class="name" width="100px">아이디</td>
 					<td class="value">${sessionScope.membervo.memberId }</td>
-					<td class="file" rowspan="3"><c:choose>
-							<c:when test="${sessionScope.membervo.mImg !=null }">
-								<img width="150"
-									src="${initParam.root }/upload/member/${sessionScope.membervo.mImg}"></td>
-					</c:when>
-					<c:otherwise>회원의 사진은 없습니다.</c:otherwise>
+					<td class="file_section" rowspan="3" width="200px"><c:choose>
+						<c:when test="${sessionScope.membervo.mImg !=null }">
+							<img src="${initParam.root }/upload/member/${sessionScope.membervo.mImg}">
+						</c:when>
+						<c:otherwise>회원의 사진은 없습니다.</c:otherwise>
 					</c:choose>
+					</td>
 				</tr>
 				<tr>
 					<td class="name">비밀번호</td>
@@ -51,9 +55,12 @@
 						${sessionScope.membervo.subject2 }&nbsp&nbsp
 						${sessionScope.membervo.subject3 }</td>
 				</tr>
-			</table>
-			<input  type="button" name="index_btn" id="index_btn" value="처음으로">
-			<input  type="button" name="update_btn" id="update_btn"	value="회원정보수정">
+			</table><br>
+			<span >
+				<input style="font-size:12pt;" type="button" class="button_section" name="index_btn" id="index_btn" value="처음" >
+				<input style="font-size:12pt;" type="button" class="button_section"  type="button" name="update_btn" id="update_btn"	value="수정">
+				<input style="font-size:12pt;" type="button" class="button_section"  type="button" name="drop_btn" id="drop_btn"	value="탈퇴">
+			</span>
 		</form>
 	</c:when>
 	<c:otherwise>
