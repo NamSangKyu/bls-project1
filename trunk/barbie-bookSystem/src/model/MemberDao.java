@@ -20,6 +20,16 @@ public class MemberDao {
 		return (String)sqlMapClient.queryForObject("member.selectIdForCheck",membervo);
 	}
 
+	//	탈퇴 전 아이디와 비밀번호 검사
+	public Object selectMemberForDrop(HashMap map) throws SQLException {
+		return sqlMapClient.queryForObject("member.selectMemberForDrop",map);
+	}
+
+	//		가입 전 아이디체크
+	public Object selectMemberForInsert(String memberId) throws SQLException{
+		return sqlMapClient.queryForObject("member.selectMemberForInsert",memberId);
+	}
+
 	// 	로그인
 	public MemberVO selectMemberForLogin(MemberVO membervo) throws SQLException{
 		return (MemberVO)sqlMapClient.queryForObject("member.selectMemberForLogin",membervo);
@@ -60,9 +70,20 @@ public class MemberDao {
 	public void deleteMemberById(String memberId) throws SQLException{
 		sqlMapClient.delete("member.deleteMemberById",memberId);
 	}
+
+	//			추천
 	public ArrayList<HashMap> recommand(String subject) throws SQLException {
-	return (ArrayList<HashMap>) sqlMapClient.queryForList("book.recommandBookBySubject", subject);
-		
+		return (ArrayList<HashMap>) sqlMapClient.queryForList("book.recommandBookBySubject", subject);
+	}
+
+	//			탈퇴 전 예약 테이블 데이터 존제 여부
+	public Object selectReserveByMemberId(String memberId) throws SQLException {
+		return sqlMapClient.queryForObject("member.selectReserveByMemberId",memberId);
+	}
+
+	//			탈퇴 전 대여 테이블 데이터 존재 여부
+	public Object selectRentalByMemberId(String memberId) throws SQLException{
+		return sqlMapClient.queryForObject("member.selectRentalByMemberId",memberId);
 	}
 }
 

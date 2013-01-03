@@ -12,12 +12,18 @@ import model.vo.PagingBean;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ibatis.sqlmap.client.SqlMapClient;
+
 import config.CommonConstants;
 
 public class MemberService {
 	private MemberDao memberDao;
+	private SqlMapClient sqlMapClient;
 	public MemberService(MemberDao memberDao){
 		this.memberDao = memberDao;
+	}
+	public void setSqlMapClient(SqlMapClient sqlMapClient){
+		this.sqlMapClient = sqlMapClient;
 	}
 
 	// 	로그인 전 체크
@@ -36,6 +42,7 @@ public class MemberService {
 		MemberVO mvo =  memberDao.selectMemberForLogin(membervo);
 		return mvo;
 	}
+
 	//로그인 사용자에 따른 채추천 메소드
 	public HashMap recommand(MemberVO memberVO) throws SQLException{
 	String subject1=memberVO.getSubject1();
@@ -55,7 +62,45 @@ public class MemberService {
 	map.put("subject3",list);
 	System.out.println("list="+list);
 	return map;
-		
+
+	}
+
+	// 	탈퇴전 아이디와 비밀번호 검사
+	public String dropMember(HashMap map) throws SQLException{
+		String message ="";
+		System.out.println("map : " +map );
+		String memberId = (String)map.get("memberId");
+		Object obj = memberDao.selectMemberForDrop(map);
+		if(obj == null)
+			return "없음";							// 비밀번호가 틀림
+		try{
+			sqlMapClient.startTransaction();
+			Object objReserve = memberDao.selectReserveByMemberId(memberId);
+			Object objRental = memberDao.selectRentalByMemberId(memberId);
+			System.out.println("reserve : " + objReserve + " rental : " + objRental)	;		//test
+			if(objReserve == null && objRental == null ){			// 삭제 가능
+				delete(memberId);					// 멤버 삭제
+				message = "탈퇴";
+			}else if(objReserve !=null && objRental !=null)
+				message ="둘다";
+			else if(objReserve !=null)
+				message="예약";
+			else if(objRental !=null)
+				message ="대여";
+			sqlMapClient.commitTransaction();
+		}finally{
+			sqlMapClient.endTransaction();
+		}
+		return message;
+	}
+
+	// 	가입전 아이디체크
+	public boolean checkIdForInsert(String memberId) throws SQLException{
+		System.out.println(memberId);
+		Object obj =memberDao.selectMemberForInsert(memberId);
+		if(obj != null) 							// obj 가 null이 아닐때 중복아이디 존재
+			return true;
+		return false;
 	}
 
 	// 	회원가입

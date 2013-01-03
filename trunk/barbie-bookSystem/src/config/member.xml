@@ -3,6 +3,7 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="member">
 	<typeAlias alias="membervo" type="model.vo.MemberVO"/>
+
 	<!--  로그인 전 체크  -->
 	<select id="selectIdForCheck" parameterClass="membervo" resultClass="string">
 		select memberId from bls_member where memberId=#memberId# and pass=#pass#
@@ -12,6 +13,16 @@
 	<select id="selectMemberForLogin" parameterClass="membervo" resultClass="membervo">
 		select name,gender,email,subject1,subject2,subject3,mImg from bls_member
 		where memberId=#memberId# and pass=#pass#
+	</select>
+
+	<!--  가입 전 아이디체크 -->
+	<select id="selectMemberForInsert" parameterClass="String" resultClass="String">
+		select name from bls_member where memberId = #memberId#
+	</select>
+
+	<!--  탈퇴 전 아이디와 비밀번호 체크 -->
+	<select id="selectMemberForDrop" parameterClass="hashmap" resultClass="String">
+		select name from bls_member where memberId= #memberId# and pass=#password#
 	</select>
 
 	<!--  회원가입  -->
@@ -53,6 +64,16 @@
 	<!-- 관심사항 리스트 -->
 	<select id="getBookSbjList" resultClass="hashmap">
 		select subjectNo,subject from bls_book_sbj
+	</select>
+
+	<!--	탈퇴 전 예약 테이블 데이터 존재 여부 -->
+	<select id="selectReserveByMemberId" parameterClass="String" resultClass="String">
+		select memberId from bls_book_reserve where memberId = #memberId#
+	</select>
+
+	<!--	탈퇴 전 대여 테이블 데이터 존재 여부 -->
+	<select id="selectRentalByMemberId" parameterClass="String" resultClass="String">
+		select memberId from bls_book_rental where memberId=#member# and returnDate is null
 	</select>
 </sqlMap>
 
