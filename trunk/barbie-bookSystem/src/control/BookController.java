@@ -8,11 +8,13 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.BookService;
 import model.vo.BookCommentVO;
 import model.vo.BookVO;
 import model.vo.ListVO;
+import model.vo.MemberVO;
 import model.vo.PagingBean;
 import model.vo.PublisherVO;
 import model.vo.SubjectVO;
@@ -381,7 +383,7 @@ public class BookController extends MultiActionController {
 	 */
 	// 북 정보 뽑아올때 해당 북에 대한 예약 목록 가져오는 로직 ( 상규 공용 로직)
 	public ModelAndView getBookInfoIsbn(HttpServletRequest request,
-			HttpServletResponse response) throws SQLException {
+			HttpServletResponse response,HttpSession session) throws SQLException {
 		int isbn = Integer.parseInt(request.getParameter("isbn"));
 		HashMap map = new HashMap();
 		try {
@@ -389,7 +391,15 @@ public class BookController extends MultiActionController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		ArrayList list = service.getBookState(isbn);			// 도서 info 볼 때 도서상태 보기위한 로직
+		HashMap map1 = new HashMap();
+		map1.put("isbn", isbn);
+		Object mvo = session.getAttribute("membervo");
+		if(mvo != null){
+			map1.put("memberId", ((MemberVO)mvo).getMemberId());
+		}else{
+			map1.put("memberId", "없음");
+		}
+		ArrayList list = service.getBookState(map1);			// 도서 info 볼 때 도서상태 보기위한 로직
 		request.setAttribute("list", list);
 		return new ModelAndView("info.book", "map", map);
 	}
@@ -511,7 +521,7 @@ public class BookController extends MultiActionController {
 			String find = request.getParameter("serach");
 			HashMap value = new HashMap();
 			value.put("value", request.getParameter("searchValue").toString());
-			
+
 			ArrayList<HashMap> listVO = null;
 			ListVO list = null;
 			int count=0;
@@ -565,6 +575,6 @@ public class BookController extends MultiActionController {
 			e.printStackTrace();
 		}
 		return new ModelAndView("newbook.book", "lvo", lvo);
-			
+
 		}
 }
