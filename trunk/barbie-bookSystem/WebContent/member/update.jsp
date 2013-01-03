@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<link rel="stylesheet" href="${initParam.root }/css/board-table.css" />
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 	$(function() {
@@ -18,8 +19,8 @@
 				error : function() {
 					alert("실패");
 				}
-				});
 			});
+		});
 		$("#confirm_img").click(function() {
 			$("#update_form").submit();
 		});
@@ -29,7 +30,6 @@
 		});
 	});
 </script>
-<link rel="stylesheet" href="${initParam.root }/css/board-table.css" />
 <br>
 	<div class="font_style">회원 수정</div>
 	<br><br>
