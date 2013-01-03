@@ -108,13 +108,13 @@ where num<![CDATA[<]]>6
 	-->
 	<!-- 관리자모드에서 도서관리 눌렀을 경우 현재 도서 전체 상태를 보여준다. -->
 	<select id="adminBook" parameterClass="hashmap"  resultClass="java.util.HashMap">
-		select bookNo, title, publisher, loc, bookState, term, (select '연체' from dual where term >7) as overdue from(
-			select b.bookNo, b.title, p.publisher, b.loc, b.bookState, ceil(rownum/#num#) as page, (
+		select bookNo, title, isbn, publisher, loc, bookState, term, (select '연체' from dual where term >7) as overdue from(
+			select b.bookNo, b.isbn, b.title, p.publisher, b.loc, b.bookState, ceil(rownum/#num#) as page, (
 				select (to_char(sysdate,'yyyymmdd')-to_char(rentalDate,'yyyymmdd'))
 				from bls_book_rental r
 				where r.bookNo = b.bookNo and r.returnDate is null) as term
-			from bls_book b, bls_book_pbs p where b.publisherNo=p.publisherNo)
-		where page=#nowPage#
+			from bls_book b, bls_book_pbs p where b.publisherNo=p.publisherNo order by b.isbn asc)
+		where page=#nowPage# order by isbn asc
 	</select>
 	<select id="getAllBookCount" resultClass="int">
 		select count(*) from bls_book
