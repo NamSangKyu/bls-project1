@@ -27,7 +27,7 @@
   				checkIdState.val("false");	// 상태 값 초기화
   				resultCheck.html("");				// 값 초기화
   				var memberId = $(this).val();
-  				if(memberId.length < 5)
+  				if(memberId.length < 4)
   					return;
 
 				$.ajax({
