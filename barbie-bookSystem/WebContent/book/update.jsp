@@ -63,11 +63,22 @@
 		});//cancel button click
 	})//ready
 </script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.8.3.js"></script>    
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>    
+<link rel="stylesheet" href="/resources/demos/style.css" />    
+<script>    
+$(function() {        
+	$("#datepicker").datepicker({
+	  	dateFormat:"yy/mm/dd"
+	}); //date picker 
+});   
+</script>
 <br>
 <center>
 <form action="book.do" name="BookInsert">
 <input type="hidden" name="command" value="updateBook">
-<table width="700" border="1">
+<table width="700" border="0">
 <tr>
 <td>책제목:</td>
 <td><input type="text" name="title" size="70" value="${requestScope.map.TITLE }"></td>
@@ -94,6 +105,10 @@
 <td>ISBN:</td>
 <td><input type="text" name="isbn" size="70" value="${requestScope.map.ISBN }" readonly="readonly"></td>
 <td></td> 
+</tr>
+<tr>
+<td>출간일:</td>
+<td><p><input type="text" id="datepicker" name="outputDate"/></p></td>
 </tr>
 <tr>
 <td>서고위치:</td>

@@ -201,6 +201,7 @@ public class BookController extends MultiActionController {
 		int publisherNo = Integer.parseInt(request.getParameter("publisherNo"));
 		int subjectNo = Integer.parseInt(request.getParameter("subjectNo"));
 		String cont = request.getParameter("cont");
+		String outputDate = request.getParameter("outputDate");
 		HashMap map = new HashMap();
 		map.put("title", title);
 		map.put("writer", writer);
@@ -209,6 +210,7 @@ public class BookController extends MultiActionController {
 		map.put("publisherNo", publisherNo);
 		map.put("subjectNo", subjectNo);
 		map.put("cont", cont);
+		map.put("outputDate",outputDate);
 		try {
 			service.updateBookInfo(map);
 			System.out.println("업데이트 완료");
