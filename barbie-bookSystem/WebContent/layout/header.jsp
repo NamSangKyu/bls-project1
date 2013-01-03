@@ -89,7 +89,22 @@
 	position: absolute;
 	margin-left: 1046px;
 }
-
+.button_section{
+	display: inline-block;
+	text-decoration: none;
+	font-family: 'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
+	BACKGROUND-COLOR: white;
+	/* border-bottom-color:#98bf21;
+	border-bottom-color:#98bf21;
+	border-color:#98bf21;*/
+	color:#98bf21;
+	margin-right:5px;
+	margin-bottom:1px; /* 하단에 외부여백 1px */
+	font:14spx Verdana; /* 폰트 속성 순서대로 크기 글꼴 */
+}
+.font_style{
+	font-family:'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
+}
 </style>
 <div id="">
 <c:choose><c:when test="${sessionScope ==null or sessionScope.membervo == null }">
