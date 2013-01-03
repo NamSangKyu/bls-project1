@@ -49,17 +49,19 @@
  <c:choose>
  	<c:when test="${sessionScope.membervo.memberId=='java' }">
 	<table>
+		<thead align="center">
 		<tr>
-			<td>도서번호</td>
-			<td>도서명</td>
-			<td>출판사</td>
-			<td>위치</td>
-			<td>도서상태</td>
-			<td></td>
-			<td>대여기간</td>
+			<th>도서번호</th>
+			<th>도서명</th>
+			<th>출판사</th>
+			<th>위치</th>
+			<th>도서상태</th>
+			<th></th>
+			<th>대여기간</th>
 		</tr>
+		</thead>
 		<c:forEach items="${requestScope.listvo.list }" var="list">
-			<tr>
+			<tr align="center">
 				<!-- 		실제 데이터 for 문	 -->
 				<td>${list.BOOKNO }</td>
 				<td>${list.TITLE }</td>
