@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<link rel="stylesheet" href="${initParam.root}/css/book-table.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
 	$(document).ready(function() {
@@ -116,33 +117,33 @@ table tr,td {
 		<td rowspan="2">
 			<table border="1" height="500" width="350">
 				<tr>
-					<td width="15%" align="center">도서명</td>
-					<td >${requestScope.map.TITLE }</td>
+					<th width="15%" align="center">도서명</th>
+					<td>${requestScope.map.TITLE }</td>
 					<td rowspan="2" align="center" width="30%" height="30%"><img
 						src="${initParam.root }/upload/${requestScope.map.IMG }"  width="100%" height="100%">
 					</td>
 				</tr>
 				<tr align="center">
-					<td>저자명</td>
+					<th>저자명</th>
 					<td>${requestScope.map.WRITER }</td>
 				</tr>
 
 				<tr align="center">
-					<td height="10">출판사</td>
+					<th height="10">출판사</th>
 					<td colspan="2">${requestScope.map.PUBLISHER }</td>
 				</tr>
 
 				<tr align="center">
-					<td height="10">분류</td>
+					<th height="10">분류</th>
 					<td colspan="2">${requestScope.map.SUBJECT }</td>
 				</tr>
 
 				<tr align="center">
-					<td height="10">위치</td>
+					<th height="10">위치</th>
 					<td colspan="2">${requestScope.map.LOC }</td>
 				</tr>
 				<tr >
-					<td height="200" align="center">내용</td>
+					<th height="200" align="center">내용</th>
 					<td colspan="2"><textarea rows="5" cols="37" readonly="readonly" >${requestScope.map.CONT }</textarea>
 					</td>
 				</tr>
@@ -154,12 +155,12 @@ table tr,td {
 				<span class="resolve"> 도서현황
 					<table border="1" width="450">
 						<tr>
-							<td>도서번호</td>
-							<td>도서명</td>
-							<td>출판사</td>
-							<td>위치</td>
-							<td>도서상태</td>
-							<td>예약신청</td>
+							<th>도서번호</th>
+							<th>도서명</th>
+							<th>출판사</th>
+							<th>위치</th>
+							<th>도서상태</th>
+							<th>예약신청</th>
 						</tr>
 						<c:forEach items="${requestScope.list }" var="list">
 							<tr>
