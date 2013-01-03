@@ -119,8 +119,8 @@ public class BookService {
 	public ArrayList getSubject() throws SQLException {
 		return dao.getSubject();
 	}
-	public ArrayList getBookState(int isbn) throws SQLException {
-		return dao.getBookState(isbn);
+	public ArrayList getBookState(HashMap map) throws SQLException {
+		return dao.getBookState(map);
 	}
 	public ArrayList<PublisherVO> getPublisherList() throws SQLException {
 		// TODO Auto-generated method stub
@@ -157,7 +157,7 @@ public class BookService {
 		// TODO Auto-generated method stub
 		dao.updateBookSubject(subjectNo);
 		dao.deleteSubject(subjectNo);
-		
+
 	}
 	/*
 	 *  호희 & 전기 코드
@@ -283,7 +283,7 @@ public class BookService {
 	}
 	public ListVO getNewBook(String pageNo) throws SQLException {
 	if(pageNo==null||pageNo.equals("")){
-	pageNo="1";	
+	pageNo="1";
 	}
 	ArrayList list=new ArrayList();
 	list=dao.getNewBook(pageNo);
