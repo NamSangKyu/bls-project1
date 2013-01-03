@@ -122,8 +122,8 @@ where num<![CDATA[<]]>6
 	<!-- book info 화면을 보여줄 때 해당 도서의 대여 상태 -->
 	<select id="getBookState" parameterClass="HashMap" resultClass="java.util.HashMap">
 		select b.bookNo, b.title, p.publisher, b.loc, b.bookState , (
-			select 'ok' from bls_book b, bls_book_reserve r where b.bookNo = r.bookNo and r.memberId = #memberId#) as idState
-		from bls_book b, bls_book_pbs p
+			select 'ok' from bls_book_reserve r where b.bookNo = r.bookNo and r.memberId = #memberId#) as idState
+			from bls_book b, bls_book_pbs p
 		where b.isbn=#isbn# and b.publisherNo=p.publisherNo
 	</select>
 	<!-- 예약버튼, 대여버튼, 취소버튼, 반납버튼 눌렀을 경우 도서상태  변경 -->
