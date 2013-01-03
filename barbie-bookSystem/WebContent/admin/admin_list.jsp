@@ -44,9 +44,8 @@
 <!-- 		자주 사용할 데이터 이름 지어줌	 -->
 <c:set var="bean" value="${requestScope.listvo.bean }"></c:set>
 <c:set var="list" value="${requestScope.listvo.list }"></c:set>
-
- <span class="resolve" > 도서현황
- <c:choose>
+<br><div class="font_style">도서 리스트</div><br><br>
+<c:choose>
  	<c:when test="${sessionScope.membervo.memberId=='java' }">
 	<table>
 		<thead align="center">
@@ -105,7 +104,7 @@
 			</tr>
 		</c:forEach>
 	</table>
-
+<br>
 <!-- 			전에 페이지 그룹 이동	 -->
 	<c:if test="${requestScope.listvo.bean.previousPageGroup }">
 		<a href="book.do?command=adminBook&nowPage=${requestScope.listvo.bean.startPageOfPageGroup-1 }" class="font_style">이전</a>
@@ -125,7 +124,7 @@
 	<c:if test="${requestScope.listvo.bean.nextPageGroup  }">
 		<a href="book.do?command=adminBook&nowPage=${requestScope.listvo.bean.endPageOfPageGroup+1 }" class="font_style">이후</a>
 	</c:if><br>
-
+<br> 
 <!-- 			출판사 분류 등록 부분 -->
  	<a href="book.do?command=publisher">출판사 등록</a>&nbsp;
 	<a href="book.do?command=subject">분류 등록</a>&nbsp;
