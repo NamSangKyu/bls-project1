@@ -14,10 +14,10 @@
 		<ref bean="methodNameResolver"/>
 	</property>
 	<property name="memberPath">
-		<value>E:\\Kosta\\project\\tomcat\\webapps\\barbie-bookSystem-m-step5\\upload\\member\\</value>
+		<value>E:\\Kosta\\project\\tomcat\\webapps\\barbie-bookSystem\\upload\\member\\</value>
 	</property>
 	<property name="memberWorkPath">
-		<value>E:\Kosta\project\workspace\project\barbie-bookSystem-step5\\WebContent\\upload\\member\\</value>
+		<value>E:\\Kosta\\project\\workspace\\project\\barbie-bookSystem\\WebContent\\upload\\member\\</value>
 	</property>
 </bean>
 
