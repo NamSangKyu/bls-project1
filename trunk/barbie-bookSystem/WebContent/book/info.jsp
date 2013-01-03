@@ -174,7 +174,11 @@ table tr,td {
 											<a href="#" id="${list.BOOKNO }" name="bookReserve">예약</a>
 										</c:when>
 										<c:when test="${list.BOOKSTATE == '예약중' }">
-											<a href="#" id="${list.BOOKNO }" name="bookReserveCancel">취소</a>
+											<a href="#" id="${list.BOOKNO }" name="bookReserveCancel">
+												<c:if test="${list.IDSTATE =='ok' }">
+													취소
+												</c:if>
+											</a>
 										</c:when>
 									</c:choose>
 								</td>
