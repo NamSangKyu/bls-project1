@@ -31,7 +31,7 @@
 		<table>
 			<tr>
 				<td>&nbsp;제목</td>
-				<td><input type="text" id="title" name="title" value="${bvo.title }" size="50"></td>
+				<td><input type="text" id="title" name="title" value="Re : ${bvo.title }" size="50"></td>
 			</tr>
 			<tr>
 				<td>&nbsp;첨부파일</td>

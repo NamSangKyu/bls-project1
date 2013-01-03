@@ -3,22 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" href="${initParam.root }/css/board-table.css" />
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<script type="text/javascript">
-	$(function(){
-		$("#search_img").click(function(){
-			alert($("#condition").val());
-		});
-	});
-</script>
 <br><div class="font_style">회원 리스트</div><br><br>
 <input type="hidden" name="isSearch" value="false">
 <table class="board_table" cellspacing="0">
 	<thead>
 		<tr>
-			<td class="board_header">아이디</td><td class="board_header">이름</td><td class="board_header">성별</td><td class="board_header" colspan="3">관심사항</td>
+			<th class="board_header">아이디</th><th class="board_header">이름</th><th class="board_header">성별</th><th class="board_header" colspan="3">관심사항</th>
 		</tr>
 	</thead>
-	<tbody id ="tbody">
+	<tbody id ="tbody" align="center">
 		<c:forEach items="${requestScope.listvo.list }" var="list">
 			<tr>
 				<td class="board_body" width="100px"><a href="member.do?command=memberInfo&memberId=${list.memberId }&nowPage=${requestScope.listvo.bean.nowPage}&isSearch=#isSearch.val()">${list.memberId }</a></td>
@@ -47,17 +40,6 @@
 <c:if test="${requestScope.listvo.bean.nextPageGroup }">
 	<a href="member.do?command=list&nowPage=${requestScope.listvo.bean.endPageOfPageGroup +1}" class="font_style">다음</a></c:if>
 </div><br>
-
-<div id="search_wrap">
-	<select id="condition" name="condition">
-		<option value="">--선택--</option>
-		<option value="by_all">전체</option>
-		<option value="by_subject">관심분야</option>
-		<option value="by_name">이름</option>
-	</select>
-	<input type="text" maxlength="10" id="search_text">
-	<input style="font-size:12pt;" class="button_section" type="button" id="search_img" value="검색">
-</div>
 
 
 
