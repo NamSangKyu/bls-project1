@@ -1,8 +1,9 @@
 --도서 테이블
 drop table bls_book;
-select distinct(isbn), img from BLS_BOOK
-delete from bls_book
-delete from BLS_BOOK_COMMENT
+select * from bls_book;
+create sequence bls_book_seq nocache;
+drop sequence bls_book_seq;
+
 create table bls_book(
 	bookNo number primary key,
 	isbn number not null,
@@ -19,87 +20,45 @@ create table bls_book(
  	constraint publisherNo_fk foreign key(publisherNo) references bls_book_pbs(publisherNo)
 )
 
-
 --도서 Test 자료
-insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '1551231', '안철수의생각7', '안철수', '대한민국 미래지도', '가1나1', '1', '1');
-insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '1551232', '안철수의생각6', '안철수', '대한민국 미래지도', '가1나1', '1', '1');
-insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '1551233', '안철수의생각4', '안철수', '대한민국 미래지도', '가1나1', '1', '1');
-insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '1551234', '안철수의생각5', '안철수', '대한민국 미래지도', '가1나1', '1', '1');
-insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '1551235', '안철수의생각3', '안철수', '대한민국 미래지도', '가1나1', '1', '1');
-insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '1523346', '어린왕자2', '생텍쥐페리', '희망하는 삶', '가1나2', '2', '2');
-insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '1523347', '어린왕자1', '생텍쥐페리', '희망하는 삶', '가1나2', '2', '2');
-insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '1523368', '아프니까 청춘이다5', '김난도', '20대 멘토링 편지', '가1나3', '3', '3');
-insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '1523369', '아프니까 청춘이다4', '김난도', '20대 멘토링 편지', '가1나3', '3', '3');
-insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '15233610', '아프니까 청춘이다3', '김난도', '20대 멘토링 편지', '가1나3', '3', '3');
-insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '15233611', '아프니까 청춘이다2', '김난도', '20대 멘토링 편지', '가1나3', '3', '3');
-insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '15233612', '아프니까 청춘이다1', '김난도', '20대 멘토링 편지', '가1나3', '3', '3');
+insert into bls_book(bookNo, isbn, title, writer, cont, loc, outputDate, subjectNo, publisherNo)
+values(bls_book_seq.nextval, '155123', '안철수의생각', '안철수', '대한민국 미래지도', '2013/01/02', '가1나1', '1', '1');
 
 --도서분류 테이블
 drop table bls_book_sbj;
+select * from bls_book_sbj;
+create sequence bls_book_sbj_seq nocache;
+drop sequence bls_book_sbj_seq;
 
 CREATE TABLE bls_book_sbj(
  	subjectNo number PRIMARY KEY,
  	subject varchar2(50)
 )
 
+--분류 Test
+insert into bls_book_sbj(subjectNo,subject) values(bls_book_sbj_seq.nextval,'소설');
+
 --출판사분류 테이블
 drop table bls_book_pbs;
-select * from bls_book_pbs
+select * from bls_book_pbs;
+create sequence bls_book_pbs_seq nocache;
+drop sequence bls_book_pbs_seq;
+
 CREATE TABLE bls_book_pbs(
  	publisherNo number PRIMARY KEY,
  	publisher varchar2(50)
 )
 
---도서 sequence
-create sequence bls_book_seq nocache;
-drop sequence bls_book_seq;
---도서분류 sequence
-create sequence bls_book_sbj_seq nocache;
-drop sequence bls_book_sbj_seq;
---출판사분류  sequence
-create sequence bls_book_pbs_seq nocache;
-drop sequence bls_book_pbs_seq;
-
---도서대여 테이블
-create table bls_book_mgt(
- bookMgtNo number primary key,
- rentalDate date,
- returnDate date,
- count number default 0,
- memberId varchar2(50) not null,
- bookNo number not null,
- constraint memberId_fk foreign key(memberId) references bls_member(memberId),
- constraint bookNo_fk foreign key(bookNo) references bls_book(bookNo)
-)
-drop table bls_book_mgt;
---출판사 등록
+--출판사 Test
 insert into bls_book_pbs values(bls_book_pbs_seq.nextval,'창작과비평사');
-insert into bls_book_pbs values(bls_book_pbs_seq.nextval,'나무');
-insert into bls_book_pbs values(bls_book_pbs_seq.nextval,'한솔');
-insert into bls_book_pbs values(bls_book_pbs_seq.nextval,'푸른숲나무');
-insert into bls_book_pbs values(bls_book_pbs_seq.nextval,'맑은샘');
-insert into bls_book_pbs values(bls_book_pbs_seq.nextval,'책과나무');
---분류 등록
-insert into bls_book_sbj(subjectNo,subject) values(bls_book_sbj_seq.nextval,'소설');
-insert into bls_book_sbj(subjectNo,subject) values(bls_book_sbj_seq.nextval,'인문');
-insert into bls_book_sbj(subjectNo,subject) values(bls_book_sbj_seq.nextval,'역사');
-insert into bls_book_sbj(subjectNo,subject) values(bls_book_sbj_seq.nextval,'정치');
-insert into bls_book_sbj(subjectNo,subject) values(bls_book_sbj_seq.nextval,'종교');
-insert into bls_book_sbj(subjectNo,subject) values(bls_book_sbj_seq.nextval,'철학');
+
 
 --도서 서평 테이블
+drop table bls_book_comment
+select * from bls_book_comment
+create sequence bls_book_comment_seq nocache;
+drop sequence bls_book_comment_seq;
+
 CREATE TABLE bls_book_comment(
  no number PRIMARY KEY,
  isbn number,
@@ -107,9 +66,12 @@ CREATE TABLE bls_book_comment(
  bookcomment varchar2(1000),
  score number
 )
-create sequence bls_book_comment_seq nocache;
+
 
 -- 도서 예약 테이블(사용자)
+drop table bls_book_reserve;
+select * from bls_book_reserve;
+
 CREATE TABLE bls_book_reserve(
 	bookNo number ,
 	memberId varchar2(50) ,
@@ -118,10 +80,13 @@ CREATE TABLE bls_book_reserve(
 	constraint bookNoReserve_fk foreign key(bookNo) references bls_book(bookNo),
 	constraint memberIReserve_fk foreign key(memberId) references bls_member(memberId)
 )
-select * from bls_book_reserve;
-drop table bls_book_reserve;
 
 -- 도서 대여 테이블(관리가_대여중)
+DROP table bls_book_rental
+select * from bls_book_rental;
+CREATE sequence bls_book_rental_seq nocache
+DROP sequence bls_book_rental_seq
+
 CREATE TABLE bls_book_rental(
 	rentalNo number primary key,
 	rentalDate date not null,
@@ -133,16 +98,8 @@ CREATE TABLE bls_book_rental(
 	constraint memberIdRental_fk foreign key(memberId) references bls_member(memberId)
 )
 
-select * from bls_book_rental;
-DROP table bls_book_rental
-CREATE sequence bls_book_rental_seq nocache
-DROP sequence bls_book_rental_seq
-
 -- 초기화 시켜줄때
 update bls_book set bookState='대여가능'
-
-update bls_book_rental set count=2
-		where bookNo=2  and returnDate = null
 
 
 SELECT MONTHS_BETWEEN(TO_DATE('2000/06/05') , TO_DATE('2000/09/23'))  "Date" FROM dual
@@ -165,9 +122,6 @@ select bookNo, title, publisher, loc, bookState, over1, (select '예약' as over
 		from bls_book b, bls_book_pbs p where b.publisherNo=p.publisherNo)
 where page=1
 	<![CDATA[     	]]>
-
-
-
 
 ---신간도서!! 
 select outputDate,isbn, newbook, title, writer, subject, publisher from (
