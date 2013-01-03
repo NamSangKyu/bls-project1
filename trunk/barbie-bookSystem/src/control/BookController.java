@@ -401,6 +401,7 @@ public class BookController extends MultiActionController {
 		}else{
 			map1.put("memberId", "없음");
 		}
+		System.out.println("여기까지나오는겨??? 제발plz");
 		ArrayList list = service.getBookState(map1);			// 도서 info 볼 때 도서상태 보기위한 로직
 		request.setAttribute("list", list);
 		return new ModelAndView("info.book", "map", map);
@@ -567,12 +568,12 @@ public class BookController extends MultiActionController {
 		}
 		public ModelAndView getNewBookList(HttpServletRequest request,
 				HttpServletResponse response){
-		System.out.println("new Book Controller입성완료");
+		System.out.println("get newBookController입성완료");
 		String pageNo=request.getParameter("pageNo");
 		ListVO lvo=new ListVO();
 		try {
 			lvo=service.getNewBook(pageNo);
-			System.out.println("newBookList"+lvo);
+			System.out.println("newBookList="+lvo);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
