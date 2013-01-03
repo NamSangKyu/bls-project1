@@ -3,7 +3,7 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="${initParam.root}/css/book-table.css"> 
 <div class="listPage">  
-<table border="1">
+<table border="0">
 <thead>
 <tr align="center">
 <th>책제목</th>

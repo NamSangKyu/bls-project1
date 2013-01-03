@@ -46,7 +46,7 @@ $(document).ready(function(){
 <option value="">--분야선택---</option>
 </select>
 <div class="listPage">
-<table border="1">
+<table border="0">
 <thead>
 <tr>
 <th>책제목</th>
