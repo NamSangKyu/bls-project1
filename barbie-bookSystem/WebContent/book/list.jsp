@@ -7,7 +7,7 @@
 <center>
 <!-- 도서목록을 게시물로 보여주기 -->
 <div class="listPage">
-<table border="1" class="board_table" >
+<table border="0" class="board_table" >
 <thead>
 <tr>
 <!-- 글번호/도서명/출판사/저자명/ISBN -->
