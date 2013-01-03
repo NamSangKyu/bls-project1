@@ -34,17 +34,18 @@
 </tbody>
 </table>
 </div>
-<br><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br><br> 
 	<!-- 페이징 처리 -->	
 	<%-- 이전 페이지 그룹이 있으면 이미지 보여준다.
 		   이미지 링크는 현 페이지 그룹 시작페이지 번호 -1 =>
 		   이전 페이지 그룹의 마지막 페이지 번호로 한다. 
 	 --%>
+	 <center>
 	<c:choose>
 	<c:when test="${requestScope.flag==false}">
 	 <c:if test="${requestScope.list.bean.previousPageGroup}">
 	 <a href=
-	 "board.do?command=getBookList&nowPage=${requestScope.list.bean.
+	 "book.do?command=getBookList&nowPage=${requestScope.list.bean.
 	 startPageOfPageGroup-1}"><<</a>
 	 </c:if>
 	 &nbsp;&nbsp;
@@ -84,7 +85,7 @@
 	 
 		 <c:if test="${requestScope.list.bean.previousPageGroup}">
 	 <a href=
-	 "board.do?command=findbook&page=${requestScope.list.bean.
+	 "book.do?command=findbook&page=${requestScope.list.bean.
 	 startPageOfPageGroup-1}&searchValue=${requestScope.serachValue}&serach=${requestScope.serach}"><<</a>
 	 </c:if>
 	 &nbsp;&nbsp;
@@ -121,6 +122,7 @@
 		 	${requsetScope.flag }${requsetScope.search }${requsetScope.searchValue }
 	 </c:otherwise>
 	 </c:choose>
+	 </center>
 	 </center>
 	 <form action="book.do" method="get">
 	 <input type="hidden" name="command" value="findBook"> 
