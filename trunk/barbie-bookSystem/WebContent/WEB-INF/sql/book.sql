@@ -22,29 +22,29 @@ create table bls_book(
 
 --도서 Test 자료
 insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '155123', '안철수의생각', '안철수', '대한민국 미래지도', '가1나1', '1', '1');
+values(bls_book_seq.nextval, '1551231', '안철수의생각7', '안철수', '대한민국 미래지도', '가1나1', '1', '1');
 insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '155123', '안철수의생각', '안철수', '대한민국 미래지도', '가1나1', '1', '1');
+values(bls_book_seq.nextval, '1551232', '안철수의생각6', '안철수', '대한민국 미래지도', '가1나1', '1', '1');
 insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '155123', '안철수의생각', '안철수', '대한민국 미래지도', '가1나1', '1', '1');
+values(bls_book_seq.nextval, '1551233', '안철수의생각4', '안철수', '대한민국 미래지도', '가1나1', '1', '1');
 insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '155123', '안철수의생각', '안철수', '대한민국 미래지도', '가1나1', '1', '1');
+values(bls_book_seq.nextval, '1551234', '안철수의생각5', '안철수', '대한민국 미래지도', '가1나1', '1', '1');
 insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '155123', '안철수의생각', '안철수', '대한민국 미래지도', '가1나1', '1', '1');
+values(bls_book_seq.nextval, '1551235', '안철수의생각3', '안철수', '대한민국 미래지도', '가1나1', '1', '1');
 insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '152334', '어린왕자', '생텍쥐페리', '희망하는 삶', '가1나2', '2', '2');
+values(bls_book_seq.nextval, '1523346', '어린왕자2', '생텍쥐페리', '희망하는 삶', '가1나2', '2', '2');
 insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '152334', '어린왕자', '생텍쥐페리', '희망하는 삶', '가1나2', '2', '2');
+values(bls_book_seq.nextval, '1523347', '어린왕자1', '생텍쥐페리', '희망하는 삶', '가1나2', '2', '2');
 insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '152336', '아프니까 청춘이다', '김난도', '20대 멘토링 편지', '가1나3', '3', '3');
+values(bls_book_seq.nextval, '1523368', '아프니까 청춘이다5', '김난도', '20대 멘토링 편지', '가1나3', '3', '3');
 insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '152336', '아프니까 청춘이다', '김난도', '20대 멘토링 편지', '가1나3', '3', '3');
+values(bls_book_seq.nextval, '1523369', '아프니까 청춘이다4', '김난도', '20대 멘토링 편지', '가1나3', '3', '3');
 insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '152336', '아프니까 청춘이다', '김난도', '20대 멘토링 편지', '가1나3', '3', '3');
+values(bls_book_seq.nextval, '15233610', '아프니까 청춘이다3', '김난도', '20대 멘토링 편지', '가1나3', '3', '3');
 insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '152336', '아프니까 청춘이다', '김난도', '20대 멘토링 편지', '가1나3', '3', '3');
+values(bls_book_seq.nextval, '15233611', '아프니까 청춘이다2', '김난도', '20대 멘토링 편지', '가1나3', '3', '3');
 insert into bls_book(bookNo, isbn, title, writer, cont, loc, subjectNo, publisherNo)
-values(bls_book_seq.nextval, '152336', '아프니까 청춘이다', '김난도', '20대 멘토링 편지', '가1나3', '3', '3');
+values(bls_book_seq.nextval, '15233612', '아프니까 청춘이다1', '김난도', '20대 멘토링 편지', '가1나3', '3', '3');
 
 --도서분류 테이블
 drop table bls_book_sbj;
