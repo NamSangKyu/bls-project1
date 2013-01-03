@@ -11,7 +11,7 @@
     	select distinct(isbn), img from BLS_BOOK where isbn = #isbn#
     </select>
     <select id="getBookInfoNum" parameterClass="int" resultClass="HashMap">
-    	select title, writer, cont, isbn ,loc, s.subject, p.publisher, img from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno and bookno=#bookno#
+    	select bookno, title, writer, cont, isbn ,loc, s.subject, p.publisher, img from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno and bookno=#bookno#
     </select>
     <select id="getBookInfoTitle" parameterClass="java.lang.String" resultClass="java.util.HashMap">
     	select distinct(isbn), title, writer, cont, isbn ,loc, img, s.subject, p.publisher  from BLS_BOOK b, BLS_BOOK_PBS p, BLS_BOOK_SBJ s where b.subjectno = s.subjectno and b.publisherno = p.publisherno and title = #title#
@@ -134,6 +134,10 @@ where num<![CDATA[<]]>6
 	<!--  예약 취소 버튼 -->
 	<delete id="deleteBookReserve">
 		delete from bls_book_reserve where bookNo=#bookNo# and memberId=#memberId#
+	</delete>
+	<!-- 도서 삭제 -->
+	<delete id="deleteBook" parameterClass="int">
+		delete from bls_book where bookno=#bookno#
 	</delete>
 	<!--  관리자 모드시 대여 0. 예약테이블 데이터 검사 	1.번째  책 상태 변화	2. 대여테이블 데이터 삽입	3. 예약취소(위에 취소 이용)	-->
 	<select id="isReserveData" parameterClass="HashMap" resultClass="string">
