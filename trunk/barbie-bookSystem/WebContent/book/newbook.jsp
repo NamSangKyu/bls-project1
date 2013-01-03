@@ -30,14 +30,13 @@
 </div>
 <!-- 이전글 -->
 <c:if test="${requestScope.lvo.bean.previousPageGroup}">
-<a href="book.do?command=newBook&pageNo=${requestScope.lvo.bean.startPageOfPageGroup-1}">
-이전 << </a>
+<a href="book.do?command=getNewBookList&pageNo=${requestScope.lvo.bean.startPageOfPageGroup-1}"> << </a>
 </c:if>
 
 <c:forEach var="i" begin="${requestScope.lvo.bean.startPageOfPageGroup}" end="${requestScope.lvo.bean.endPageOfPageGroup}">
   <c:choose>
 	 <c:when test="${requestScope.lvo.bean.nowPage!=i}">
-	 <a href="book.do?command=newBook&pageNo=${i}">${i}</a>
+	 <a href="book.do?command=getNewBookList&pageNo=${i}">${i}</a>
 	 </c:when>
 	 <c:otherwise>
 	${i}
@@ -47,6 +46,5 @@
  
 <!-- 이후글 -->
 <c:if test="${requestScope.lvo.bean.nextPageGroup}">
-<a href="book.do?command=newBook&pageNo=${requestScope.lvo.bean.
-	 endPageOfPageGroup+1}">이후 >></a>
+<a href="book.do?command=getNewBookList&pageNo=${requestScope.lvo.bean.endPageOfPageGroup+1}"> >> </a>
 </c:if> 
