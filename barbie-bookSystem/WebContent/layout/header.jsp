@@ -108,18 +108,18 @@
 </style>
 <div id="">
 <c:choose><c:when test="${sessionScope ==null or sessionScope.membervo == null }">
-	<form action="member.do" method="post" id="login_form" >
 	<div id="login" >
+		<form action="member.do" method="post" id="login_form" >
 			<input type="hidden" name="command" value="login">
 			<input type="text" id="memberId" name="memberId" size="10" style="height: 15px; width: 70px" placeholder="아이디"><br>
 			<input type="password" id="pass" name="pass" size="10" style="height: 15px; width: 70px" placeholder="비밀번호"><br>
-			<!-- <input type="submit" id="" name="" value=""  style="visibility:hidden"> -->
+			<input type="submit" id="" name="" value=""  style="visibility:hidden">
+		</form>
 	</div>
 	<div id="login_imgs">
 		<input type="image" src="${initParam.root}/img/ui/layout/login.jpg" id="loginImg">
 		<input type="image" src="${initParam.root}/img/ui/layout/join.jpg" id="joinImg">
 	</div>
-	</form>
 </c:when>
 <c:otherwise>
 	<div id="login">
