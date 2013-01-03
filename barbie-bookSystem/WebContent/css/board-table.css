@@ -202,7 +202,9 @@ b{
 	margin-bottom:1px; /* 하단에 외부여백 1px */
 	font:14spx Verdana; /* 폰트 속성 순서대로 크기 글꼴 */
 }
-
+.file_section{
+	padding-left: 20px;
+}
 
 
 
