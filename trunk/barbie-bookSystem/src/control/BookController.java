@@ -85,6 +85,21 @@ public class BookController extends MultiActionController {
 		}
 		return new ModelAndView("book_info.admin","map",map);
 	}
+	public ModelAndView deleteBook(HttpServletRequest request,
+			HttpServletResponse response) {
+		String bookno = request.getParameter("bookno");
+		System.out.println(bookno);
+		try {
+			service.deleteBook(Integer.parseInt(bookno));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return getBookAllList(request,response);
+	}
 	public ModelAndView insert(HttpServletRequest request,
 			HttpServletResponse response, BookVO vo) {
 		System.out.println("insert");
