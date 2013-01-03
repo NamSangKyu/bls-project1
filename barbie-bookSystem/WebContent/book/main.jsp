@@ -1,22 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>    
 <link rel="stylesheet" href="css/book-table.css"> 
-<link rel="stylesheet"
- href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
-<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+
 <link rel="stylesheet" href="/resources/demos/style.css" />
 
+<br><div class="font_style">${sessionScope.membervo.memberId}회원님 추천 도서</div><br><br>
 
-
-<table border="1">
+<div id="listPage">
+<table border="0" class="board_table">
 <thead>
 <tr>
-<td>책제목</td>
-<td>글쓴이</td>
-<td>평점</td>
-<td>ISBN</td>
-<td>분류</td>
+<th>책제목</th>
+<th>글쓴이</th>
+<th>평점</th>
+<th>ISBN</th>
+<th>분류</th>
 </tr>
 </thead>
 
@@ -90,3 +88,4 @@
 </c:choose>
 </tbody>
 </table>
+</div>
