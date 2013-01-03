@@ -14,10 +14,10 @@
 		<ref bean="methodNameResolver"/>
 	</property>
 	<property name="memberPath">
-		<value>E:\\Kosta\\project\\tomcat\\webapps\\barbie-bookSystem-m-step4\\upload\\member\\</value>
+		<value>E:\\Kosta\\project\\tomcat\\webapps\\barbie-bookSystem-m-step5\\upload\\member\\</value>
 	</property>
 	<property name="memberWorkPath">
-		<value>E:\Kosta\project\workspace\project\barbie-bookSystem-step4\\WebContent\\upload\\member\\</value>
+		<value>E:\Kosta\project\workspace\project\barbie-bookSystem-step5\\WebContent\\upload\\member\\</value>
 	</property>
 </bean>
 
@@ -25,6 +25,9 @@
 	<constructor-arg>
 		<ref bean="memberDao"/>
 	</constructor-arg>
+	<property name="sqlMapClient">
+		<ref bean="sqlMapClient"/>
+	</property>
 </bean>
 <bean id="memberDao" class="model.MemberDao">
 	<constructor-arg>
