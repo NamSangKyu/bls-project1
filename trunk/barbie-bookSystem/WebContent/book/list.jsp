@@ -3,8 +3,8 @@
     <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
     <link rel="stylesheet" href="${initParam.root}/css/book-table.css"> 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <br><br>
 <center>
+<br><div class="font_style">도서 리스트</div><br><br>
 <!-- 도서목록을 게시물로 보여주기 -->
 <div class="listPage">
 <table border="0" class="board_table" >
@@ -34,7 +34,7 @@
 </tbody>
 </table>
 </div>
-<br><br> 
+<br>
 	<!-- 페이징 처리 -->	
 	<%-- 이전 페이지 그룹이 있으면 이미지 보여준다.
 		   이미지 링크는 현 페이지 그룹 시작페이지 번호 -1 =>

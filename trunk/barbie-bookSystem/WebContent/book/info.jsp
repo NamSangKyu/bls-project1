@@ -83,7 +83,7 @@ table tr,td {
 <input type="hidden" name="command" value="insertComment">
 <input type="hidden" name="writer" value="${sessionScope.membervo.memberId }">
 <input type="hidden" name="isbn" value="${requestScope.map.ISBN }">
-<table border="1" width="450"  height="300">
+<table border="0" width="450"  height="300">
 <thead>
 <tr>
 <th>작성자</th>
@@ -115,7 +115,7 @@ table tr,td {
 </form>
 		</td>
 		<td rowspan="2">
-			<table border="1" height="500" width="350">
+			<table border="0" height="500" width="350">
 				<tr>
 					<th width="15%" align="center">도서명</th>
 					<td>${requestScope.map.TITLE }</td>
@@ -144,7 +144,7 @@ table tr,td {
 				</tr>
 				<tr >
 					<th height="200" align="center">내용</th>
-					<td colspan="2"><textarea rows="5" cols="37" readonly="readonly" >${requestScope.map.CONT }</textarea>
+					<td colspan="2">${requestScope.map.CONT }
 					</td>
 				</tr>
 			</table>
@@ -152,9 +152,10 @@ table tr,td {
 		</tr>
 		<tr>
 			<td>
-				<span class="resolve"> 도서현황
-					<table border="1" width="450">
-						<tr>
+				<span class="resolve">
+					<table border="0" width="450">
+					<br><div class="font_style" align="center">도서 현황</div><br><br> 
+						<tr align="center" >
 							<th>도서번호</th>
 							<th>도서명</th>
 							<th>출판사</th>
@@ -163,7 +164,7 @@ table tr,td {
 							<th>예약신청</th>
 						</tr>
 						<c:forEach items="${requestScope.list }" var="list">
-							<tr>
+							<tr align="center">
 								<td>${list.BOOKNO }</td>
 								<td>${list.TITLE }</td>
 								<td>${list.PUBLISHER }</td>

@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<link rel="stylesheet" href="${initParam.root}/css/book-table.css">
 <script>
 	$(document).ready(function() {
 		$("a").click(function() {
@@ -82,7 +83,7 @@ table tr,td {
 <input type="hidden" name="command" value="insertComment">
 <input type="hidden" name="writer" value="${sessionScope.membervo.memberId }">
 <input type="hidden" name="isbn" value="${requestScope.map.ISBN }">
-<table border="1" width="450"  height="300">
+<table border="0" width="450"  height="300">
 <thead>
 <tr>
 <th>작성자</th>
@@ -115,7 +116,7 @@ table tr,td {
 			
 		</td>
 		<td rowspan="2">
-			<table border="1" height="500" width="350">
+			<table border="0" height="500" width="350">
 		<tr>
 			<td width="15%" align="center">도서명</td>
 			<td >${requestScope.map.TITLE }</td>
