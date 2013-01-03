@@ -63,7 +63,7 @@
 
 	<!-- 관심사항 리스트 -->
 	<select id="getBookSbjList" resultClass="hashmap">
-		select subjectNo,subject from bls_book_sbj
+		select subjectNo,subject from bls_book_sbj where subjectNo >0
 	</select>
 
 	<!--	탈퇴 전 예약 테이블 데이터 존재 여부 -->
