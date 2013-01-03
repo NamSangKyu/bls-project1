@@ -105,6 +105,9 @@
 .font_style{
 	font-family:'Trebuchet MS', malgun gothic,Arial, Helvetica, sans-serif;
 }
+.file_section{
+	padding-left: 20px;
+}
 </style>
 <div id="">
 <c:choose><c:when test="${sessionScope ==null or sessionScope.membervo == null }">
