@@ -78,6 +78,7 @@ public class BookController extends MultiActionController {
 		HashMap map = null;
 		try {
 			map = service.getBookInfo(Integer.parseInt(bookno));
+			System.out.println("수정 정보 : "+map.toString());
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
