@@ -108,7 +108,7 @@ $(function() {
 </tr>
 <tr>
 <td>출간일:</td>
-<td><p><input type="text" id="datepicker" name="outputDate"/></p></td>
+<td><p><input type="text" id="datepicker" name="outputDate" value="${requestScope.map.OUTPUTDATE }"/></p></td>
 </tr>
 <tr>
 <td>서고위치:</td>
