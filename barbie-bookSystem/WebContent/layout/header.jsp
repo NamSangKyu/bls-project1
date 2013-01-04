@@ -87,8 +87,7 @@
 }
 #home{
 	position: absolute;
-	margin-left: 10px;
-	margin-top: 10px;
+	margin-top: 12px;
 }
 #login_imgs {
 	position: absolute;
