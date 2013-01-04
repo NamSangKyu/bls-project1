@@ -22,7 +22,7 @@
 <!-- 역사 -->
 <c:choose>
 <c:when test="${empty requestScope.subject.subject1}">
-<tr>
+<tr align="center">
 <td colspan="5">${sessionScope.membervo.subject1}에 해당하는 추천도서가 없습니다</td>
 
 </tr>
