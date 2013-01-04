@@ -46,7 +46,7 @@
 <!-- 역사 -->
 <c:choose>
 <c:when test="${empty requestScope.subject.subject2}">
-<tr>
+<tr align="center">
 <td colspan="5">${sessionScope.membervo.subject2}에 해당하는 추천도서가 없습니다</td>
 </tr>
 </c:when>
@@ -70,7 +70,7 @@
 <!-- 역사 -->
 <c:choose>
 <c:when test="${empty requestScope.subject.subject3}">
-<tr>
+<tr align="center">
 <td colspan="5">${sessionScope.membervo.subject3}에 해당하는 추천도서가 없습니다</td>
 </tr>
 </c:when>

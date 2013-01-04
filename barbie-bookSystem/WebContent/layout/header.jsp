@@ -85,6 +85,11 @@
 	margin-left: 970px;
 	margin-top: 3px;
 }
+#home{
+	position: absolute;
+	margin-left: 10px;
+	margin-top: 10px;
+}
 #login_imgs {
 	position: absolute;
 	margin-left: 1046px;
@@ -135,7 +140,7 @@
 </c:otherwise>
 </c:choose>
 </div>
-
+	<div id="home"><a href="member.do?command=home&memberId=${sessionScope.membervo.memberId }&pass=${sessionScope.membervo.pass }"><input type="image" src="${initParam.root}/img/ui/layout/home.jpg" id="loginImg"></a></div>
 	<c:choose><c:when test="${sessionScope.membervo.memberId !='java' }">
 		<ul id="navCircle">
 			<li><a href="book.do?command=getBookList&nowPage=1" class="wrapper">도서검색</a></li>
